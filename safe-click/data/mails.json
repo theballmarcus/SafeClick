@@ -4,7 +4,7 @@
 	"subject": "Din pakke kunne ikke leveres",
 	"sender_name": "PostNord Support",
 	"sender_email": "support@postnord-track-help.com",
-	"body": "Hej. Vi kunne ikke levere din pakke i dag. Klik på linket for at bekræfte dine oplysninger og betale et nyt leveringsgebyr på 19 kr.",
+	"body": "Hej. \nVi kunne ikke levere din pakke i dag. \nKlik på linket for at bekræfte dine oplysninger og betale et nyt leveringsgebyr på 19 kr.\nMvh Postnord",
 	"visible_link_text": "Bekræft levering",
 	"real_url": "http://postnord-track-help.com/verify",
 	"is_phishing": true,

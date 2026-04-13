@@ -1,0 +1,90 @@
+[gd_scene format=3 uid="uid://6a1c2b7ljyx8"]
+
+[ext_resource type="Script" uid="uid://bjlwqm25igokj" path="res://scripts/game.gd" id="1_ibkli"]
+
+[node name="Game" type="Node2D" unique_id=1693393910]
+script = ExtResource("1_ibkli")
+
+[node name="TopBar" type="PanelContainer" parent="." unique_id=919060674]
+offset_right = 1151.0
+offset_bottom = 75.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TopBar" unique_id=473274596]
+layout_mode = 2
+
+[node name="DayLabel" type="Label" parent="TopBar/HBoxContainer" unique_id=513262262]
+layout_mode = 2
+
+[node name="ScoreLabel" type="Label" parent="TopBar/HBoxContainer" unique_id=1256865766]
+layout_mode = 2
+
+[node name="RankLabel" type="Label" parent="TopBar/HBoxContainer" unique_id=1181601461]
+layout_mode = 2
+
+[node name="MainArea" type="HBoxContainer" parent="." unique_id=2055143435]
+offset_left = 1.0
+offset_top = 79.0
+offset_right = 1148.0
+offset_bottom = 648.0
+
+[node name="InboxPanel" type="PanelContainer" parent="MainArea" unique_id=72076426]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainArea/InboxPanel" unique_id=455304951]
+layout_mode = 2
+
+[node name="InboxTitle" type="Label" parent="MainArea/InboxPanel/VBoxContainer" unique_id=1254164014]
+layout_mode = 2
+text = "  Mail Inbox  "
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainArea/InboxPanel/VBoxContainer" unique_id=1196344816]
+layout_mode = 2
+
+[node name="MailPanel" type="PanelContainer" parent="MainArea" unique_id=1806376303]
+layout_direction = 2
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainArea/MailPanel" unique_id=654317937]
+layout_mode = 2
+size_flags_horizontal = 8
+
+[node name="SubjectLabel" type="Label" parent="MainArea/MailPanel/VBoxContainer" unique_id=1889684102]
+layout_mode = 2
+
+[node name="SenderLabel" type="Label" parent="MainArea/MailPanel/VBoxContainer" unique_id=875251291]
+layout_mode = 2
+
+[node name="BodyText" type="RichTextLabel" parent="MainArea/MailPanel/VBoxContainer" unique_id=728276069]
+layout_mode = 2
+text = "hejh
+jvordan har du det"
+fit_content = true
+
+[node name="HoverUrlButton" type="Button" parent="MainArea/MailPanel/VBoxContainer" unique_id=203944982]
+layout_mode = 2
+text = "Afsender"
+
+[node name="HoverUrlLabel" type="Label" parent="MainArea/MailPanel/VBoxContainer" unique_id=1009668716]
+layout_mode = 2
+
+[node name="ActionButtons" type="HBoxContainer" parent="MainArea/MailPanel/VBoxContainer" unique_id=1750800828]
+layout_mode = 2
+
+[node name="LegitButton" type="Button" parent="MainArea/MailPanel/VBoxContainer/ActionButtons" unique_id=1988458320]
+layout_mode = 2
+text = "Videresend"
+
+[node name="PhishingButton" type="Button" parent="MainArea/MailPanel/VBoxContainer/ActionButtons" unique_id=1456599114]
+layout_mode = 2
+text = "Afvis"
+
+[node name="FeedbackLabel" type="Label" parent="." unique_id=1556555921]
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="NextMailButton" type="Button" parent="." unique_id=1872202553]
+offset_left = 664.0
+offset_top = 569.0
+offset_right = 907.0
+offset_bottom = 629.0
+text = "Næste mail"

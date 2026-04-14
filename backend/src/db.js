@@ -117,12 +117,11 @@ export async function getHighscores() {
     const [rows] = await pool.query(
         'SELECT username, highscore, created_at FROM highscore ORDER BY highscore DESC LIMIT 10');
     if (!rows || rows.length === 0) return null;
-    const r = rows[0];
-    return { 
+    return rows.map((r) => ({
         username: r.username,
         highscore: parseInt(r.highscore),
         created_at: r.created_at
-    };
+    }));
 }
 
 export async function getAllMails() {

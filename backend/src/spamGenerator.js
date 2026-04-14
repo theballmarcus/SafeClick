@@ -1,0 +1,155 @@
+import OpenAI from 'openai';
+
+const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4.1-mini';
+const VALID_DIFFICULTIES = new Set(['easy', 'medium', 'hard']);
+
+function stripCodeFences(text) {
+    const trimmed = String(text || '').trim();
+    if (!trimmed.startsWith('```')) return trimmed;
+
+    const lines = trimmed.split('\n');
+    if (lines.length < 3) return trimmed;
+    if (lines[0].startsWith('```')) lines.shift();
+    if (lines[lines.length - 1].startsWith('```')) lines.pop();
+    return lines.join('\n').trim();
+}
+
+function parseJsonPayload(text) {
+    const cleaned = stripCodeFences(text);
+    try {
+        return JSON.parse(cleaned);
+    } catch {
+        const start = cleaned.indexOf('{');
+        const end = cleaned.lastIndexOf('}');
+        if (start === -1 || end === -1 || end <= start) return null;
+        try {
+            return JSON.parse(cleaned.slice(start, end + 1));
+        } catch {
+            return null;
+        }
+    }
+}
+
+function sanitizeText(value, maxLength) {
+    if (typeof value !== 'string') return null;
+    const trimmed = value.trim();
+    if (!trimmed) return null;
+    return trimmed.slice(0, maxLength);
+}
+
+function normalizeGeneratedMail(mail, fallbackDifficulty) {
+    const subject = sanitizeText(mail?.subject, 100);
+    const body = sanitizeText(mail?.body, 6000);
+    if (!subject || !body) return null;
+
+    const difficultyValue = sanitizeText(mail?.difficulty, 10)?.toLowerCase();
+    const difficulty = VALID_DIFFICULTIES.has(difficultyValue)
+        ? difficultyValue
+        : fallbackDifficulty;
+
+    return {
+        subject,
+        sender_name: sanitizeText(mail?.sender_name, 255),
+        sender_email: sanitizeText(mail?.sender_email, 255),
+        body,
+        real_url: sanitizeText(mail?.real_url, 255),
+        hint: sanitizeText(mail?.hint, 500),
+        difficulty,
+        category: sanitizeText(mail?.category, 50) || 'generated',
+        is_phishing: true
+    };
+}
+
+export async function generateSpamMailsWithAI({ count, difficulty, existingSubjects = [] }) {
+    const apiKey = process.env.OPENAI_API_KEY;
+    if (!apiKey) {
+        throw new Error('OPENAI_API_KEY is not configured.');
+    }
+
+    const openai = new OpenAI({ apiKey });
+
+    const requestedCount = Math.min(Math.max(Number(count) || 1, 1), 30);
+    const normalizedDifficulty = VALID_DIFFICULTIES.has(String(difficulty || '').toLowerCase())
+        ? String(difficulty).toLowerCase()
+        : 'easy';
+
+    const blockedSubjects = Array.from(new Set(
+        (Array.isArray(existingSubjects) ? existingSubjects : [])
+            .filter((value) => typeof value === 'string' && value.trim())
+            .map((value) => value.trim())
+    )).slice(-300);
+
+    let completion;
+    try {
+        completion = await openai.chat.completions.create({
+            model: OPENAI_MODEL,
+            temperature: 1.5,
+            response_format: { type: 'json_object' },
+            messages: [
+                {
+                    role: 'system',
+                    content: 'You generate realistic phishing/spam training mails for educational simulation. Always return valid JSON.'
+                },
+                {
+                    role: 'user',
+                    content: `Generate ${requestedCount} UNIQUE phishing emails at ${normalizedDifficulty} difficulty.
+
+Return JSON only in this shape:
+{
+  "mails": [
+    {
+      "subject": "string max 100 chars",
+      "sender_name": "string or null",
+      "sender_email": "string or null",
+      "body": "string",
+      "real_url": "string or null",
+      "hint": "short clue about phishing red flags",
+      "difficulty": "easy|medium|hard",
+      "category": "one short category"
+    }
+  ]
+}
+
+Rules:
+- Every mail must be phishing (is_phishing=true implied).
+- Do not duplicate subjects.
+- Do not use any subject from this existing subject list:
+${JSON.stringify(blockedSubjects)}
+- Vary tactics and writing style. 
+- Difficult mails should be hard to distinguish from real mails, while easy ones should have more obvious red flags.
+- Keep content realistic but safe for training.`
+                }
+            ]
+        });
+    } catch (error) {
+        const status = error?.status || 'unknown';
+        const details = error?.message || String(error);
+        throw new Error(`OpenAI API request failed (${status}): ${details.slice(0, 300)}`);
+    }
+
+    const content = completion?.choices?.[0]?.message?.content;
+    const parsed = parseJsonPayload(content);
+    const candidates = Array.isArray(parsed)
+        ? parsed
+        : Array.isArray(parsed?.mails)
+            ? parsed.mails
+            : [];
+
+    const blockedSet = new Set(blockedSubjects.map((subject) => subject.toLowerCase()));
+    const uniqueSubjects = new Set();
+    const normalized = [];
+
+    for (const candidate of candidates) {
+        const mail = normalizeGeneratedMail(candidate, normalizedDifficulty);
+        if (!mail) continue;
+
+        const key = mail.subject.toLowerCase();
+        if (blockedSet.has(key) || uniqueSubjects.has(key)) continue;
+
+        uniqueSubjects.add(key);
+        normalized.push(mail);
+        if (normalized.length >= requestedCount) break;
+    }
+
+    return normalized;
+}

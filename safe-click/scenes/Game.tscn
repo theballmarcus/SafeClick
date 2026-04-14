@@ -13,8 +13,11 @@
 [ext_resource type="Texture2D" uid="uid://csf2c2xq2w53o" path="res://graphics/images/Settings.png" id="10_mcffj"]
 [ext_resource type="Texture2D" uid="uid://dsi0djg27gk87" path="res://graphics/images/Indbakke.png" id="12_2rd6h"]
 [ext_resource type="Theme" uid="uid://dwltkpsji8m0" path="res://graphics/themes/AcceptButton.tres" id="12_7ua8r"]
+[ext_resource type="Texture2D" uid="uid://bw24g4wbjfdpa" path="res://graphics/images/Calender.png" id="12_kyk2p"]
 [ext_resource type="Texture2D" uid="uid://cwle457dmgiuh" path="res://graphics/images/Inbox.png" id="13_7ua8r"]
 [ext_resource type="Theme" uid="uid://cx61wghxdyryp" path="res://graphics/themes/DeclineButton.tres" id="13_r7sob"]
+[ext_resource type="Theme" uid="uid://bhjhubx6g25ei" path="res://graphics/themes/StartButton.tres" id="16_vjgi4"]
+[ext_resource type="Texture2D" uid="uid://bnvdso5i71hka" path="res://graphics/images/DayPlaying.png" id="17_vjgi4"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_aug50"]
 load_path = "res://.godot/imported/Settings.png-f0ebdf1b9c61c5c5ae8349cc17dd00a4.ctex"
@@ -71,9 +74,9 @@ theme_override_styles/hover = SubResource("StyleBoxTexture_400sg")
 [node name="StatsButton" type="Button" parent="TopBar/TopPanel" unique_id=1534592607]
 z_index = 1
 layout_mode = 0
-offset_left = 1011.0
+offset_left = 1016.0
 offset_top = 5.0
-offset_right = 1076.0
+offset_right = 1081.0
 offset_bottom = 67.0
 mouse_default_cursor_shape = 2
 theme = ExtResource("4_s0nni")
@@ -184,6 +187,27 @@ offset_right = 286.0
 offset_bottom = 48.0
 theme = ExtResource("9_mcffj")
 
+[node name="Calender" type="TextureRect" parent="TopBar/TopPanel" unique_id=121729648]
+layout_mode = 0
+offset_left = 950.0
+offset_top = 12.0
+offset_right = 1005.0
+offset_bottom = 62.0
+texture = ExtResource("12_kyk2p")
+expand_mode = 1
+
+[node name="CalenderLabel" type="Label" parent="TopBar/TopPanel/Calender" unique_id=1567467059]
+modulate = Color(0, 0, 0, 1)
+z_index = 1
+layout_mode = 0
+offset_left = 21.0
+offset_top = 15.0
+offset_right = 36.0
+offset_bottom = 94.0
+theme_override_font_sizes/font_size = 29
+text = "
+"
+
 [node name="MainArea" type="Control" parent="." unique_id=1340309323]
 z_index = -5
 layout_mode = 3
@@ -213,6 +237,7 @@ modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_right = 145.0
 offset_bottom = 23.0
+theme_override_font_sizes/font_size = 18
 text = "Din pakke kunne ikke leveres"
 
 [node name="SenderLabel" type="Label" parent="MainArea/MailPanel/MailContent" unique_id=875251291]
@@ -221,6 +246,7 @@ layout_mode = 0
 offset_top = 27.0
 offset_right = 145.0
 offset_bottom = 50.0
+theme_override_font_sizes/font_size = 18
 text = "Fra: PostNord Support <support@postnord-track-help.com>"
 
 [node name="BodyText" type="RichTextLabel" parent="MainArea/MailPanel/MailContent" unique_id=728276069]
@@ -230,6 +256,7 @@ offset_left = 2.0
 offset_top = 67.0
 offset_right = 512.0
 offset_bottom = 136.0
+theme_override_font_sizes/normal_font_size = 18
 text = "Hej. Vi kunne ikke levere din pakke i dag. Klik på linket for at bekræfte dine oplysninger og betale et nyt leveringsgebyr på 19 kr."
 fit_content = true
 
@@ -250,17 +277,17 @@ offset_bottom = 293.0
 
 [node name="LegitButton" type="Button" parent="MainArea/MailPanel/MailContent" unique_id=1988458320]
 layout_mode = 0
-offset_left = 18.0
+offset_left = 22.0
 offset_top = 455.0
-offset_right = 63.0
+offset_right = 67.0
 offset_bottom = 500.0
 theme = ExtResource("12_7ua8r")
 
 [node name="PhishingButton" type="Button" parent="MainArea/MailPanel/MailContent" unique_id=1456599114]
 layout_mode = 0
-offset_left = 65.0
+offset_left = 69.0
 offset_top = 455.0
-offset_right = 110.0
+offset_right = 114.0
 offset_bottom = 500.0
 theme = ExtResource("13_r7sob")
 
@@ -347,19 +374,18 @@ offset_top = 89.0
 offset_right = 352.0
 offset_bottom = 112.0
 
-[node name="NextMailButton" type="Button" parent="." unique_id=1872202553]
-offset_left = 549.0
-offset_top = 446.0
-offset_right = 825.0
-offset_bottom = 506.0
-text = "Næste mail"
-
 [node name="NewDayButton" type="Button" parent="." unique_id=430395349]
-offset_left = 908.0
-offset_top = 449.0
-offset_right = 1050.0
-offset_bottom = 496.0
-text = "Ny dag"
+z_index = 1
+offset_left = 1060.0
+offset_top = 583.0
+offset_right = 1105.0
+offset_bottom = 628.0
+theme = ExtResource("16_vjgi4")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1937908707]
+position = Vector2(1082.8, 605.5)
+scale = Vector2(0.47, 0.47)
+texture = ExtResource("17_vjgi4")
 
 [connection signal="pressed" from="TopBar/TopPanel/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="TopBar/TopPanel/StatsButton" to="." method="_on_stats_button_pressed"]

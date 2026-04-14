@@ -33,8 +33,10 @@ var spawn_times: Array = []
 @onready var feedback_label = $FeedbackLabel
 @onready var next_mail_button = $NextMailButton
 @onready var new_day_button = $NewDayButton
+@onready var dayplaying_sprite = $Sprite2D
 @onready var SettingsMenu = $TopBar/TopPanel/SettingsMenu
 @onready var StatsMenu = $TopBar/TopPanel/StatsMenu
+@onready var calender_label = $TopBar/TopPanel/Calender/CalenderLabel
 
 
 func _ready():
@@ -71,6 +73,7 @@ func start_new_day():
 	clear_mail_view()
 	generate_spawn_times()
 	new_day_button.visible = false
+	calender_label.text = "%d" % day
 	#feedback_label.text = "Dag %d startet" % day
 
 func generate_spawn_times():

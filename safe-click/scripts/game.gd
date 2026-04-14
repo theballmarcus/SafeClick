@@ -6,6 +6,11 @@ const DAY_DURATION := 120.0 # 4 minutes
 const MIN_MAILS_PER_DAY := 6
 const MAX_MAILS_PER_DAY := 7
 const MAIL_ITEM_SCENE := preload("res://graphics/assets/MailItem.tscn")
+const WORK_START_HOUR := 8
+const WORK_END_HOUR := 15
+const WORK_START_MINUTES := WORK_START_HOUR * 60
+const WORK_END_MINUTES := WORK_END_HOUR * 60
+const WORKDAY_MINUTES := WORK_END_MINUTES - WORK_START_MINUTES
 
 var mails: Array = []
 var pending_pool: Array = []
@@ -21,6 +26,7 @@ var spawn_times: Array = []
 
 @onready var inbox_container = $MainArea/Mails
 @onready var day_label = $TopBar/TopPanel/StatsMenu/TextureRect/DayLabel
+@onready var time_label = $TimeLabel
 @onready var score_label = $TopBar/TopPanel/StatsMenu/TextureRect/ScoreLabel
 @onready var rank_label = $TopBar/TopPanel/StatsMenu/TextureRect/RankLabel
 @onready var subject_label = $MainArea/MailPanel/MailContent/SubjectLabel
@@ -53,14 +59,17 @@ func _ready():
 
 func _process(delta):
 	if not day_running:
+		time_label.text = "Kl. 08:00"
 		return
 	time_left -= delta
 	while spawn_times.size() > 0 and DAY_DURATION - time_left >= spawn_times[0]:
 		spawn_times.pop_front()
 		spawn_random_mail()
 	if time_left <= 0:
+		time_left = 0
 		end_day()
 	day_label.text = "Dag: %d (%.0fs)" % [day, max(time_left,0)]
+	time_label.text = "Kl. %s" % get_current_clock_time()
 
 func start_new_day():
 	day_running = true
@@ -72,6 +81,7 @@ func start_new_day():
 	generate_spawn_times()
 	new_day_button.visible = false
 	calender_label.text = "%d" % day
+	time_label.text = "Kl. %s" % get_current_clock_time()
 	#feedback_label.text = "Dag %d startet" % day
 
 func generate_spawn_times():
@@ -135,6 +145,8 @@ func _select_next_mail():
 
 func end_day():
 	day_running = false
+	time_left = 0
+	time_label.text = "Kl. 15:00"
 	feedback_label.text = "Dag færdig. Tryk for næste dag."
 	new_day_button.visible = true
 	day += 1
@@ -149,8 +161,6 @@ func clear_mail_view():
 	body_text.text = "Ingen mail valgt"
 	hover_url_button.visible = false
 	hover_url_label.visible = false
-	legit_button.disabled = true
-	phishing_button.disabled = true
 
 func _on_hover_url_pressed(): hover_url_label.visible = not hover_url_label.visible
 func _on_legit_pressed(): evaluate_choice(false)
@@ -173,19 +183,30 @@ func save_progress():
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file: file.store_string(JSON.stringify({"score":score,"day":day,"rank":rank}))
 	
+func get_current_clock_time() -> String:
+	var elapsed := DAY_DURATION - time_left
+	var progress: float = clamp(elapsed / DAY_DURATION, 0.0, 1.0)
+	var current_minutes := WORK_START_MINUTES + int(progress * WORKDAY_MINUTES)
+	if current_minutes > WORK_END_MINUTES:
+		current_minutes = WORK_END_MINUTES
+	var hours := current_minutes / 60
+	var minutes := current_minutes % 60
+
+	return "%02d:%02d" % [hours, minutes]
+	
 #Buttons
 func _on_settings_button_pressed() -> void:
-	SettingsMenu.visible=not SettingsMenu.visible
+	SettingsMenu.visible = not SettingsMenu.visible
 	Sound.play_sound("ButtonClicked")
 
 func _on_close_settings_button_pressed() -> void:
-	SettingsMenu.visible=not SettingsMenu.visible
+	SettingsMenu.visible = false
 	Sound.play_sound("ButtonClicked")
 
 func _on_stats_button_pressed() -> void:
-	StatsMenu.visible=not StatsMenu.visible
+	StatsMenu.visible = not StatsMenu.visible
 	Sound.play_sound("ButtonClicked")
 
 func _on_close_stats_button_pressed() -> void:
-	StatsMenu.visible=not StatsMenu.visible
+	StatsMenu.visible = false
 	Sound.play_sound("ButtonClicked")

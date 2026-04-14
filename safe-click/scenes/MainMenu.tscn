@@ -2,34 +2,69 @@
 
 [ext_resource type="Script" uid="uid://4xquco0dyjvp" path="res://scripts/main_menu.gd" id="1_yqorp"]
 [ext_resource type="PackedScene" uid="uid://cgq086xqkv7g4" path="res://graphics/assets/Highscore.tscn" id="2_0ykhv"]
+[ext_resource type="Texture2D" uid="uid://d3r23vxas2b4r" path="res://graphics/images/TopPanel.png" id="3_2wh52"]
+[ext_resource type="Texture2D" uid="uid://h3px0tvvvs2m" path="res://graphics/images/Mail.png" id="4_l72w3"]
+[ext_resource type="Texture2D" uid="uid://c0v3bufklvidv" path="res://graphics/images/MouseClick.png" id="5_826wr"]
 
 [node name="MainMenu" type="Node2D" unique_id=1025483519]
 script = ExtResource("1_yqorp")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=1498115019]
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1451147149]
-offset_top = 1.0
-offset_right = 1147.0
-offset_bottom = 650.0
-
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=390072923]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1494319621]
-layout_mode = 2
-text = "SafeClick"
-
-[node name="StartButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1395177779]
-layout_mode = 2
-text = "Start spil"
-
-[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1811172870]
-layout_mode = 2
-text = "Exit"
-
 [node name="Highscore" parent="." unique_id=1556198625 instance=ExtResource("2_0ykhv")]
 offset_left = 112.0
 offset_top = 249.0
 offset_right = 112.0
 offset_bottom = 249.0
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1224852831]
+z_index = -1
+offset_right = 1152.0
+offset_bottom = 652.0
+texture = ExtResource("3_2wh52")
+expand_mode = 1
+
+[node name="SafeClick" type="Label" parent="." unique_id=1494319621]
+offset_left = 390.0
+offset_top = 254.0
+offset_right = 664.0
+offset_bottom = 331.0
+theme_override_font_sizes/font_size = 60
+text = "SafeClick"
+
+[node name="TextureRect" type="TextureRect" parent="SafeClick" unique_id=647320799]
+layout_mode = 0
+offset_left = 277.0
+offset_top = -11.0
+offset_right = 373.0
+offset_bottom = 85.0
+texture = ExtResource("4_l72w3")
+
+[node name="TextureRect2" type="TextureRect" parent="SafeClick" unique_id=1923078235]
+layout_mode = 0
+offset_left = 325.0
+offset_top = 27.0
+offset_right = 390.0
+offset_bottom = 92.0
+texture = ExtResource("5_826wr")
+
+[node name="StartButton" type="Button" parent="." unique_id=1395177779]
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 536.0
+offset_top = 330.0
+offset_right = 616.0
+offset_bottom = 359.0
+grow_horizontal = 0
+grow_vertical = 0
+text = "Start spil"
+
+[node name="QuitButton" type="Button" parent="." unique_id=1811172870]
+offset_left = 556.0
+offset_top = 370.0
+offset_right = 597.0
+offset_bottom = 399.0
+text = "Exit"

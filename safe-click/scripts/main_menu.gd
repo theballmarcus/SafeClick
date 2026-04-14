@@ -7,8 +7,8 @@ const HIGHSCORE_ITEM_SCENE := preload("res://graphics/assets/HighscoreItem.tscn"
 
 
 func _ready() -> void:
-	$CenterContainer/VBoxContainer/StartButton.pressed.connect(_on_start_pressed)
-	$CenterContainer/VBoxContainer/QuitButton.pressed.connect(_on_quit_pressed)
+	$StartButton.pressed.connect(_on_start_pressed)
+	$QuitButton.pressed.connect(_on_quit_pressed)
 	
 	update_highscores()
 

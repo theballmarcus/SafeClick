@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://4kqt77berg4e" path="res://graphics/images/SettingsHover.png" id="3_s0nni"]
 [ext_resource type="Texture2D" uid="uid://d3r23vxas2b4r" path="res://graphics/images/TopPanel.png" id="4_78awf"]
 [ext_resource type="Theme" uid="uid://cpqcnmcr30ded" path="res://graphics/themes/Trophy.tres" id="4_s0nni"]
-[ext_resource type="Texture2D" uid="uid://l8jinca35cgc" path="res://graphics/images/ScandiTech.png" id="6_aug50"]
 [ext_resource type="Texture2D" uid="uid://0cp4gdw3xudq" path="res://graphics/images/StatsMenu.png" id="7_kiw3p"]
 [ext_resource type="Texture2D" uid="uid://bqlc7fdhjl8s7" path="res://graphics/images/Trophy.png" id="8_qy1jj"]
 [ext_resource type="Texture2D" uid="uid://buey1m4dtrj8l" path="res://graphics/images/SettingsMenu.png" id="9_3xj3m"]
@@ -15,7 +14,9 @@
 [ext_resource type="Theme" uid="uid://dwltkpsji8m0" path="res://graphics/themes/AcceptButton.tres" id="12_7ua8r"]
 [ext_resource type="Texture2D" uid="uid://bw24g4wbjfdpa" path="res://graphics/images/Calender.png" id="12_kyk2p"]
 [ext_resource type="Texture2D" uid="uid://cwle457dmgiuh" path="res://graphics/images/Inbox.png" id="13_7ua8r"]
+[ext_resource type="FontFile" uid="uid://lohkoxhgdcob" path="res://graphics/fonts/Bungee-Regular.ttf" id="13_45i86"]
 [ext_resource type="Theme" uid="uid://cx61wghxdyryp" path="res://graphics/themes/DeclineButton.tres" id="13_r7sob"]
+[ext_resource type="Texture2D" uid="uid://blvpqeoftl0ch" path="res://graphics/images/Logo.png" id="13_sv1m6"]
 [ext_resource type="Theme" uid="uid://bhjhubx6g25ei" path="res://graphics/themes/StartButton.tres" id="16_vjgi4"]
 [ext_resource type="Texture2D" uid="uid://bnvdso5i71hka" path="res://graphics/images/DayPlaying.png" id="17_vjgi4"]
 
@@ -81,7 +82,7 @@ offset_bottom = 67.0
 mouse_default_cursor_shape = 2
 theme = ExtResource("4_s0nni")
 
-[node name="TextureRect" type="TextureRect" parent="TopBar/TopPanel" unique_id=272660542]
+[node name="BluePanel" type="TextureRect" parent="TopBar/TopPanel" unique_id=272660542]
 z_index = -1
 z_as_relative = false
 layout_mode = 0
@@ -90,11 +91,6 @@ offset_bottom = 75.0
 mouse_filter = 2
 texture = ExtResource("4_78awf")
 expand_mode = 1
-
-[node name="Sprite2D" type="Sprite2D" parent="TopBar/TopPanel" unique_id=445748600]
-position = Vector2(122, 38.000015)
-scale = Vector2(0.28811368, 0.2628425)
-texture = ExtResource("6_aug50")
 
 [node name="StatsMenu" type="Panel" parent="TopBar/TopPanel" unique_id=84190788]
 visible = false
@@ -111,6 +107,7 @@ offset_left = 857.0
 offset_top = 85.0
 offset_right = 1158.0
 offset_bottom = 563.0
+mouse_filter = 2
 texture = ExtResource("7_kiw3p")
 
 [node name="DayLabel" type="Label" parent="TopBar/TopPanel/StatsMenu/TextureRect" unique_id=513262262]
@@ -149,11 +146,13 @@ scale = Vector2(0.33593675, 0.32291666)
 texture = ExtResource("8_qy1jj")
 
 [node name="CloseStatsButton" type="Button" parent="TopBar/TopPanel/StatsMenu/TextureRect" unique_id=1726624235]
+z_index = 5
 layout_mode = 0
 offset_left = 243.0
 offset_top = 13.0
 offset_right = 283.0
 offset_bottom = 53.0
+mouse_default_cursor_shape = 2
 theme = ExtResource("9_mcffj")
 
 [node name="SettingsMenu" type="Panel" parent="TopBar/TopPanel" unique_id=1938691487]
@@ -180,11 +179,13 @@ scale = Vector2(0.33593675, 0.32291666)
 texture = ExtResource("10_mcffj")
 
 [node name="CloseSettingsButton" type="Button" parent="TopBar/TopPanel/SettingsMenu/TextureRect" unique_id=985757586]
+z_index = 5
 layout_mode = 0
 offset_left = 251.0
 offset_top = 14.0
 offset_right = 286.0
 offset_bottom = 48.0
+mouse_default_cursor_shape = 2
 theme = ExtResource("9_mcffj")
 
 [node name="Calender" type="TextureRect" parent="TopBar/TopPanel" unique_id=121729648]
@@ -197,16 +198,24 @@ texture = ExtResource("12_kyk2p")
 expand_mode = 1
 
 [node name="CalenderLabel" type="Label" parent="TopBar/TopPanel/Calender" unique_id=1567467059]
-modulate = Color(0, 0, 0, 1)
+modulate = Color(0.47058824, 0.50980395, 0.54509807, 1)
 z_index = 1
 layout_mode = 0
-offset_left = 21.0
-offset_top = 15.0
+offset_left = 19.0
+offset_top = 11.0
 offset_right = 36.0
-offset_bottom = 94.0
+offset_bottom = 50.0
+theme_override_fonts/font = ExtResource("13_45i86")
 theme_override_font_sizes/font_size = 29
-text = "
-"
+
+[node name="Logo" type="TextureRect" parent="TopBar/TopPanel" unique_id=772319117]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 1.0
+offset_right = 244.0
+offset_bottom = 81.0
+scale = Vector2(0.9, 0.9)
+texture = ExtResource("13_sv1m6")
 
 [node name="MainArea" type="Control" parent="." unique_id=1340309323]
 z_index = -5
@@ -281,6 +290,7 @@ offset_left = 22.0
 offset_top = 455.0
 offset_right = 67.0
 offset_bottom = 500.0
+mouse_default_cursor_shape = 2
 theme = ExtResource("12_7ua8r")
 
 [node name="PhishingButton" type="Button" parent="MainArea/MailPanel/MailContent" unique_id=1456599114]
@@ -289,10 +299,11 @@ offset_left = 69.0
 offset_top = 455.0
 offset_right = 114.0
 offset_bottom = 500.0
+mouse_default_cursor_shape = 2
 theme = ExtResource("13_r7sob")
 
 [node name="Baggrund" type="ColorRect" parent="MainArea/MailPanel" unique_id=1052325175]
-z_index = -1
+z_index = -5
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -380,12 +391,22 @@ offset_left = 1060.0
 offset_top = 583.0
 offset_right = 1105.0
 offset_bottom = 628.0
+mouse_default_cursor_shape = 2
 theme = ExtResource("16_vjgi4")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1937908707]
 position = Vector2(1082.8, 605.5)
 scale = Vector2(0.47, 0.47)
 texture = ExtResource("17_vjgi4")
+
+[node name="TimeLabel" type="Label" parent="." unique_id=1238711193]
+modulate = Color(0, 0, 0, 1)
+offset_left = 920.0
+offset_top = 589.0
+offset_right = 1050.0
+offset_bottom = 622.0
+theme_override_fonts/font = ExtResource("13_45i86")
+theme_override_font_sizes/font_size = 24
 
 [connection signal="pressed" from="TopBar/TopPanel/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="TopBar/TopPanel/StatsButton" to="." method="_on_stats_button_pressed"]

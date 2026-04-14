@@ -19,20 +19,23 @@ var day_running := false
 var time_left := 0.0
 var spawn_times: Array = []
 
-@onready var inbox_container = $MainArea/InboxPanel/MailContainer/Mails
-@onready var day_label = $TopBar/TopPanel/DayLabel
-@onready var score_label = $TopBar/TopPanel/ScoreLabel
-@onready var rank_label = $TopBar/TopPanel/RankLabel
+@onready var inbox_container = $MainArea/Mails
+@onready var day_label = $TopBar/TopPanel/StatsMenu/TextureRect/DayLabel
+@onready var score_label = $TopBar/TopPanel/StatsMenu/TextureRect/ScoreLabel
+@onready var rank_label = $TopBar/TopPanel/StatsMenu/TextureRect/RankLabel
 @onready var subject_label = $MainArea/MailPanel/MailContent/SubjectLabel
 @onready var sender_label = $MainArea/MailPanel/MailContent/SenderLabel
 @onready var body_text = $MainArea/MailPanel/MailContent/BodyText
 @onready var hover_url_button = $MainArea/MailPanel/MailContent/HoverUrlButton
 @onready var hover_url_label = $MainArea/MailPanel/MailContent/HoverUrlLabel
-@onready var legit_button = $MainArea/MailPanel/MailContent/ActionButtons/LegitButton
-@onready var phishing_button = $MainArea/MailPanel/MailContent/ActionButtons/PhishingButton
+@onready var legit_button = $MainArea/MailPanel/MailContent/LegitButton
+@onready var phishing_button = $MainArea/MailPanel/MailContent/PhishingButton
 @onready var feedback_label = $FeedbackLabel
 @onready var next_mail_button = $NextMailButton
-@onready var new_day_button = $NewDayButton # add a button in scene
+@onready var new_day_button = $NewDayButton
+@onready var SettingsMenu = $TopBar/TopPanel/SettingsMenu
+@onready var StatsMenu = $TopBar/TopPanel/StatsMenu
+
 
 func _ready():
 	load_mail_data()
@@ -45,6 +48,8 @@ func _ready():
 	next_mail_button.disabled = true
 	clear_mail_view()
 	update_topbar()
+	SettingsMenu.visible = false
+	StatsMenu.visible = false
 
 func _process(delta):
 	if not day_running:
@@ -66,7 +71,7 @@ func start_new_day():
 	clear_mail_view()
 	generate_spawn_times()
 	new_day_button.visible = false
-	feedback_label.text = "Dag %d startet" % day
+	#feedback_label.text = "Dag %d startet" % day
 
 func generate_spawn_times():
 	spawn_times.clear()
@@ -166,3 +171,20 @@ func load_mail_data():
 func save_progress():
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
 	if file: file.store_string(JSON.stringify({"score":score,"day":day,"rank":rank}))
+	
+#Buttons
+func _on_settings_button_pressed() -> void:
+	SettingsMenu.visible=not SettingsMenu.visible
+	Sound.play_sound("ButtonClicked")
+
+func _on_close_settings_button_pressed() -> void:
+	SettingsMenu.visible=not SettingsMenu.visible
+	Sound.play_sound("ButtonClicked")
+
+func _on_stats_button_pressed() -> void:
+	StatsMenu.visible=not StatsMenu.visible
+	Sound.play_sound("ButtonClicked")
+
+func _on_close_stats_button_pressed() -> void:
+	StatsMenu.visible=not StatsMenu.visible
+	Sound.play_sound("ButtonClicked")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b2jkgg18awx0x"
-path="res://.godot/imported/settings.webp-06160f892db5fc16c0f86d193760950f.ctex"
+uid="uid://babyn3ourecc1"
+path="res://.godot/imported/CloseButton.png-7ae22f5d8af6de9842bc0a9790f00db3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/images/settings.webp"
-dest_files=["res://.godot/imported/settings.webp-06160f892db5fc16c0f86d193760950f.ctex"]
+source_file="res://graphics/images/CloseButton.png"
+dest_files=["res://.godot/imported/CloseButton.png-7ae22f5d8af6de9842bc0a9790f00db3.ctex"]
 
 [params]
 

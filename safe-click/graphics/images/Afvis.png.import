@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://debgh73eq5m7x"
-path="res://.godot/imported/trophy.webp-5577e19f65115c6ad7bf286e63a9c0cd.ctex"
+uid="uid://6t7w4xk4k3ik"
+path="res://.godot/imported/Afvis.png-1b3dc5a36b505902a647a3b3bc96f15e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/images/trophy.webp"
-dest_files=["res://.godot/imported/trophy.webp-5577e19f65115c6ad7bf286e63a9c0cd.ctex"]
+source_file="res://graphics/images/Afvis.png"
+dest_files=["res://.godot/imported/Afvis.png-1b3dc5a36b505902a647a3b3bc96f15e.ctex"]
 
 [params]
 

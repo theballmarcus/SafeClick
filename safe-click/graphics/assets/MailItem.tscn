@@ -1,36 +1,63 @@
 [gd_scene format=3 uid="uid://qtbxw3rkkx6x"]
 
+[ext_resource type="Theme" uid="uid://cgcvefu8sv8uc" path="res://graphics/themes/MailItem.tres" id="1_3q27o"]
 [ext_resource type="Texture2D" uid="uid://bn0aajlr5e1s8" path="res://graphics/images/3_dopts.png" id="1_rfu3h"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3q27o"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e5qy0"]
+bg_color = Color(0.8627451, 0.8627451, 0.8627451, 0.39607844)
 
 [node name="MailItem" type="Button" unique_id=1370430783]
 custom_minimum_size = Vector2(220, 66)
 layout_direction = 2
-offset_right = 220.0
-offset_bottom = 66.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -873.0
+offset_bottom = -582.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_3q27o")
+theme_override_styles/hover = SubResource("StyleBoxFlat_e5qy0")
 
 [node name="Control" type="Control" parent="." unique_id=923534668]
 anchors_preset = 0
-offset_right = 219.0
-offset_bottom = 67.0
+offset_left = 1.0
+offset_top = 2.0
+offset_right = 281.0
+offset_bottom = 61.0
+mouse_filter = 2
+theme = ExtResource("1_3q27o")
 
 [node name="Afsender" type="Label" parent="Control" unique_id=401853236]
+modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 4.0
-offset_top = 12.0
-offset_right = 143.0
-offset_bottom = 35.0
+offset_top = 7.0
+offset_right = 145.0
+offset_bottom = 28.0
 text = "PostNord Support"
 
 [node name="Emne" type="Label" parent="Control" unique_id=944621572]
+modulate = Color(0, 0, 0, 1)
 layout_mode = 0
-offset_left = 5.0
-offset_top = 36.0
-offset_right = 232.0
-offset_bottom = 59.0
+offset_left = 4.0
+offset_top = 31.0
+offset_right = 231.0
+offset_bottom = 54.0
 theme_override_font_sizes/font_size = 13
 text = "Din pakke kunne ikke leveres"
 
 [node name="3Dopts" type="Sprite2D" parent="Control" unique_id=770971871]
-position = Vector2(205, 36.000004)
+position = Vector2(261, 28.000004)
 scale = Vector2(0.24749987, 0.24749988)
 texture = ExtResource("1_rfu3h")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=645741392]
+layout_mode = 0
+offset_top = 64.0
+offset_right = 277.0
+offset_bottom = 65.0
+color = Color(0.78936666, 0.78936666, 0.78936666, 1)

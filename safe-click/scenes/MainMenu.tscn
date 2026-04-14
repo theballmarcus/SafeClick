@@ -1,26 +1,35 @@
 [gd_scene format=3 uid="uid://cmgq3or81s8or"]
 
 [ext_resource type="Script" uid="uid://4xquco0dyjvp" path="res://scripts/main_menu.gd" id="1_yqorp"]
+[ext_resource type="PackedScene" uid="uid://cgq086xqkv7g4" path="res://graphics/assets/Highscore.tscn" id="2_0ykhv"]
 
 [node name="MainMenu" type="Node2D" unique_id=1025483519]
 script = ExtResource("1_yqorp")
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1947412121]
+[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=1498115019]
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1451147149]
 offset_top = 1.0
 offset_right = 1147.0
 offset_bottom = 650.0
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=506518242]
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer" unique_id=390072923]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1948256283]
+[node name="Label" type="Label" parent="CenterContainer/VBoxContainer" unique_id=1494319621]
 layout_mode = 2
 text = "SafeClick"
 
-[node name="StartButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=485353847]
+[node name="StartButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1395177779]
 layout_mode = 2
 text = "Start spil"
 
-[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=382930309]
+[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1811172870]
 layout_mode = 2
 text = "Exit"
+
+[node name="Highscore" parent="." unique_id=1556198625 instance=ExtResource("2_0ykhv")]
+offset_left = 112.0
+offset_top = 249.0
+offset_right = 112.0
+offset_bottom = 249.0

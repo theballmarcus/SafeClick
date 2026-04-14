@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Sound="*uid://dmx701e88fc5x"
+Gamestate="*uid://dt6aj6wbdg4a1"
 
 [gui]
 

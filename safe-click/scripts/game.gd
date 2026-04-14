@@ -44,10 +44,8 @@ func _ready():
 	legit_button.pressed.connect(_on_legit_pressed)
 	phishing_button.pressed.connect(_on_phishing_pressed)
 	hover_url_button.pressed.connect(_on_hover_url_pressed)
-	next_mail_button.pressed.connect(_select_next_mail)
 	new_day_button.pressed.connect(start_new_day)
 	new_day_button.visible = true
-	next_mail_button.disabled = true
 	clear_mail_view()
 	update_topbar()
 	SettingsMenu.visible = false

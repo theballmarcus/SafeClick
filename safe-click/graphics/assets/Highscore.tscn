@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cgq086xqkv7g4"]
+
+[node name="Highscore" type="Control" unique_id=1556198625]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="HighscoreEntries" type="VBoxContainer" parent="." unique_id=1264753266]
+layout_mode = 0
+offset_right = 292.0
+offset_bottom = 373.0

@@ -61,10 +61,10 @@ function normalizeReceivedMailIds(rawIds) {
     return Array.from(new Set(parsed));
 }
 
-function getDifficultyForUser(receivedCount) {
-    if (receivedCount < 5) return 'easy';
-    if (receivedCount < 15) return 'medium';
-    return 'hard';
+function normalizeDay(value) {
+    const parsed = Number(value);
+    if (!Number.isInteger(parsed) || parsed < 1 || parsed > 10) return null;
+    return parsed;
 }
 
 await initDb();
@@ -82,6 +82,7 @@ app.post('/spam-mails/batch', requireKey, async (req, res) => {
     try {
         const {
             count = 5,
+            day = 1,
             receivedMailIds
         } = req.body || {};
 
@@ -99,9 +100,17 @@ app.post('/spam-mails/batch', requireKey, async (req, res) => {
             });
         }
 
+        const parsedDay = normalizeDay(day);
+        if (parsedDay === null) {
+            return res.status(400).json({
+                error: 'day must be an integer between 1 and 10'
+            });
+        }
+
         let mails = await getSpamMails({
             count: requestedCount,
-            excludeIds: parsedReceivedMailIds
+            excludeIds: parsedReceivedMailIds,
+            day: parsedDay
         });
 
         let generatedCount = 0;
@@ -113,11 +122,10 @@ app.post('/spam-mails/batch', requireKey, async (req, res) => {
             }
 
             const missingCount = requestedCount - mails.length;
-            const difficulty = getDifficultyForUser(parsedReceivedMailIds.length);
             const existingSubjects = await getAllMailSubjects();
             const generatedMails = await generateSpamMailsWithAI({
                 count: missingCount + 3,
-                difficulty,
+                day: parsedDay,
                 existingSubjects
             });
 
@@ -130,7 +138,8 @@ app.post('/spam-mails/batch', requireKey, async (req, res) => {
 
             const topUpMails = await getSpamMails({
                 count: requestedCount - mails.length,
-                excludeIds: refreshedExcludeIds
+                excludeIds: refreshedExcludeIds,
+                day: parsedDay
             });
 
             mails = mails.concat(topUpMails);
@@ -138,6 +147,7 @@ app.post('/spam-mails/batch', requireKey, async (req, res) => {
 
         res.json({
             mails,
+            day: parsedDay,
             requestedCount,
             returnedCount: mails.length,
             generatedCount

@@ -12,6 +12,7 @@ script = ExtResource("1_yqorp")
 [node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=1498115019]
 
 [node name="Highscore" parent="." unique_id=1556198625 instance=ExtResource("2_0ykhv")]
+z_index = 9
 offset_left = 112.0
 offset_top = 249.0
 offset_right = 112.0

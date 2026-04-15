@@ -11,6 +11,9 @@ func _ready() -> void:
 	$QuitButton.pressed.connect(_on_quit_pressed)
 	
 	update_highscores()
+	# Fetch first batch of mails
+	if Gamestate.mails.size() == 0:
+		Gamestate.fetch_mails()
 
 func _on_start_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/Game.tscn")
@@ -21,9 +24,9 @@ func _on_quit_pressed() -> void:
 	
 func update_highscores():
 	http_request.request_completed.connect(_on_request_completed)
-	var response = http_request.request(Gamestate.API_URL + "/highscores", Gamestate.headers, HTTPClient.METHOD_GET)
+	var _response = http_request.request(Gamestate.API_URL + "/highscores", Gamestate.headers, HTTPClient.METHOD_GET)
 	
-func _on_request_completed(result, response_code, headers, body):
+func _on_request_completed(result, response_code, _headers, body):
 	print("Response code:", response_code)
 	if result != OK:
 		print("Request failed!")
@@ -33,20 +36,19 @@ func _on_request_completed(result, response_code, headers, body):
 	var data = JSON.new()
 	var response_json = data.parse(response_text)
 	if response_json == OK:
-		if not "highscores" in data.data.keys():
-			return
-
-		print(data.data)
-		for n in highscore_panel.get_children():
-			#highscore.remove_child(n)
-			pass
+		if "highscores" in data.data.keys():
+			print(data.data)
 			
-		for entry in data.data['highscores']:
-			# fjern nodes i highscore som allerede er der
-			var item = HIGHSCORE_ITEM_SCENE.instantiate()
-			item.get_node("Control").get_node("Username").text = entry["username"]
-			item.get_node("Control").get_node("Score").text = "%d" % entry["highscore"]
+			for n in highscore_panel.get_children():
+				#highscore.remove_child(n)
+				pass
+				
+			for entry in data.data['highscores']:
+				# fjern nodes i highscore som allerede er der
+				var item = HIGHSCORE_ITEM_SCENE.instantiate()
+				item.get_node("Control").get_node("Username").text = entry["username"]
+				item.get_node("Control").get_node("Score").text = "%d" % entry["highscore"]
 
-			highscore_panel.add_child(item)
+				highscore_panel.add_child(item)
 	else:
 		return

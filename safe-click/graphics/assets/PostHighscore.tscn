@@ -1,0 +1,50 @@
+[gd_scene format=3 uid="uid://bfayfoa2sloiy"]
+
+[ext_resource type="Script" uid="uid://dniclfcmj3kqj" path="res://scripts/post_highscore.gd" id="1_b3qs3"]
+
+[node name="PostHighscore" type="Node2D" unique_id=145812766]
+script = ExtResource("1_b3qs3")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=674315563]
+
+[node name="ClickFilter" type="Control" parent="." unique_id=1355000555]
+z_index = 100
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1150.0
+offset_bottom = 648.0
+
+[node name="Background" type="ColorRect" parent="." unique_id=453380534]
+offset_left = 427.0
+offset_top = 237.0
+offset_right = 762.0
+offset_bottom = 450.0
+color = Color(0.41598046, 0.41598043, 0.4159804, 1)
+
+[node name="UsernameInput" type="LineEdit" parent="." unique_id=1829369026]
+offset_left = 483.0
+offset_top = 328.0
+offset_right = 626.0
+offset_bottom = 363.0
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=1565606085]
+offset_left = 458.0
+offset_top = 255.0
+offset_right = 591.0
+offset_bottom = 278.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Du fik %d i score!"
+
+[node name="Username" type="Label" parent="." unique_id=2066079140]
+offset_left = 455.0
+offset_top = 286.0
+offset_right = 744.0
+offset_bottom = 309.0
+text = "Skriv dit brugernavn i feltet herunder"
+
+[node name="SubmitButton" type="Button" parent="." unique_id=1101976163]
+offset_left = 483.0
+offset_top = 373.0
+offset_right = 627.0
+offset_bottom = 415.0
+text = "Submit"

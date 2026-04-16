@@ -15,6 +15,9 @@ var fetch_in_progress := false
 # Request stuff
 var http: HTTPRequest
 
+# User stats
+var user_score := 0
+
 var boss_comments := {
   "bad": [
 	"Hvad var det i dag?\nJeg har set nybegyndere gøre det bedre.\nKom ikke igen i morgen med den indstilling.",
@@ -55,16 +58,29 @@ var boss_comments := {
 }
 
 var boss_feedback := [
-	"One more thing before you go.\nI’ve got some feedback for you.\nTake a second and read it.",
-	"Before you clock out completely,\nthere’s some feedback coming your way.\nMake sure you check it.",
-	"That’s all for today.\nNow I’m sending you some feedback.\nUse it well tomorrow.",
-	"Quick heads-up before you leave.\nSome feedback is coming next.\nGive it a proper look.",
-	"Nice work wrapping up today.\nI’ve got feedback ready for you.\nRead through it when it arrives.",
-	"We’re done for the shift.\nYour feedback is coming right after this.\nPay attention to the details.",
-	"Before the day ends,\nexpect some feedback from me.\nIt’ll help for tomorrow.",
-	"Good, that’s a wrap.\nNow comes a bit of feedback.\nTake it seriously.",
-	"You can relax in a second.\nFirst, I’m sending some feedback.\nCheck it out below.",
-    "End of day complete.\nYour feedback is coming now.\nUse it to improve next shift."
+	"En ting mere inden du går.\nEn klient har sendt noget feedback.\nTag et øjeblik og læs det.",
+	"Før du stempler ud,\nder er kommet noget feedback fra en klient.\nSørg for at tjekke det.",
+	"Det var alt for i dag.\nEn klient har sendt feedback.\nBrug det i morgen.",
+	"Lige en hurtig besked inden du går.\nDer er feedback fra en klient på vej.\nGiv det et grundigt kig.",
+	"Godt arbejde med at afslutte dagen.\nJeg har modtaget feedback fra en klient.\nLæs det når det kommer.",
+	"Vi er færdige med vagten.\nDer er feedback fra en klient lige efter dette.\nVær opmærksom på detaljerne.",
+	"Inden dagen slutter,\nkan du forvente feedback fra en klient.\nDet kan hjælpe i morgen.",
+	"Godt, det er afsluttet.\nNu kommer der lidt feedback fra en klient.\nTag det seriøst.",
+	"Du kan slappe af om et øjeblik.\nFørst sender jeg noget feedback fra en klient.\nTjek det nedenfor.",
+	"Dagen er afsluttet.\nDer er kommet feedback fra en klient.\nBrug det til at forbedre næste vagt."
+]
+
+var boss_fired := [
+	"Det her fungerer ikke længere.\nVi har givet dig chancer nok, og der er ingen udvikling.\nDu er færdig her – aflever dine ting inden du går.",
+	"Jeg går direkte til sagen.\nDin indsats matcher ikke det niveau, vi kræver.\nI dag bliver din sidste arbejdsdag.",
+	"Vi har haft den samme samtale for mange gange.\nForventningerne er ikke blevet mødt.\nDerfor stopper dit ansættelsesforhold nu.",
+	"Jeg havde håbet på en forbedring.\nDen kom aldrig.\nPak sammen – vi går hver til sit fra i dag.",
+	"Det her er ikke personligt.\nMen jobbet bliver ikke løst godt nok.\nVi afslutter samarbejdet med øjeblikkelig virkning.",
+	"Jeg har brug for folk, jeg kan regne med.\nDet har du ikke vist, at jeg kan.\nDu skal ikke møde ind igen fra i morgen.",
+	"Resultaterne taler for sig selv.\nVi kan ikke fortsætte sådan her.\nDin ansættelse ophører i dag.",
+	"Jeg vil ikke pakke det ind.\nDet her har ikke fungeret i noget tid.\nDu er opsagt med virkning fra nu.",
+	"Vi har vurderet situationen grundigt.\nDer er ikke grundlag for at fortsætte samarbejdet.\nTak for din tid – det slutter her.",
+	"Jeg forventede mere stabilitet, mere ansvar og bedre kvalitet.\nDet fik jeg ikke.\nDerfor er det slut fra i dag."
 ]
 
 func _ready():

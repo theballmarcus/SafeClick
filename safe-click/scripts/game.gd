@@ -2,7 +2,7 @@ extends Node
 
 const save_game := false
 const SAVE_PATH := "user://savegame.json"
-const DAY_DURATION := 5.0 # 4 minutes
+const DAY_DURATION := 20.0 # 4 minutes
 const MIN_MAILS_PER_DAY := 6
 const MAX_MAILS_PER_DAY := 7
 const UNANSWERED_MAIL_PENALTY := 3
@@ -23,8 +23,11 @@ var rank := "Trainee"
 var day_running := false
 var time_left := 0.0
 var spawn_times: Array = []
+var failed_mails := []
+
 
 var boss_shown := false
+var employee_fired := false
 var max_score := 0
 
 var expanded := false
@@ -56,10 +59,15 @@ var rect_size := Vector2(155, 39)
 @onready var boss_n = $BossFeedback/BossN
 @onready var boss_g = $BossFeedback/BossG
 @onready var boss_s = $BossFeedback/BossS
+var boss_qoute_queue := []
 
 @onready var shape = $MainArea/MailPanel/AnimatedShape
 @onready var idea_button = $MainArea/MailPanel/AnimatedShape/IdeaButton
 @onready var hint_label = $MainArea/MailPanel/AnimatedShape/IdeaButton/HintLabel
+
+@onready var snake_game = $Snake
+
+@onready var post_highscore_elem = $PostHighscore
 
 func _ready():
 	load_mail_data()
@@ -125,6 +133,9 @@ func start_new_day():
 	time_label.text = "Kl. %s" % get_current_clock_time()
 	feedback_label.text = "Dag %d startet" % day
 	call_deferred("_prefetch_next_day_mails")
+	
+	snake_game.stop()
+	failed_mails.clear()
 
 func generate_spawn_times(count: int):
 	spawn_times.clear()
@@ -174,6 +185,7 @@ func evaluate_choice(player_says_phishing):
 	else:
 		score -= 5
 		feedback_label.text = "Forkert. " + current_mail["hint"]
+		failed_mails.append(current_mail)
 		
 	Gamestate.finished_mails.append(current_mail)
 	var answered_id := int(current_mail.get("id", -1))
@@ -202,12 +214,24 @@ func _select_next_mail():
 
 # Forste gange der korer viser det chefen. Anden gang lukker det menuen og bliver klar til naste dag.
 func end_day():
+	if employee_fired == true:
+		post_highscore_elem.visible = true
+		return
+		
 	if boss_shown == false:
 		day += 1
 		boss_shown = true
 
 		show_boss()
 		return
+	
+	if boss_qoute_queue.size() > 0:
+		print(boss_qoute_queue)
+		print("should update")
+		boss_label.text = boss_qoute_queue[0]
+		boss_qoute_queue.pop_front()
+		return
+	
 	calender_label.text = "%d" % day
 	day_running = false
 	time_left = 0
@@ -228,10 +252,10 @@ func end_day():
 	update_rank()
 	update_topbar()
 	save_progress()
-
+	
 	boss_shown = false
 	feedback_menu.visible = false
-
+	snake_game.start()
 	
 func show_boss():
 	feedback_menu.visible = true
@@ -244,12 +268,32 @@ func show_boss():
 	# Then pick random qoute from Gamestate.BOSS_QUOTES based on performance
 	var performance: float = (float(score) / max(float(max_score), 1.0)) * 100.0
 	var quote_pool := []
-	if performance <= 60:
+	
+	var qoute_feedback_pre := ""
+	var qoute_feedback 
+	
+	if failed_mails.size() > 0:
+		qoute_feedback_pre = Gamestate.boss_feedback[randi() % Gamestate.boss_feedback.size()]
+		qoute_feedback = failed_mails[randi() % failed_mails.size()]
+		
+	print("Performance: %f" % performance)
+	if performance <= 30:
+		# WE FIRE THE EMPLOYEE
+		Gamestate.user_score = score
+		employee_fired = true
+		quote_pool = Gamestate.boss_fired
+
+	elif performance <= 60:
 		quote_pool = Gamestate.boss_comments["bad"]
 		boss_s.visible = true
+		boss_qoute_queue.append(qoute_feedback_pre)
+		boss_qoute_queue.append("Mail fra %s\n%s" % [qoute_feedback["sender_name"], qoute_feedback["hint"]])
+		
 	elif performance <= 90:
 		quote_pool = Gamestate.boss_comments["ok"]
 		boss_n.visible = true
+		boss_qoute_queue.append(qoute_feedback_pre)
+		boss_qoute_queue.append("Mail fra %s\n%s" % [qoute_feedback["sender_name"], qoute_feedback["hint"]])
 	else:
 		quote_pool = Gamestate.boss_comments["good"]
 		boss_g.visible = true
@@ -291,13 +335,10 @@ func _prefetch_next_day_mails() -> void:
 	var next_day: int = min(day + 1, 10)
 	var _started: bool = Gamestate.fetch_mails(next_day, MAX_MAILS_PER_DAY)
 
-func _on_boss_button_pressed() -> void:
-	print('hello')
-	
+func _on_boss_button_pressed() -> void:	
 	if not boss_shown:
 		return
 
-	feedback_menu.visible = false
 	end_day()
 
 func _remove_mail_from_unanswered_by_id(mail_id: int) -> bool:
@@ -418,5 +459,3 @@ func _on_idea_button_pressed() -> void:
 		hint_label.visible = true
 	else:
 		hint_label.visible = false
-	
-	

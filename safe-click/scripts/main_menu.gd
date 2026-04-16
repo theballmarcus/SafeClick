@@ -65,7 +65,6 @@ func play_click_animation():
 	var tween2 = create_tween().set_parallel(true)
 	tween2.tween_property(mouse_icon, "scale", Vector2(1, 1), 0.15)
 
-	
 func click_loop():
 	while true:
 		play_click_animation()

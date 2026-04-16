@@ -28,6 +28,8 @@
 [ext_resource type="Texture2D" uid="uid://dqsnkdnpwqvbt" path="res://graphics/images/Boss1a.png" id="23_ocgqw"]
 [ext_resource type="Texture2D" uid="uid://tkhelwj1l8w0" path="res://graphics/images/Boss1b.png" id="24_jbgew"]
 [ext_resource type="Texture2D" uid="uid://bmkco34c5w7v5" path="res://graphics/images/SpeechBoxGod.png" id="28_0bq3a"]
+[ext_resource type="PackedScene" uid="uid://d1acbss8jec32" path="res://graphics/assets/Snake.tscn" id="29_754j2"]
+[ext_resource type="PackedScene" uid="uid://bfayfoa2sloiy" path="res://graphics/assets/PostHighscore.tscn" id="30_i4jil"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_aug50"]
 load_path = "res://.godot/imported/Settings.png-f0ebdf1b9c61c5c5ae8349cc17dd00a4.ctex"
@@ -611,6 +613,13 @@ offset_right = 274.99997
 offset_bottom = 226.24997
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/normal_font_size = 20
+
+[node name="Snake" parent="." unique_id=1358990295 instance=ExtResource("29_754j2")]
+position = Vector2(306, 93)
+
+[node name="PostHighscore" parent="." unique_id=199145365 instance=ExtResource("30_i4jil")]
+visible = false
+z_index = 50
 
 [connection signal="pressed" from="TopBar/TopPanel/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="TopBar/TopPanel/StatsButton" to="." method="_on_stats_button_pressed"]

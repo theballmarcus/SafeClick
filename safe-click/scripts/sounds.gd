@@ -4,6 +4,8 @@ var players: Array
 var backgroundMusic
 var sounds = {
 	"ButtonClicked": preload("res://sounds/ButtonClickSound.mp3"),
+	"SnakeEat": preload("res://sounds/SnakeEat.mp3"),
+	"SnakeGameover": preload("res://sounds/SnakeGameOver.mp3")
 }
 
 func _ready():

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b05lfim61n8eo"
-path="res://.godot/imported/SpeechBubble.png-e7b1959295d585a195017606848ec0ae.ctex"
+uid="uid://odm4xt7berv"
+path="res://.godot/imported/Arrow.png-d2e941c279a79270a3c15951d4a94740.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://graphics/images/SpeechBubble.png"
-dest_files=["res://.godot/imported/SpeechBubble.png-e7b1959295d585a195017606848ec0ae.ctex"]
+source_file="res://graphics/images/Arrow.png"
+dest_files=["res://.godot/imported/Arrow.png-d2e941c279a79270a3c15951d4a94740.ctex"]
 
 [params]
 

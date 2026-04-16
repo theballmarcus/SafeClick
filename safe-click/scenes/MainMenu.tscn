@@ -3,8 +3,65 @@
 [ext_resource type="Script" uid="uid://4xquco0dyjvp" path="res://scripts/main_menu.gd" id="1_yqorp"]
 [ext_resource type="PackedScene" uid="uid://cgq086xqkv7g4" path="res://graphics/assets/Highscore.tscn" id="2_0ykhv"]
 [ext_resource type="Texture2D" uid="uid://d3r23vxas2b4r" path="res://graphics/images/TopPanel.png" id="3_2wh52"]
-[ext_resource type="Texture2D" uid="uid://h3px0tvvvs2m" path="res://graphics/images/Mail.png" id="4_l72w3"]
 [ext_resource type="Texture2D" uid="uid://c0v3bufklvidv" path="res://graphics/images/MouseClick.png" id="5_826wr"]
+[ext_resource type="Texture2D" uid="uid://cp5yq5na5xbn2" path="res://graphics/images/mailanimation/c.png" id="6_bky6r"]
+[ext_resource type="Texture2D" uid="uid://bgtkb83jkbu2s" path="res://graphics/images/mailanimation/10.png" id="6_hubol"]
+[ext_resource type="Texture2D" uid="uid://euhy2ps7fswq" path="res://graphics/images/mailanimation/a.png" id="8_l4mxc"]
+[ext_resource type="Texture2D" uid="uid://cqnqqedr7dq3q" path="res://graphics/images/mailanimation/8.png" id="8_tdapf"]
+[ext_resource type="Texture2D" uid="uid://m2sfo21gywsn" path="res://graphics/images/mailanimation/b.png" id="9_5faoh"]
+[ext_resource type="Texture2D" uid="uid://5mnnh0kpwcg8" path="res://graphics/images/mailanimation/4.png" id="12_1n6yq"]
+[ext_resource type="Texture2D" uid="uid://caqii0cgr8k4l" path="res://graphics/images/mailanimation/2.png" id="14_2axsc"]
+[ext_resource type="Texture2D" uid="uid://na2hjs8tfyfj" path="res://graphics/images/mailanimation/1.png" id="15_wrgne"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hm0al"]
+animations = [{
+"frames": [{
+"duration": 0.5,
+"texture": ExtResource("6_hubol")
+}, {
+"duration": 0.2,
+"texture": ExtResource("6_bky6r")
+}, {
+"duration": 0.5,
+"texture": ExtResource("8_tdapf")
+}, {
+"duration": 0.2,
+"texture": ExtResource("8_l4mxc")
+}, {
+"duration": 0.2,
+"texture": ExtResource("9_5faoh")
+}, {
+"duration": 0.5,
+"texture": ExtResource("14_2axsc")
+}, {
+"duration": 0.5,
+"texture": ExtResource("15_wrgne")
+}, {
+"duration": 0.5,
+"texture": ExtResource("14_2axsc")
+}, {
+"duration": 0.2,
+"texture": ExtResource("9_5faoh")
+}, {
+"duration": 0.2,
+"texture": ExtResource("12_1n6yq")
+}, {
+"duration": 0.2,
+"texture": ExtResource("8_l4mxc")
+}, {
+"duration": 0.5,
+"texture": ExtResource("8_tdapf")
+}, {
+"duration": 0.2,
+"texture": ExtResource("6_bky6r")
+}, {
+"duration": 0.5,
+"texture": ExtResource("6_hubol")
+}],
+"loop": false,
+"name": &"default",
+"speed": 3.0
+}]
 
 [node name="MainMenu" type="Node2D" unique_id=1025483519]
 script = ExtResource("1_yqorp")
@@ -33,21 +90,19 @@ offset_bottom = 331.0
 theme_override_font_sizes/font_size = 60
 text = "SafeClick"
 
-[node name="TextureRect" type="TextureRect" parent="SafeClick" unique_id=647320799]
+[node name="Mouse" type="TextureRect" parent="SafeClick" unique_id=1923078235]
+z_index = 2
 layout_mode = 0
-offset_left = 277.0
-offset_top = -11.0
-offset_right = 373.0
-offset_bottom = 85.0
-texture = ExtResource("4_l72w3")
-
-[node name="TextureRect2" type="TextureRect" parent="SafeClick" unique_id=1923078235]
-layout_mode = 0
-offset_left = 325.0
-offset_top = 27.0
-offset_right = 390.0
-offset_bottom = 92.0
+offset_left = 365.0
+offset_top = 39.0
+offset_right = 430.0
+offset_bottom = 104.0
 texture = ExtResource("5_826wr")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SafeClick" unique_id=1943702639]
+position = Vector2(349, 22)
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_hm0al")
 
 [node name="StartButton" type="Button" parent="." unique_id=1395177779]
 anchors_preset = 3

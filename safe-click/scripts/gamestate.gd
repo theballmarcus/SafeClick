@@ -17,40 +17,40 @@ var http: HTTPRequest
 
 var boss_comments := {
   "bad": [
-	"What was that today?\nI’ve seen beginners do better work than this.\nDo not come back tomorrow with the same attitude.",
-	"You managed to turn simple tasks into a disaster.\nI shouldn’t have to babysit you every shift.\nFigure it out before you waste more of my time.",
-	"Completely unacceptable performance today.\nYou were slow, distracted, and careless.\nFix it immediately or we have a real problem.",
-	"I don’t know what you were thinking all day.\nNothing was done properly.\nYou need to seriously wake up.",
-	"That effort was embarrassing.\nEveryone else carried the load while you dragged behind.\nDo better or don’t bother.",
-	"You made mistake after mistake today.\nAt some point excuses stop mattering.\nCome prepared tomorrow for once.",
-	"I asked for results, not chaos.\nYou created more problems than solutions.\nThat cannot happen again.",
-	"If this is your best, it’s not enough.\nToday was frustrating to watch.\nI expect a complete turnaround tomorrow.",
-	"You were checked out the entire shift.\nI need workers I can rely on, not passengers.\nThink hard about that tonight.",
-    "Today was a mess from start to finish.\nYour performance was the biggest part of it.\nShow up ready next time."
+	"Hvad var det i dag?\nJeg har set nybegyndere gøre det bedre.\nKom ikke igen i morgen med den indstilling.",
+	"Du fik simple opgaver til at sejle.\nJeg skal ikke holde dig i hånden hver vagt.\nFå styr på det, før du spilder mere af min tid.",
+	"Helt uacceptabel indsats i dag.\nDu var langsom, ukoncentreret og sjusket.\nRet op på det nu, ellers har vi et problem.",
+	"Jeg ved ikke, hvad du lavede hele dagen.\nIntet blev gjort ordentligt.\nDu må tage dig sammen.",
+	"Den indsats var pinlig.\nDe andre bar læsset, mens du sakkede bagud.\nGør det bedre, ellers lad være.",
+	"Du lavede fejl på fejl i dag.\nPå et tidspunkt holder undskyldninger op med at gælde.\nMød forberedt i morgen for en gangs skyld.",
+	"Jeg bad om resultater, ikke kaos.\nDu skabte flere problemer end løsninger.\nDet må ikke ske igen.",
+	"Hvis det her er dit bedste, er det ikke nok.\nDet var frustrerende at se på i dag.\nJeg forventer en klar forbedring i morgen.",
+	"Du var væk hele vagten.\nJeg har brug for folk, jeg kan stole på, ikke statister.\nTænk over det i aften.",
+	"I dag sejlede fra start til slut.\nDin indsats var en stor del af det.\nMød klar næste gang."
   ],
   "ok": [
-	"WHAT ARE YOU DOING???\nPsych, you did okay though.\nGet better sleep tomorrow, I need a perfect performance.",
-	"I almost came over there to panic.\nThen I looked closer—you actually handled it fine.\nLet’s sharpen it up tomorrow.",
-	"For a second, I thought we were doomed.\nTurns out you saved it in the end.\nNice recovery, but start stronger tomorrow.",
-	"You really enjoy stressing me out, huh?\nStill, the results were decent.\nLet’s aim for great instead of decent tomorrow.",
-	"I was ready to give a speech.\nLuckily, you pulled it together.\nCome in focused tomorrow and make it easy on me.",
-	"Bold strategy today.\nSomehow it worked better than I expected.\nLet’s use less chaos and more consistency tomorrow.",
-	"I had questions all day.\nBy the end, most of them were answered.\nGood enough—but I know you can level up tomorrow.",
-	"You move like Mondays are illegal.\nBut the work got done, so I’ll allow it.\nBring more energy tomorrow.",
-	"I nearly wrote your name in my complaint notebook.\nThen you finished strong.\nKeep the strong part for the whole shift tomorrow.",
-    "That was a weird performance.\nNot bad, not amazing, just... memorable.\nLet’s make tomorrow memorable for better reasons."
+	"HVAD LAVER DU???\nHaha, rolig - det gik faktisk fint.\nFå bedre søvn i morgen, jeg vil se en perfekt indsats.",
+	"Jeg var lige ved at gå i panik.\nMen du klarede det faktisk fint.\nLad os stramme det op i morgen.",
+	"Et øjeblik troede jeg, vi var færdige.\nMen du reddede den til sidst.\nGodt comeback—start bedre i morgen.",
+	"Du elsker virkelig at stresse mig, hva?\nMen resultatet var okay.\nLad os gå efter noget bedre i morgen.",
+	"Jeg var klar til at holde en tale.\nHeldigvis fik du styr på det.\nKom fokuseret i morgen.",
+	"Interessant strategi i dag.\nDet virkede bedre end forventet.\nMindre kaos, mere stabilitet i morgen.",
+	"Jeg havde mange spørgsmål i dag.\nDe fleste blev besvaret til sidst.\nGodt nok—men du kan gøre det bedre i morgen.",
+	"Du arbejder som om mandag er ulovlig.\nMen jobbet blev gjort, så fair nok.\nMere energi i morgen.",
+	"Jeg var tæt på at skrive dit navn ned.\nMen du sluttede stærkt.\nHold det niveau hele vagten i morgen.",
+	"Det var en mærkelig indsats.\nIkke dårlig, ikke fantastisk—bare... speciel.\nLad os gøre i morgen mindeværdig på den gode måde."
   ],
   "good": [
-	"Great job today.\nYou stayed focused and handled everything well.\nEnjoy your evening—you earned it.",
-	"I noticed the effort you gave all day.\nThat kind of consistency matters.\nCome back tomorrow with the same energy.",
-	"Strong work today.\nYou made the team better just by how you showed up.\nRest up and see you tomorrow.",
-	"You were reliable, sharp, and productive.\nThat’s exactly what I need.\nExcellent job today.",
-	"Really solid performance today.\nYou handled pressure without slowing down.\nBe proud of that work.",
-	"Thank you for the effort today.\nIt didn’t go unnoticed.\nHave a good night and recharge.",
-	"You did impressive work today.\nThe quality and attitude were both top level.\nKeep building on that tomorrow.",
-	"That was a professional performance.\nYou solved problems and kept things moving.\nOutstanding job.",
-	"You brought great energy today.\nPeople notice that more than you think.\nSee you tomorrow.",
-    "Excellent finish to the day.\nYou stayed locked in until the end.\nThat’s the standard right there."
+	"Flot arbejde i dag.\nDu holdt fokus og klarede det hele godt.\nNyd aftenen - du har fortjent det.",
+	"Jeg lagde mærke til din indsats i dag.\nDen stabilitet betyder noget.\nKom igen i morgen med samme energi.",
+	"Stærkt arbejde i dag.\nDu løftede holdet bare ved din indsats.\nFå hvilet og ses i morgen.",
+	"Du var stabil, skarp og produktiv.\nDet er præcis det, jeg har brug for.\nRigtig godt arbejde.",
+	"Virkelig solid indsats i dag.\nDu håndterede presset uden at falde i tempo.\nVær stolt af det.",
+	"Tak for indsatsen i dag.\nDet blev bemærket.\nGod aften—lad op til i morgen.",
+	"Imponerende arbejde i dag.\nBåde kvalitet og attitude var i top.\nByg videre på det i morgen.",
+	"Det var en professionel indsats.\nDu løste problemer og holdt tingene i gang.\nFremragende arbejde.",
+	"Du kom med god energi i dag.\nFolk lægger mere mærke til det, end du tror.\nSes i morgen.",
+	"Stærk afslutning på dagen.\nDu holdt fokus hele vejen.\nDet er standarden."
   ]
 }
 

@@ -2,6 +2,8 @@ extends Node2D
 
 @onready var http_request = $HTTPRequest
 @onready var highscore_panel = $Highscore/HighscoreEntries
+@onready var mouse_icon = $SafeClick/Mouse
+@onready var mail_animation = $SafeClick/AnimatedSprite2D
 
 const HIGHSCORE_ITEM_SCENE := preload("res://graphics/assets/HighscoreItem.tscn")
 
@@ -14,6 +16,8 @@ func _ready() -> void:
 	# Fetch first batch of mails
 	if Gamestate.mails.size() == 0:
 		Gamestate.fetch_mails()
+	
+	click_loop()
 
 func _on_start_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/Game.tscn")
@@ -52,3 +56,17 @@ func _on_request_completed(result, response_code, _headers, body):
 				highscore_panel.add_child(item)
 	else:
 		return
+
+func play_click_animation():
+	var tween = create_tween().set_parallel(true)
+	tween.tween_property(mouse_icon, "scale", Vector2(0.9, 0.9), 0.15)
+	mail_animation.play()
+	await tween.finished
+	var tween2 = create_tween().set_parallel(true)
+	tween2.tween_property(mouse_icon, "scale", Vector2(1, 1), 0.15)
+
+	
+func click_loop():
+	while true:
+		play_click_animation()
+		await get_tree().create_timer(2.5).timeout

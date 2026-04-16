@@ -27,6 +27,10 @@ var spawn_times: Array = []
 var boss_shown := false
 var max_score := 0
 
+var expanded := false
+var circle_size := Vector2(39, 39)
+var rect_size := Vector2(155, 39)
+
 @onready var inbox_container = $MainArea/Mails
 @onready var day_label = $TopBar/TopPanel/StatsMenu/TextureRect/DayLabel
 @onready var time_label = $TimeLabel
@@ -35,10 +39,10 @@ var max_score := 0
 @onready var subject_label = $MainArea/MailPanel/MailContent/SubjectLabel
 @onready var sender_label = $MainArea/MailPanel/MailContent/SenderLabel
 @onready var body_text = $MainArea/MailPanel/MailContent/BodyText
-@onready var hover_url_button = $MainArea/MailPanel/MailContent/HoverUrlButton
+@onready var hover_url_button = $MainArea/MailPanel/AnimatedShape/HoverUrlButton
 @onready var hover_url_label = $MainArea/MailPanel/MailContent/HoverUrlLabel
-@onready var legit_button = $MainArea/MailPanel/MailContent/LegitButton
-@onready var phishing_button = $MainArea/MailPanel/MailContent/PhishingButton
+@onready var legit_button = $MainArea/MailPanel/LegitButton
+@onready var phishing_button = $MainArea/MailPanel/PhishingButton
 @onready var feedback_label = $FeedbackLabel
 @onready var next_mail_button = $NextMailButton
 @onready var new_day_button = $NewDayButton
@@ -48,10 +52,14 @@ var max_score := 0
 @onready var calender_label = $TopBar/TopPanel/Calender/CalenderLabel
 
 @onready var feedback_menu = $BossFeedback
-@onready var boss_label = $BossFeedback/BossLabel
+@onready var boss_label = $BossFeedback/SpeechBubble/BossLabel
 @onready var boss_n = $BossFeedback/BossN
 @onready var boss_g = $BossFeedback/BossG
 @onready var boss_s = $BossFeedback/BossS
+
+@onready var shape = $MainArea/MailPanel/AnimatedShape
+@onready var idea_button = $MainArea/MailPanel/AnimatedShape/IdeaButton
+@onready var hint_label = $MainArea/MailPanel/AnimatedShape/IdeaButton/HintLabel
 
 func _ready():
 	load_mail_data()
@@ -65,6 +73,16 @@ func _ready():
 	update_topbar()
 	SettingsMenu.visible = false
 	StatsMenu.visible = false
+	
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color("c3c3c396")
+	style.corner_radius_top_left = 60
+	style.corner_radius_top_right = 60
+	style.corner_radius_bottom_left = 60
+	style.corner_radius_bottom_right = 60
+	shape.visible = true
+	shape.add_theme_stylebox_override("panel", style)
+	shape.size = circle_size
 
 func _process(delta):
 	if not day_running:
@@ -145,6 +163,7 @@ func open_mail(mail, item):
 	hover_url_label.text = "URL: %s" % mail["real_url"]
 	legit_button.disabled = false
 	phishing_button.disabled = false
+	hint_label.visible = false
 
 func evaluate_choice(player_says_phishing):
 	if current_mail.is_empty(): return
@@ -184,11 +203,12 @@ func _select_next_mail():
 # Forste gange der korer viser det chefen. Anden gang lukker det menuen og bliver klar til naste dag.
 func end_day():
 	if boss_shown == false:
+		day += 1
 		boss_shown = true
 
 		show_boss()
 		return
-		
+	calender_label.text = "%d" % day
 	day_running = false
 	time_left = 0
 	var unanswered_removed := _remove_unanswered_mails_and_apply_penalty()
@@ -207,7 +227,6 @@ func end_day():
 	new_day_button.disabled = false
 	update_rank()
 	update_topbar()
-	day += 1
 	save_progress()
 
 	boss_shown = false
@@ -309,7 +328,6 @@ func clear_mail_view():
 	subject_label.text = ""
 	sender_label.text = ""
 	body_text.text = ""
-	hover_url_button.visible = false
 	hover_url_label.visible = false
 
 func _on_hover_url_pressed(): hover_url_label.visible = not hover_url_label.visible
@@ -344,9 +362,34 @@ func get_current_clock_time() -> String:
 
 	return "%02d:%02d" % [hours, minutes]
 	
+func toggle_shape():
+	var tween = create_tween()
+
+	if expanded:
+		tween.set_parallel(true)
+		tween.tween_property(idea_button, "modulate:a", 0.0, 0.1)
+		tween.tween_property(hover_url_button, "modulate:a", 0.0, 0.15)
+		tween.tween_callback(func():
+			idea_button.visible = false
+			hover_url_button.visible = false
+		)
+		tween.tween_property(shape, "size", circle_size, 0.25)
+	else:
+		hover_url_button.visible = true
+		idea_button.visible = true
+		hover_url_button.modulate.a = 0
+		idea_button.modulate.a = 0
+		tween.tween_property(shape, "size", rect_size, 0.35)
+		tween.tween_interval(0.1)
+		tween.tween_property(hover_url_button, "modulate:a", 1.0, 0.2)
+		tween.tween_interval(0.1)
+		tween.tween_property(idea_button, "modulate:a", 1.0, 0.2)
+	expanded = !expanded
+	
 #Buttons
 func _on_settings_button_pressed() -> void:
 	SettingsMenu.visible = not SettingsMenu.visible
+	StatsMenu.visible = false
 	Sound.play_sound("ButtonClicked")
 
 func _on_close_settings_button_pressed() -> void:
@@ -355,8 +398,25 @@ func _on_close_settings_button_pressed() -> void:
 
 func _on_stats_button_pressed() -> void:
 	StatsMenu.visible = not StatsMenu.visible
+	SettingsMenu.visible = false
 	Sound.play_sound("ButtonClicked")
 
 func _on_close_stats_button_pressed() -> void:
 	StatsMenu.visible = false
 	Sound.play_sound("ButtonClicked")
+
+func _on_tool_button_pressed() -> void:
+	toggle_shape()
+
+func _on_idea_button_pressed() -> void:
+	score -= 5
+	if current_mail.size() == 0:
+		hint_label.text = "\n Ingen mail er valgt!"
+	else:
+		hint_label.text = "Du spørger chefen om hjælp - han siger: \n" +  current_mail["hint"]
+	if hint_label.visible == false:
+		hint_label.visible = true
+	else:
+		hint_label.visible = false
+	
+	

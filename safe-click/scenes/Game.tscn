@@ -17,13 +17,17 @@
 [ext_resource type="FontFile" uid="uid://lohkoxhgdcob" path="res://graphics/fonts/Bungee-Regular.ttf" id="13_45i86"]
 [ext_resource type="Theme" uid="uid://cx61wghxdyryp" path="res://graphics/themes/DeclineButton.tres" id="13_r7sob"]
 [ext_resource type="Texture2D" uid="uid://blvpqeoftl0ch" path="res://graphics/images/Logo.png" id="13_sv1m6"]
+[ext_resource type="Theme" uid="uid://ukjmf4h4tvbf" path="res://graphics/themes/InfoButton.tres" id="14_0bq3a"]
 [ext_resource type="Theme" uid="uid://bhjhubx6g25ei" path="res://graphics/themes/StartButton.tres" id="16_vjgi4"]
+[ext_resource type="Theme" uid="uid://d0dmlirlj6i2" path="res://graphics/themes/ToolsButton.tres" id="17_a85ww"]
+[ext_resource type="Theme" uid="uid://ddqhgpls6sa23" path="res://graphics/themes/IdeaButton.tres" id="17_jhsr3"]
 [ext_resource type="Texture2D" uid="uid://bnvdso5i71hka" path="res://graphics/images/DayPlaying.png" id="17_vjgi4"]
-[ext_resource type="Texture2D" uid="uid://c1ln0vc3ct5qs" path="res://graphics/animations/speach.png" id="21_a8wo8"]
+[ext_resource type="Theme" uid="uid://bx08qc3hybbv4" path="res://graphics/themes/LinkButton.tres" id="18_jhsr3"]
 [ext_resource type="Texture2D" uid="uid://bskfmxrcv3lm2" path="res://graphics/images/Boss2a.png" id="21_attvq"]
 [ext_resource type="Texture2D" uid="uid://d3f0t5ig2gax5" path="res://graphics/images/Boss2b.png" id="22_bneo8"]
 [ext_resource type="Texture2D" uid="uid://dqsnkdnpwqvbt" path="res://graphics/images/Boss1a.png" id="23_ocgqw"]
 [ext_resource type="Texture2D" uid="uid://tkhelwj1l8w0" path="res://graphics/images/Boss1b.png" id="24_jbgew"]
+[ext_resource type="Texture2D" uid="uid://b05lfim61n8eo" path="res://graphics/images/SpeechBubble.png" id="24_ocgqw"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_aug50"]
 load_path = "res://.godot/imported/Settings.png-f0ebdf1b9c61c5c5ae8349cc17dd00a4.ctex"
@@ -148,6 +152,16 @@ offset_bottom = 75.0
 [node name="TopPanel" type="Control" parent="TopBar" unique_id=1158090097]
 layout_mode = 2
 
+[node name="BluePanel" type="TextureRect" parent="TopBar/TopPanel" unique_id=272660542]
+z_index = -5
+z_as_relative = false
+layout_mode = 0
+offset_right = 1151.0
+offset_bottom = 75.0
+mouse_filter = 2
+texture = ExtResource("4_78awf")
+expand_mode = 1
+
 [node name="SettingsButton" type="Button" parent="TopBar/TopPanel" unique_id=1829501662]
 light_mask = 0
 layout_mode = 0
@@ -170,16 +184,6 @@ offset_right = 1081.0
 offset_bottom = 67.0
 mouse_default_cursor_shape = 2
 theme = ExtResource("4_s0nni")
-
-[node name="BluePanel" type="TextureRect" parent="TopBar/TopPanel" unique_id=272660542]
-z_index = -1
-z_as_relative = false
-layout_mode = 0
-offset_right = 1151.0
-offset_bottom = 75.0
-mouse_filter = 2
-texture = ExtResource("4_78awf")
-expand_mode = 1
 
 [node name="StatsMenu" type="Panel" parent="TopBar/TopPanel" unique_id=84190788]
 visible = false
@@ -279,9 +283,9 @@ theme = ExtResource("9_mcffj")
 
 [node name="Calender" type="TextureRect" parent="TopBar/TopPanel" unique_id=121729648]
 layout_mode = 0
-offset_left = 950.0
+offset_left = 883.0
 offset_top = 12.0
-offset_right = 1005.0
+offset_right = 938.0
 offset_bottom = 62.0
 texture = ExtResource("12_kyk2p")
 expand_mode = 1
@@ -306,6 +310,14 @@ offset_bottom = 81.0
 scale = Vector2(0.9, 0.9)
 texture = ExtResource("13_sv1m6")
 
+[node name="InfoButton" type="Button" parent="TopBar/TopPanel" unique_id=863024614]
+layout_mode = 0
+offset_left = 950.0
+offset_top = 11.0
+offset_right = 1003.0
+offset_bottom = 64.0
+theme = ExtResource("14_0bq3a")
+
 [node name="MainArea" type="Control" parent="." unique_id=1340309323]
 z_index = -5
 layout_mode = 3
@@ -314,38 +326,38 @@ offset_left = 1.0
 offset_top = 76.0
 offset_right = 1148.0
 offset_bottom = 645.0
+mouse_filter = 2
 
 [node name="MailPanel" type="Control" parent="MainArea" unique_id=1575102721]
 anchors_preset = 0
 offset_left = 293.0
 offset_right = 1146.0
 offset_bottom = 569.0
+mouse_filter = 2
 
 [node name="MailContent" type="Control" parent="MainArea/MailPanel" unique_id=162358128]
 z_index = 5
 anchors_preset = 0
 offset_left = 28.0
-offset_top = 52.0
+offset_top = 12.0
 offset_right = 605.0
-offset_bottom = 504.0
+offset_bottom = 564.0
 size_flags_horizontal = 8
 
 [node name="SubjectLabel" type="Label" parent="MainArea/MailPanel/MailContent" unique_id=1889684102]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
-offset_right = 145.0
+offset_right = 267.0
 offset_bottom = 23.0
 theme_override_font_sizes/font_size = 18
-text = "Din pakke kunne ikke leveres"
 
 [node name="SenderLabel" type="Label" parent="MainArea/MailPanel/MailContent" unique_id=875251291]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_top = 27.0
-offset_right = 145.0
+offset_right = 524.0
 offset_bottom = 50.0
 theme_override_font_sizes/font_size = 18
-text = "Fra: PostNord Support <support@postnord-track-help.com>"
 
 [node name="BodyText" type="RichTextLabel" parent="MainArea/MailPanel/MailContent" unique_id=728276069]
 modulate = Color(0, 0, 0, 1)
@@ -355,16 +367,7 @@ offset_top = 67.0
 offset_right = 512.0
 offset_bottom = 136.0
 theme_override_font_sizes/normal_font_size = 18
-text = "Hej. Vi kunne ikke levere din pakke i dag. Klik på linket for at bekræfte dine oplysninger og betale et nyt leveringsgebyr på 19 kr."
 fit_content = true
-
-[node name="HoverUrlButton" type="Button" parent="MainArea/MailPanel/MailContent" unique_id=203944982]
-layout_mode = 0
-offset_left = 18.0
-offset_top = 402.0
-offset_right = 163.0
-offset_bottom = 433.0
-text = "Afsender"
 
 [node name="HoverUrlLabel" type="Label" parent="MainArea/MailPanel/MailContent" unique_id=1009668716]
 layout_mode = 0
@@ -372,24 +375,6 @@ offset_left = -2.0
 offset_top = 270.0
 offset_right = 143.0
 offset_bottom = 293.0
-
-[node name="LegitButton" type="Button" parent="MainArea/MailPanel/MailContent" unique_id=1988458320]
-layout_mode = 0
-offset_left = 22.0
-offset_top = 455.0
-offset_right = 67.0
-offset_bottom = 500.0
-mouse_default_cursor_shape = 2
-theme = ExtResource("12_7ua8r")
-
-[node name="PhishingButton" type="Button" parent="MainArea/MailPanel/MailContent" unique_id=1456599114]
-layout_mode = 0
-offset_left = 69.0
-offset_top = 455.0
-offset_right = 114.0
-offset_bottom = 500.0
-mouse_default_cursor_shape = 2
-theme = ExtResource("13_r7sob")
 
 [node name="Baggrund" type="ColorRect" parent="MainArea/MailPanel" unique_id=1052325175]
 z_index = -5
@@ -411,6 +396,66 @@ offset_right = 819.0
 offset_bottom = 556.0
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_r7sob")
+
+[node name="LegitButton" type="Button" parent="MainArea/MailPanel" unique_id=1988458320]
+layout_mode = 0
+offset_left = 50.0
+offset_top = 507.0
+offset_right = 95.0
+offset_bottom = 552.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("12_7ua8r")
+
+[node name="PhishingButton" type="Button" parent="MainArea/MailPanel" unique_id=1456599114]
+layout_mode = 0
+offset_left = 97.0
+offset_top = 507.0
+offset_right = 142.0
+offset_bottom = 552.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("13_r7sob")
+
+[node name="AnimatedShape" type="Panel" parent="MainArea/MailPanel" unique_id=125768515]
+layout_mode = 0
+offset_left = 151.0
+offset_top = 510.4
+offset_right = 156.0
+offset_bottom = 515.4
+
+[node name="ToolButton" type="Button" parent="MainArea/MailPanel/AnimatedShape" unique_id=2131955172]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 31.0
+offset_bottom = 31.0
+theme = ExtResource("17_a85ww")
+
+[node name="IdeaButton" type="Button" parent="MainArea/MailPanel/AnimatedShape" unique_id=1201720767]
+visible = false
+layout_mode = 0
+offset_left = 120.0
+offset_top = 6.6
+offset_right = 145.0
+offset_bottom = 31.6
+theme = ExtResource("17_jhsr3")
+
+[node name="HintLabel" type="Label" parent="MainArea/MailPanel/AnimatedShape/IdeaButton" unique_id=1889518184]
+modulate = Color(0, 0, 0, 1)
+z_index = 110
+layout_mode = 0
+offset_left = -217.0
+offset_top = -71.0
+offset_right = -204.0
+offset_bottom = -50.0
+
+[node name="HoverUrlButton" type="Button" parent="MainArea/MailPanel/AnimatedShape" unique_id=203944982]
+visible = false
+layout_mode = 0
+offset_left = 85.0
+offset_top = 6.6
+offset_right = 110.0
+offset_bottom = 31.6
+theme = ExtResource("18_jhsr3")
 
 [node name="MailContainer" type="VBoxContainer" parent="MainArea" unique_id=455304951]
 layout_mode = 0
@@ -469,6 +514,7 @@ rotation = 1.5707964
 color = Color(0.78936666, 0.78936666, 0.78936666, 1)
 
 [node name="FeedbackLabel" type="Label" parent="." unique_id=1556555921]
+visible = false
 offset_left = 312.0
 offset_top = 89.0
 offset_right = 352.0
@@ -509,39 +555,23 @@ offset_bottom = 641.0
 z_index = 20
 layout_mode = 0
 offset_right = 1152.0
-offset_bottom = 647.0
+offset_bottom = 648.0
 theme = SubResource("Theme_a8wo8")
-color = Color(0.3647059, 0.3647059, 0.3647059, 0.54901963)
-
-[node name="Speach" type="Sprite2D" parent="BossFeedback" unique_id=1664133685]
-z_index = 25
-position = Vector2(1421, 8.000061)
-scale = Vector2(0.5446263, 0.5446263)
-skew = 0.017453194
-texture = ExtResource("21_a8wo8")
-flip_h = true
-
-[node name="BossLabel" type="RichTextLabel" parent="BossFeedback" unique_id=558887016]
-z_index = 26
-layout_mode = 0
-offset_left = 1230.0
-offset_top = -72.0
-offset_right = 1594.0
-offset_bottom = 12.0
-theme_override_colors/default_color = Color(0, 0, 0, 1)
+color = Color(0.3647059, 0.3647059, 0.3647059, 0.47058824)
 
 [node name="Button" type="Button" parent="BossFeedback" unique_id=1318475244]
+modulate = Color(1, 1, 1, 0)
 z_index = 100
 layout_mode = 0
-offset_left = 1591.0
-offset_top = 429.0
-offset_right = 1698.0
-offset_bottom = 533.0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 1152.0
+offset_bottom = 647.0
 
 [node name="BossN" type="AnimatedSprite2D" parent="BossFeedback" unique_id=94708382]
 visible = false
 z_index = 100
-position = Vector2(147, 556)
+position = Vector2(150, 556)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_ocgqw")
 animation = &"BossNeutralBlink"
@@ -550,7 +580,7 @@ autoplay = "BossNeutralBlink"
 [node name="BossG" type="AnimatedSprite2D" parent="BossFeedback" unique_id=1034632788]
 visible = false
 z_index = 100
-position = Vector2(147, 556)
+position = Vector2(150, 556)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_a85ww")
 animation = &"BossSurBlink"
@@ -559,14 +589,34 @@ autoplay = "BossSurBlink"
 [node name="BossS" type="AnimatedSprite2D" parent="BossFeedback" unique_id=44953969]
 visible = false
 z_index = 100
-position = Vector2(147, 556)
+position = Vector2(150, 556)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_a85ww")
 animation = &"BossSurBlink"
 autoplay = "BossSurBlink"
 
+[node name="SpeechBubble" type="TextureRect" parent="BossFeedback" unique_id=2116787915]
+z_index = 99
+layout_mode = 0
+offset_left = 178.0
+offset_top = 265.0
+offset_right = 488.0
+offset_bottom = 575.0
+texture = ExtResource("24_ocgqw")
+
+[node name="BossLabel" type="RichTextLabel" parent="BossFeedback/SpeechBubble" unique_id=558887016]
+z_index = 100
+layout_mode = 0
+offset_left = 58.0
+offset_top = 53.0
+offset_right = 273.0
+offset_bottom = 192.0
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+
 [connection signal="pressed" from="TopBar/TopPanel/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="TopBar/TopPanel/StatsButton" to="." method="_on_stats_button_pressed"]
 [connection signal="pressed" from="TopBar/TopPanel/StatsMenu/TextureRect/CloseStatsButton" to="." method="_on_close_stats_button_pressed"]
 [connection signal="pressed" from="TopBar/TopPanel/SettingsMenu/TextureRect/CloseSettingsButton" to="." method="_on_close_settings_button_pressed"]
+[connection signal="pressed" from="MainArea/MailPanel/AnimatedShape/ToolButton" to="." method="_on_tool_button_pressed"]
+[connection signal="pressed" from="MainArea/MailPanel/AnimatedShape/IdeaButton" to="." method="_on_idea_button_pressed"]
 [connection signal="pressed" from="BossFeedback/Button" to="." method="_on_boss_button_pressed"]

@@ -49,6 +49,9 @@ var max_score := 0
 
 @onready var feedback_menu = $BossFeedback
 @onready var boss_label = $BossFeedback/BossLabel
+@onready var boss_n = $BossFeedback/BossN
+@onready var boss_g = $BossFeedback/BossG
+@onready var boss_s = $BossFeedback/BossS
 
 func _ready():
 	load_mail_data()
@@ -224,10 +227,13 @@ func show_boss():
 	var quote_pool := []
 	if performance <= 60:
 		quote_pool = Gamestate.boss_comments["bad"]
+		boss_s.visible = true
 	elif performance <= 90:
 		quote_pool = Gamestate.boss_comments["ok"]
+		boss_n.visible = true
 	else:
 		quote_pool = Gamestate.boss_comments["good"]
+		boss_g.visible = true
 	
 	var quote = quote_pool[randi() % quote_pool.size()]
 	boss_label.text = quote
@@ -302,7 +308,7 @@ func clear_inbox_ui():
 func clear_mail_view():
 	subject_label.text = ""
 	sender_label.text = ""
-	body_text.text = "Ingen mail valgt"
+	body_text.text = ""
 	hover_url_button.visible = false
 	hover_url_label.visible = false
 

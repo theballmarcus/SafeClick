@@ -19,8 +19,11 @@
 [ext_resource type="Texture2D" uid="uid://blvpqeoftl0ch" path="res://graphics/images/Logo.png" id="13_sv1m6"]
 [ext_resource type="Theme" uid="uid://bhjhubx6g25ei" path="res://graphics/themes/StartButton.tres" id="16_vjgi4"]
 [ext_resource type="Texture2D" uid="uid://bnvdso5i71hka" path="res://graphics/images/DayPlaying.png" id="17_vjgi4"]
-[ext_resource type="Texture2D" uid="uid://dc2stw1knwc72" path="res://graphics/animations/BossFeedback.png" id="20_sv1m6"]
 [ext_resource type="Texture2D" uid="uid://c1ln0vc3ct5qs" path="res://graphics/animations/speach.png" id="21_a8wo8"]
+[ext_resource type="Texture2D" uid="uid://bskfmxrcv3lm2" path="res://graphics/images/Boss2a.png" id="21_attvq"]
+[ext_resource type="Texture2D" uid="uid://d3f0t5ig2gax5" path="res://graphics/images/Boss2b.png" id="22_bneo8"]
+[ext_resource type="Texture2D" uid="uid://dqsnkdnpwqvbt" path="res://graphics/images/Boss1a.png" id="23_ocgqw"]
+[ext_resource type="Texture2D" uid="uid://tkhelwj1l8w0" path="res://graphics/images/Boss1b.png" id="24_jbgew"]
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_aug50"]
 load_path = "res://.godot/imported/Settings.png-f0ebdf1b9c61c5c5ae8349cc17dd00a4.ctex"
@@ -50,6 +53,88 @@ shadow_size = 14
 shadow_offset = Vector2(2, 2)
 
 [sub_resource type="Theme" id="Theme_a8wo8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ocgqw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_bneo8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}],
+"loop": true,
+"name": &"BossNeutralBlink",
+"speed": 3.0
+}]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_a85ww"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("23_ocgqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ocgqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ocgqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ocgqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ocgqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_jbgew")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ocgqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ocgqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ocgqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ocgqw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_ocgqw")
+}],
+"loop": true,
+"name": &"BossSurBlink",
+"speed": 3.0
+}]
 
 [node name="Game" type="Node2D" unique_id=1693393910]
 script = ExtResource("1_ibkli")
@@ -428,15 +513,9 @@ offset_bottom = 647.0
 theme = SubResource("Theme_a8wo8")
 color = Color(0.3647059, 0.3647059, 0.3647059, 0.54901963)
 
-[node name="Sprite2D" type="Sprite2D" parent="BossFeedback" unique_id=1741165791]
-z_index = 25
-position = Vector2(1039, 545)
-texture = ExtResource("20_sv1m6")
-hframes = 5
-
 [node name="Speach" type="Sprite2D" parent="BossFeedback" unique_id=1664133685]
 z_index = 25
-position = Vector2(788, 389.00003)
+position = Vector2(1421, 8.000061)
 scale = Vector2(0.5446263, 0.5446263)
 skew = 0.017453194
 texture = ExtResource("21_a8wo8")
@@ -445,17 +524,46 @@ flip_h = true
 [node name="BossLabel" type="RichTextLabel" parent="BossFeedback" unique_id=558887016]
 z_index = 26
 layout_mode = 0
-offset_left = 608.0
-offset_top = 317.0
-offset_right = 972.0
-offset_bottom = 401.0
+offset_left = 1230.0
+offset_top = -72.0
+offset_right = 1594.0
+offset_bottom = 12.0
 theme_override_colors/default_color = Color(0, 0, 0, 1)
 
 [node name="Button" type="Button" parent="BossFeedback" unique_id=1318475244]
 z_index = 100
 layout_mode = 0
-offset_right = 1142.0
-offset_bottom = 713.0
+offset_left = 1591.0
+offset_top = 429.0
+offset_right = 1698.0
+offset_bottom = 533.0
+
+[node name="BossN" type="AnimatedSprite2D" parent="BossFeedback" unique_id=94708382]
+visible = false
+z_index = 100
+position = Vector2(147, 556)
+scale = Vector2(0.4, 0.4)
+sprite_frames = SubResource("SpriteFrames_ocgqw")
+animation = &"BossNeutralBlink"
+autoplay = "BossNeutralBlink"
+
+[node name="BossG" type="AnimatedSprite2D" parent="BossFeedback" unique_id=1034632788]
+visible = false
+z_index = 100
+position = Vector2(147, 556)
+scale = Vector2(0.4, 0.4)
+sprite_frames = SubResource("SpriteFrames_a85ww")
+animation = &"BossSurBlink"
+autoplay = "BossSurBlink"
+
+[node name="BossS" type="AnimatedSprite2D" parent="BossFeedback" unique_id=44953969]
+visible = false
+z_index = 100
+position = Vector2(147, 556)
+scale = Vector2(0.4, 0.4)
+sprite_frames = SubResource("SpriteFrames_a85ww")
+animation = &"BossSurBlink"
+autoplay = "BossSurBlink"
 
 [connection signal="pressed" from="TopBar/TopPanel/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="pressed" from="TopBar/TopPanel/StatsButton" to="." method="_on_stats_button_pressed"]

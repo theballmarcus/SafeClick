@@ -1,9 +1,12 @@
 extends Node2D
 
-@export var grid_size := 32
-@export var board_width := 20
-@export var board_height := 15
-@export var tick_rate := 0.12
+@export var grid_size := 42
+@export var board_width := 14
+@export var board_height := 10
+@export var tick_rate := 0.15
+@export var food_texture: Texture2D
+
+@export var snake_head_texture: Texture2D
 
 var score := 0
 var game_over := false
@@ -102,20 +105,62 @@ func _unhandled_input(event):
 		start_game()
 
 func _draw():
-	draw_rect(Rect2(Vector2.ZERO, Vector2(board_width * grid_size, board_height * grid_size)), Color(0.08,0.08,0.08), true)
+	draw_rect(Rect2(Vector2.ZERO, Vector2(board_width * grid_size, board_height * grid_size)), Color(0.08,0.08,0.08
+	), true)
 
 	for x in board_width:
 		for y in board_height:
 			draw_rect(Rect2(x * grid_size, y * grid_size, grid_size - 1, grid_size - 1), Color(0.12,0.12,0.12), false)
 
-	var food_center = Vector2(food * grid_size) + Vector2.ONE * grid_size / 2.0
-	draw_circle(food_center, grid_size * 0.32, Color.RED)
+	var food_pos = Vector2(food * grid_size)
+
+	if food_texture:
+		draw_texture_rect(
+			food_texture,
+			Rect2(food_pos, Vector2(grid_size, grid_size)),
+			false
+		)
+	else:
+		var food_center = food_pos + Vector2.ONE * grid_size / 2.0
+		draw_circle(food_center, grid_size * 0.32, Color.RED)
+
+	var head_color = Color("1c00ff")
+	var tail_color = Color("0091ff")
 
 	for i in range(snake.size()):
 		var pos = Vector2(snake[i] * grid_size)
-		var color = Color.LIME_GREEN if i == 0 else Color.GREEN
-		draw_rect(Rect2(pos, Vector2(grid_size, grid_size)), color, true)
-		draw_rect(Rect2(pos, Vector2(grid_size, grid_size)), Color.BLACK, false, 2)
+		var rect = Rect2(pos, Vector2(grid_size*0.9, grid_size*0.9))
+
+		if i == 0 and snake_head_texture:
+			var angle = get_head_rotation()
+			var center = pos + Vector2.ONE * grid_size / 2.0
+
+			draw_set_transform(center, angle, Vector2.ONE)
+			draw_texture_rect(
+				snake_head_texture,
+				Rect2(Vector2(-grid_size / 2.0, -grid_size / 2.0), Vector2(grid_size, grid_size)),
+				false
+			)
+			draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+		else:
+			var t = 0.0
+			if snake.size() > 1:
+				t = float(i) / float(snake.size() - 1)
+
+			var segment_color = head_color.lerp(tail_color, t)
+			draw_rect(rect, segment_color, true)
+			draw_rect(rect, Color.BLACK, false, 2)
+
+func get_head_rotation() -> float:
+	if direction == Vector2i.RIGHT:
+		return PI / 2
+	elif direction == Vector2i.DOWN:
+		return PI 
+	elif direction == Vector2i.LEFT:
+		return -PI / 2
+	elif direction == Vector2i.UP:
+		return 0.0
+	return 0.0
 
 func start():
 	visible = true

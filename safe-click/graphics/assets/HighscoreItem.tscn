@@ -3,11 +3,14 @@
 [ext_resource type="Theme" uid="uid://cgcvefu8sv8uc" path="res://graphics/themes/MailItem.tres" id="1_vd2mc"]
 
 [node name="HighscoreItem" type="Button" unique_id=1836904760]
+self_modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(292, 65)
 offset_right = 292.0
 offset_bottom = 65.0
+theme_override_colors/font_color = Color(0.13050123, 0.8617083, 0.16004495, 1)
 
 [node name="Control" type="Control" parent="." unique_id=1864737852]
+self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 0
 offset_left = 1.0
 offset_top = 2.0
@@ -19,19 +22,19 @@ theme = ExtResource("1_vd2mc")
 [node name="Username" type="Label" parent="Control" unique_id=358169957]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
-offset_left = 12.0
-offset_top = 14.0
-offset_right = 195.0
-offset_bottom = 42.0
+offset_left = 23.0
+offset_top = 20.0
+offset_right = 206.0
+offset_bottom = 41.0
 text = "David"
 
 [node name="Score" type="Label" parent="Control" unique_id=1481607316]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
-offset_left = 151.0
-offset_top = 14.0
-offset_right = 291.0
-offset_bottom = 42.0
+offset_left = 160.0
+offset_top = 20.0
+offset_right = 300.0
+offset_bottom = 48.0
 text = "100"
 horizontal_alignment = 1
 

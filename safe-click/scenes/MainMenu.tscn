@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://4xquco0dyjvp" path="res://scripts/main_menu.gd" id="1_yqorp"]
 [ext_resource type="PackedScene" uid="uid://cgq086xqkv7g4" path="res://graphics/assets/Highscore.tscn" id="2_0ykhv"]
 [ext_resource type="Texture2D" uid="uid://d3r23vxas2b4r" path="res://graphics/images/TopPanel.png" id="3_2wh52"]
+[ext_resource type="FontFile" uid="uid://lohkoxhgdcob" path="res://graphics/fonts/Bungee-Regular.ttf" id="3_l4mxc"]
 [ext_resource type="Texture2D" uid="uid://c0v3bufklvidv" path="res://graphics/images/MouseClick.png" id="5_826wr"]
 [ext_resource type="Texture2D" uid="uid://cp5yq5na5xbn2" path="res://graphics/images/mailanimation/c.png" id="6_bky6r"]
 [ext_resource type="Texture2D" uid="uid://bgtkb83jkbu2s" path="res://graphics/images/mailanimation/10.png" id="6_hubol"]
@@ -11,7 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://m2sfo21gywsn" path="res://graphics/images/mailanimation/b.png" id="9_5faoh"]
 [ext_resource type="Texture2D" uid="uid://5mnnh0kpwcg8" path="res://graphics/images/mailanimation/4.png" id="12_1n6yq"]
 [ext_resource type="Texture2D" uid="uid://caqii0cgr8k4l" path="res://graphics/images/mailanimation/2.png" id="14_2axsc"]
+[ext_resource type="Theme" uid="uid://j5u3y12053wn" path="res://graphics/themes/Button1.tres" id="14_hubol"]
+[ext_resource type="Theme" uid="uid://ct2telxc5wpci" path="res://graphics/themes/Button3.tres" id="15_8vx4p"]
 [ext_resource type="Texture2D" uid="uid://na2hjs8tfyfj" path="res://graphics/images/mailanimation/1.png" id="15_wrgne"]
+[ext_resource type="Theme" uid="uid://cgotv5vax3tlo" path="res://graphics/themes/Button2.tres" id="16_tdapf"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hm0al"]
 animations = [{
@@ -70,10 +74,20 @@ script = ExtResource("1_yqorp")
 
 [node name="Highscore" parent="." unique_id=1556198625 instance=ExtResource("2_0ykhv")]
 z_index = 9
-offset_left = 112.0
-offset_top = 249.0
-offset_right = 112.0
-offset_bottom = 249.0
+offset_left = 10.0
+offset_top = 40.0
+offset_right = 301.0
+offset_bottom = 136.0
+
+[node name="Label" type="Label" parent="Highscore" unique_id=154313779]
+layout_mode = 0
+offset_left = 15.0
+offset_top = -30.0
+offset_right = 268.0
+offset_bottom = 13.0
+theme_override_fonts/font = ExtResource("3_l4mxc")
+theme_override_font_sizes/font_size = 32
+text = "Leaderboard"
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1224852831]
 z_index = -1
@@ -110,17 +124,40 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 536.0
-offset_top = 330.0
-offset_right = 616.0
-offset_bottom = 359.0
+offset_left = 392.0
+offset_top = 340.0
+offset_right = 520.0
+offset_bottom = 443.0
 grow_horizontal = 0
 grow_vertical = 0
-text = "Start spil"
+theme = ExtResource("14_hubol")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_l4mxc")
+theme_override_font_sizes/font_size = 18
+text = "Start Spil"
 
 [node name="QuitButton" type="Button" parent="." unique_id=1811172870]
-offset_left = 556.0
-offset_top = 370.0
-offset_right = 597.0
-offset_bottom = 399.0
-text = "Exit"
+offset_left = 678.0
+offset_top = 340.0
+offset_right = 806.0
+offset_bottom = 443.0
+theme = ExtResource("15_8vx4p")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_l4mxc")
+theme_override_font_sizes/font_size = 18
+text = "Exit Spil"
+
+[node name="TutorialButton" type="Button" parent="." unique_id=1302199518]
+offset_left = 535.0
+offset_top = 340.0
+offset_right = 663.0
+offset_bottom = 443.0
+theme = ExtResource("16_tdapf")
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("3_l4mxc")
+theme_override_font_sizes/font_size = 18
+text = "Tutorial"
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="TutorialButton" to="." method="_on_tutorial_button_pressed"]

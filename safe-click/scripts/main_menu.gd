@@ -9,22 +9,12 @@ const HIGHSCORE_ITEM_SCENE := preload("res://graphics/assets/HighscoreItem.tscn"
 
 
 func _ready() -> void:
-	$StartButton.pressed.connect(_on_start_pressed)
-	$QuitButton.pressed.connect(_on_quit_pressed)
-	
 	update_highscores()
 	# Fetch first batch of mails
 	if Gamestate.mails.size() == 0:
 		Gamestate.fetch_mails()
 	
 	click_loop()
-
-func _on_start_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/Game.tscn")
-
-func _on_quit_pressed() -> void:
-	get_tree().quit()
-	
 	
 func update_highscores():
 	http_request.request_completed.connect(_on_request_completed)
@@ -69,3 +59,15 @@ func click_loop():
 	while true:
 		play_click_animation()
 		await get_tree().create_timer(2.5).timeout
+
+
+func _on_start_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/Game.tscn")
+
+
+func _on_quit_button_pressed() -> void:
+	get_tree().quit()
+
+
+func _on_tutorial_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/Tutorial.tscn")

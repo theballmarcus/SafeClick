@@ -332,12 +332,59 @@ offset_right = 1148.0
 offset_bottom = 645.0
 mouse_filter = 2
 
+[node name="Background" type="ColorRect" parent="MainArea" unique_id=588397626]
+z_index = -5
+layout_mode = 0
+offset_right = 293.0
+offset_bottom = 572.0
+mouse_filter = 2
+
+[node name="TextureRect" type="TextureRect" parent="MainArea/Background" unique_id=1161870536]
+layout_mode = 0
+offset_left = 53.0
+offset_top = 14.0
+offset_right = 200.0
+offset_bottom = 43.0
+texture = ExtResource("12_2rd6h")
+expand_mode = 1
+
+[node name="TextureRect2" type="TextureRect" parent="MainArea/Background" unique_id=2040789127]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 9.0
+offset_right = 46.0
+offset_bottom = 45.0
+texture = ExtResource("13_7ua8r")
+expand_mode = 1
+
 [node name="MailPanel" type="Control" parent="MainArea" unique_id=1575102721]
 anchors_preset = 0
 offset_left = 293.0
 offset_right = 1146.0
 offset_bottom = 569.0
 mouse_filter = 2
+
+[node name="Baggrund" type="ColorRect" parent="MainArea/MailPanel" unique_id=1052325175]
+z_index = -5
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 4.0
+offset_bottom = 3.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="Panel" parent="MainArea/MailPanel/Baggrund" unique_id=1603240273]
+z_index = 5
+layout_mode = 0
+offset_left = 42.0
+offset_top = 504.0
+offset_right = 819.0
+offset_bottom = 556.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_r7sob")
 
 [node name="MailContent" type="Control" parent="MainArea/MailPanel" unique_id=162358128]
 z_index = 5
@@ -374,33 +421,13 @@ theme_override_font_sizes/normal_font_size = 18
 fit_content = true
 
 [node name="HoverUrlLabel" type="Label" parent="MainArea/MailPanel/MailContent" unique_id=1009668716]
-layout_mode = 0
-offset_left = -2.0
-offset_top = 270.0
-offset_right = 143.0
-offset_bottom = 293.0
-
-[node name="Baggrund" type="ColorRect" parent="MainArea/MailPanel" unique_id=1052325175]
-z_index = -5
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_right = 4.0
-offset_bottom = 3.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-
-[node name="Panel" type="Panel" parent="MainArea/MailPanel/Baggrund" unique_id=1603240273]
+modulate = Color(0, 0, 0, 1)
 z_index = 5
 layout_mode = 0
-offset_left = 42.0
-offset_top = 504.0
-offset_right = 819.0
-offset_bottom = 556.0
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_r7sob")
+offset_left = 23.0
+offset_top = 463.0
+offset_right = 168.0
+offset_bottom = 486.0
 
 [node name="LegitButton" type="Button" parent="MainArea/MailPanel" unique_id=1988458320]
 z_index = 11
@@ -471,31 +498,6 @@ offset_top = 41.0
 offset_right = 293.0
 offset_bottom = 569.0
 theme_override_constants/separation = 16
-
-[node name="Background" type="ColorRect" parent="MainArea" unique_id=588397626]
-z_index = -1
-layout_mode = 0
-offset_right = 293.0
-offset_bottom = 572.0
-mouse_filter = 2
-
-[node name="TextureRect" type="TextureRect" parent="MainArea/Background" unique_id=1161870536]
-layout_mode = 0
-offset_left = 53.0
-offset_top = 14.0
-offset_right = 200.0
-offset_bottom = 43.0
-texture = ExtResource("12_2rd6h")
-expand_mode = 1
-
-[node name="TextureRect2" type="TextureRect" parent="MainArea/Background" unique_id=2040789127]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 9.0
-offset_right = 46.0
-offset_bottom = 45.0
-texture = ExtResource("13_7ua8r")
-expand_mode = 1
 
 [node name="Mails" type="VBoxContainer" parent="MainArea" unique_id=1196344816]
 z_index = 5

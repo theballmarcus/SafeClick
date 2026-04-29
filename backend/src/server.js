@@ -51,22 +51,6 @@ function requireKey(req, res, next) {
     next();
 }
 
-function normalizeReceivedMailIds(rawIds) {
-    if (rawIds === undefined) return [];
-    if (!Array.isArray(rawIds)) return null;
-
-    const parsed = rawIds.map((id) => Number(id));
-    if (parsed.some((id) => !Number.isInteger(id) || id <= 0)) return null;
-
-    return Array.from(new Set(parsed));
-}
-
-function normalizeDay(value) {
-    const parsed = Number(value);
-    if (!Number.isInteger(parsed) || parsed < 1 || parsed > 10) return null;
-    return parsed;
-}
-
 await initDb();
 
 // --- Routes ---
@@ -93,53 +77,35 @@ app.post('/spam-mails/batch', requireKey, async (req, res) => {
             });
         }
 
-        const parsedReceivedMailIds = normalizeReceivedMailIds(receivedMailIds);
-        if (parsedReceivedMailIds === null) {
-            return res.status(400).json({
-                error: 'receivedMailIds must be an array of positive integer ids'
-            });
-        }
-
-        const parsedDay = normalizeDay(day);
-        if (parsedDay === null) {
-            return res.status(400).json({
-                error: 'day must be an integer between 1 and 10'
-            });
-        }
+        if(day > 10) day = 10;
 
         let mails = await getSpamMails({
             count: requestedCount,
-            excludeIds: parsedReceivedMailIds,
-            day: parsedDay
+            excludeIds: receivedMailIds,
+            day: day
         });
 
         let generatedCount = 0;
         if (mails.length < requestedCount) {
-            if (!process.env.OPENAI_API_KEY) {
-                return res.status(503).json({
-                    error: 'Mail pool exhausted and OPENAI_API_KEY is not configured.'
-                });
-            }
-
             const missingCount = requestedCount - mails.length;
             const existingSubjects = await getAllMailSubjects();
             const generatedMails = await generateSpamMailsWithAI({
                 count: missingCount + 3,
-                day: parsedDay,
+                day: day,
                 existingSubjects
             });
 
             generatedCount = await insertGeneratedSpamMails(generatedMails);
 
             const refreshedExcludeIds = Array.from(new Set([
-                ...parsedReceivedMailIds,
+                ...receivedMailIds,
                 ...mails.map((mail) => mail.id)
             ]));
 
             const topUpMails = await getSpamMails({
                 count: requestedCount - mails.length,
                 excludeIds: refreshedExcludeIds,
-                day: parsedDay
+                day: day
             });
 
             mails = mails.concat(topUpMails);
@@ -147,7 +113,7 @@ app.post('/spam-mails/batch', requireKey, async (req, res) => {
 
         res.json({
             mails,
-            day: parsedDay,
+            day: day,
             requestedCount,
             returnedCount: mails.length,
             generatedCount
@@ -184,12 +150,7 @@ app.post('/highscores', requireKey, async (req, res) => {
         }
 
         const parsedHighscore = Number(highscore);
-        if (!Number.isInteger(parsedHighscore) || parsedHighscore < 0) {
-            return res.status(400).json({
-                error: 'Invalid highscore'
-            });
-        }
-
+        
         const createdHighscore = await createHighscore({
             username: trimmedName,
             highscore: parsedHighscore

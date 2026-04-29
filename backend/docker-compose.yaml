@@ -8,7 +8,7 @@ services:
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
-      - db_data:/var/lib/mysql
+      - safeclick_db_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
@@ -48,4 +48,4 @@ services:
 
 
 volumes:
-  db_data:
+  safeclick_db_data:

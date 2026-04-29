@@ -11,15 +11,8 @@ const pool = mysql.createPool({
     queueLimit: 0
 });
 
-function normalizeDay(day) {
-    const parsed = Number(day);
-    if (!Number.isInteger(parsed)) return 1;
-    return Math.min(10, Math.max(1, parsed));
-}
-
 function getDifficultyWeightsForDay(day) {
-    const normalizedDay = normalizeDay(day);
-    const progress = (normalizedDay - 1) / 9;
+    const progress = (day - 1) / 9;
 
     return {
         easy: 5.0 - (4.2 * progress),
@@ -32,24 +25,9 @@ function toMailRow(mail) {
     const senderEmail = typeof mail.sender_email === 'string' ? mail.sender_email.trim() : '';
     const senderName = typeof mail.sender_name === 'string' ? mail.sender_name.trim() : '';
 
-    let resolvedSenderName = senderName;
-    if (!resolvedSenderName && senderEmail) {
-        const localPart = senderEmail.split('@')[0] || '';
-        resolvedSenderName = localPart
-            .replace(/[._-]+/g, ' ')
-            .replace(/[^a-zA-Z0-9\s]/g, ' ')
-            .replace(/\s+/g, ' ')
-            .trim()                                                                                                                                                                                             
-            .split(' ')
-            .filter(Boolean)
-            .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())              
-            .join(' ')
-            .trim();
-    }
-
     return {
         ...mail,
-        sender_name: resolvedSenderName || 'Ukendt afsender',
+        sender_name: senderName || 'Ukendt afsender',
         is_phishing: Boolean(mail.is_phishing)
     };
 }
@@ -57,31 +35,20 @@ function toMailRow(mail) {
 function pickWeightedRandomMails(rows, count, day) {
     if (!Array.isArray(rows) || rows.length === 0 || count <= 0) return [];
 
-    const safeCount = Math.min(count, rows.length);
-    const weights = getDifficultyWeightsForDay(day);
     const poolRows = rows.slice();
     const selected = [];
+    const weights = getDifficultyWeightsForDay(day);
+    const limit = Math.min(count, poolRows.length);
 
-    while (selected.length < safeCount && poolRows.length > 0) {
-        let totalWeight = 0;
-        for (const row of poolRows) {
-            totalWeight += weights[row.difficulty] ?? 1;
-        }
-
-        if (totalWeight <= 0) {
-            const randomIndex = Math.floor(Math.random() * poolRows.length);
-            selected.push(toMailRow(poolRows.splice(randomIndex, 1)[0]));
-            continue;
-        }
-
-        const pick = Math.random() * totalWeight;
-        let cumulative = 0;
+    for (let i = 0; i < limit; i += 1) {
+        const totalWeight = poolRows.reduce((sum, row) => sum + (weights[row.difficulty] ?? 1), 0);
+        let pick = Math.random() * totalWeight;
         let chosenIndex = poolRows.length - 1;
 
-        for (let i = 0; i < poolRows.length; i += 1) {
-            cumulative += weights[poolRows[i].difficulty] ?? 1;
-            if (pick <= cumulative) {
-                chosenIndex = i;
+        for (let j = 0; j < poolRows.length; j += 1) {
+            pick -= weights[poolRows[j].difficulty] ?? 1;
+            if (pick <= 0) {
+                chosenIndex = j;
                 break;
             }
         }
@@ -160,29 +127,23 @@ export async function createHighscore({ highscore, username = null }) {
 }
 
 export async function getSpamMails({ count = 5, excludeIds = [], day = 1 }) {
-    const safeCount = Number.isInteger(count) ? count : 5;
-    const safeExcludeIds = Array.isArray(excludeIds)
-        ? excludeIds.filter((id) => Number.isInteger(id) && id > 0)
-        : [];
-    const safeDay = normalizeDay(day);
-
     const baseSql = `SELECT id, subject, sender_name, sender_email, body, real_url, is_phishing, hint, difficulty, category, created_at
         FROM unique_mails
         WHERE 1=1`;
 
-    const orderingSql = ' ORDER BY id DESC';
+    const ordre = ' ORDER BY id DESC';
 
-    let sql = baseSql + orderingSql;
+    let sql = baseSql + ordre;
     let params = [];
 
-    if (safeExcludeIds.length > 0) {
-        const placeholders = safeExcludeIds.map(() => '?').join(', ');
-        sql = `${baseSql} AND id NOT IN (${placeholders})${orderingSql}`;
-        params = [...safeExcludeIds];
+    if (excludeIds.length > 0) {
+        const placeholders = excludeIds.map(() => '?').join(', ');
+        sql = `${baseSql} AND id NOT IN (${placeholders})${ordre}`;
+        params = [...excludeIds];
     }
 
     const [rows] = await pool.query(sql, params);
-    return pickWeightedRandomMails(rows, safeCount, safeDay);
+    return pickWeightedRandomMails(rows, count, day);
 }
 
 export async function getAllMailSubjects() {

@@ -94,7 +94,7 @@ function resolveSenderName(mail) {
 
 function normalizeGeneratedMail(mail, fallbackDifficulty) {
     const subject = sanitizeText(mail?.subject, 100);
-    const body = sanitizeText(mail?.body, 6000);
+    const body = sanitizeText(mail?.body, 1200);
     if (!subject || !body) return null;
 
     if (typeof mail?.is_phishing !== 'boolean') return null;
@@ -150,7 +150,7 @@ export async function generateSpamMailsWithAI({ count, day = 1, existingSubjects
     try {
         completion = await openai.chat.completions.create({
             model: OPENAI_MODEL,
-            temperature: 1.5,
+            temperature: 0.7,
             response_format: { type: 'json_object' },
             messages: [
                 {
@@ -166,11 +166,11 @@ Return JSON only in this shape:
   "mails": [
     {
       "subject": "string max 100 chars",
-    "sender_name": "string (required)",
-      "sender_email": "string or null",
+      "sender_name": "string",
+      "sender_email": "string",
       "body": "string",
       "real_url": "string or null",
-            "is_phishing": true,
+      "is_phishing": true,
       "hint": "short clue about phishing red flags",
       "difficulty": "easy|medium|hard",
       "category": "one short category"
@@ -179,29 +179,29 @@ Return JSON only in this shape:
 }
 
 Rules:
-- sender_name must always be present and non-empty.
-- Mix phishing and real emails. Include BOTH types using is_phishing true/false.
-- About 55% should be phishing and 45% should be real.
+- About 55% should be phishing and 45% should be real. Include BOTH types using is_phishing true/false.
 - Target difficulty distribution for this day:
     - easy: ${difficultyDistribution.easy}
     - medium: ${difficultyDistribution.medium}
     - hard: ${difficultyDistribution.hard}
-- Do not duplicate subjects.
 - You can use real company names.
+- If you send a link in bodytext, as an example, you can write [l]click me[/l], and put the real URL in real_url field.
 - ALL text must be in natural Danish (subjects, body, sender names where appropriate, hints, categories).
-- Do not use any subject from this existing subject list:
+- Optionally, you can address the recipient by different common Danish names in the body to add realism.
+- Avoid using subjects from this existing subject list:
 ${JSON.stringify(blockedSubjects)}
-- Vary tactics and writing style.
+- Vary writing styles and tactics like urgency, curiosity, fear, or impersonation to create a diverse set of emails.
 - Difficult mails should be hard to distinguish from real mails, while easy ones should have more obvious red flags.
-- For real mails, hint can explain why it looks legitimate.
-- Keep content realistic but safe for training.`
+- Maximum 1000 characters in each body, but vary between short and long mails.
+- For real mails, hint can explain why it looks legitimate, and for phishing mails it can point out red flags without giving away the exact attack vector.
+`
                 }
             ]
         });
     } catch (error) {
         const status = error?.status || 'unknown';
         const details = error?.message || String(error);
-        throw new Error(`OpenAI API request failed (${status}): ${details.slice(0, 300)}`);
+        throw new Error(`OpenAI API request failed (${status}): ${details}`);
     }
 
     const content = completion?.choices?.[0]?.message?.content;

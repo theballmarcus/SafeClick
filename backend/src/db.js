@@ -115,26 +115,47 @@ export async function initDb() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     ) ENGINE=InnoDB`;
     await pool.query(highscoreSql);
-
 }
 
 export async function truncateMails() {
     await pool.query('DROP TABLE unique_mails');
+    initDb()
 }
 
 export async function truncateHighscores() {
     await pool.query('DROP TABLE highscore');
+    initDb();
 }
 
 export async function createHighscore({ highscore, username = null }) {
+    // Check if a highscore for this username already exists
+    const [rows] = await pool.query('SELECT id, highscore FROM highscore WHERE username = ?', [username]);
+    if (rows && rows.length > 0) {
+        const existing = rows[0];
+        const existingScore = Number(existing.highscore) || 0;
+        const newScore = Number(highscore) || 0;
+        const finalScore = Math.max(existingScore, newScore);
+
+        if (finalScore !== existingScore) {
+            await pool.query('UPDATE highscore SET highscore = ?, created_at = CURRENT_TIMESTAMP WHERE id = ?', [finalScore, existing.id]);
+        }
+
+        return {
+            id: parseInt(existing.id),
+            username,
+            highscore: finalScore
+        };
+    }
+
     const [result] = await pool.query(
         'INSERT INTO highscore (username, highscore) VALUES (?, ?)',
         [username, highscore]
     );
 
-    return { 
-        id: parseInt(result.insertId), 
-        username 
+    return {
+        id: parseInt(result.insertId),
+        username,
+        highscore: Number(highscore)
     };
 }
 

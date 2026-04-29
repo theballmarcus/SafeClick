@@ -91,7 +91,6 @@ func _ready():
 	phishing_button.visible = false
 	tool_button.visible = false
 	time_label.visible = false
-	
 
 func _process(delta):
 	if not day_running:
@@ -169,7 +168,8 @@ func open_mail(mail, item):
 	current_mail["ui_node"] = item
 	subject_label.text = mail["subject"]
 	sender_label.text = "Fra: %s <%s>" % [mail["sender_name"], mail["sender_email"]]
-	body_text.text = mail["body"]
+	var cur_body_text = mail["body"].replace('[l]', '[url][color=blue]').replace('[/l]', '[/color]s[/url]')
+	body_text.text = cur_body_text
 	hover_url_button.visible = str(mail["real_url"]) != ""
 	hover_url_label.visible = false
 	hover_url_label.text = "URL: %s" % mail["real_url"]
@@ -281,7 +281,7 @@ func show_boss():
 
 	# Then pick random qoute from Gamestate.BOSS_QUOTES based on performance
 	var performance: float = (float(score) / max(float(max_score), 1.0)) * 100.0
-	performance = 100
+	#performance = 100
 	var quote_pool := []
 	
 	var qoute_feedback_pre := ""

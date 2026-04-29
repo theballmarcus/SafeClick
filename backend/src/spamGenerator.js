@@ -5,8 +5,9 @@ const VALID_DIFFICULTIES = new Set(['easy', 'medium', 'hard']);
 
 function normalizeDay(day) {
     const parsed = Number(day);
-    if (!Number.isInteger(parsed)) return 1;
-    return Math.min(10, Math.max(1, parsed));
+    if (Number.isNaN(parsed)) return 1;
+    const asInt = Math.trunc(parsed);
+    return Math.min(10, Math.max(1, asInt));
 }
 
 function getDifficultyDistributionForDay(day) {
@@ -58,40 +59,6 @@ function sanitizeText(value, maxLength) {
     return trimmed.slice(0, maxLength);
 }
 
-function titleCaseWords(value) {
-    return String(value)
-        .split(' ')
-        .filter(Boolean)
-        .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
-        .join(' ')
-        .trim();
-}
-
-function inferSenderNameFromEmail(senderEmail) {
-    if (!senderEmail) return null;
-
-    const localPart = String(senderEmail).split('@')[0] || '';
-    const cleaned = localPart
-        .replace(/[._-]+/g, ' ')
-        .replace(/[^a-zA-Z0-9\s]/g, ' ')
-        .replace(/\s+/g, ' ')
-        .trim();
-
-    if (!cleaned) return null;
-    return titleCaseWords(cleaned).slice(0, 255) || null;
-}
-
-function resolveSenderName(mail) {
-    const directSenderName = sanitizeText(mail?.sender_name, 255);
-    if (directSenderName) return directSenderName;
-
-    const senderEmail = sanitizeText(mail?.sender_email, 255);
-    const inferredFromEmail = inferSenderNameFromEmail(senderEmail);
-    if (inferredFromEmail) return inferredFromEmail;
-
-    return 'Ukendt afsender';
-}
-
 function normalizeGeneratedMail(mail, fallbackDifficulty) {
     const subject = sanitizeText(mail?.subject, 100);
     const body = sanitizeText(mail?.body, 1200);
@@ -105,10 +72,7 @@ function normalizeGeneratedMail(mail, fallbackDifficulty) {
         : fallbackDifficulty;
 
     const senderEmail = sanitizeText(mail?.sender_email, 255);
-    const senderName = resolveSenderName({
-        sender_name: mail?.sender_name,
-        sender_email: senderEmail
-    });
+    const senderName = sanitizeText(mail?.sender_name, 255);
 
     return {
         subject,
@@ -131,7 +95,7 @@ export async function generateSpamMailsWithAI({ count, day = 1, existingSubjects
 
     const openai = new OpenAI({ apiKey });
 
-    const requestedCount = Math.min(Math.max(Number(count) || 1, 1), 30);
+    const requestedCount = Math.min(count, 30);
     const normalizedDay = normalizeDay(day);
     const difficultyDistribution = getDifficultyDistributionForDay(normalizedDay);
     const fallbackDifficulty = normalizedDay <= 3
@@ -140,11 +104,7 @@ export async function generateSpamMailsWithAI({ count, day = 1, existingSubjects
             ? 'medium'
             : 'hard';
 
-    const blockedSubjects = Array.from(new Set(
-        (Array.isArray(existingSubjects) ? existingSubjects : [])
-            .filter((value) => typeof value === 'string' && value.trim())
-            .map((value) => value.trim())
-    )).slice(-300);
+    const blockedSubjects = existingSubjects.map((value) => value.trim());
 
     let completion;
     try {
@@ -179,6 +139,7 @@ Return JSON only in this shape:
 }
 
 Rules:
+- Mails must always include a subject and body, but sender_name, sender_email, real_url, hint
 - About 55% should be phishing and 45% should be real. Include BOTH types using is_phishing true/false.
 - Target difficulty distribution for this day:
     - easy: ${difficultyDistribution.easy}
@@ -206,26 +167,14 @@ ${JSON.stringify(blockedSubjects)}
 
     const content = completion?.choices?.[0]?.message?.content;
     const parsed = parseJsonPayload(content);
-    const candidates = Array.isArray(parsed)
-        ? parsed
-        : Array.isArray(parsed?.mails)
-            ? parsed.mails
-            : [];
 
-    const blockedSet = new Set(blockedSubjects.map((subject) => subject.toLowerCase()));
-    const uniqueSubjects = new Set();
     const normalized = [];
 
-    for (const candidate of candidates) {
+    for (const candidate of parsed.mails) {
         const mail = normalizeGeneratedMail(candidate, fallbackDifficulty);
         if (!mail) continue;
 
-        const key = mail.subject.toLowerCase();
-        if (blockedSet.has(key) || uniqueSubjects.has(key)) continue;
-
-        uniqueSubjects.add(key);
         normalized.push(mail);
-        if (normalized.length >= requestedCount) break;
     }
 
     return normalized;

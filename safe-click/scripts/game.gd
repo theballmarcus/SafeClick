@@ -168,7 +168,7 @@ func open_mail(mail, item):
 	current_mail["ui_node"] = item
 	subject_label.text = mail["subject"]
 	sender_label.text = "Fra: %s <%s>" % [mail["sender_name"], mail["sender_email"]]
-	var cur_body_text = mail["body"].replace('[l]', '[url][color=blue]').replace('[/l]', '[/color]s[/url]')
+	var cur_body_text = mail["body"].replace('[l]', '[url]').replace('[/l]', '[/url]')
 	body_text.text = cur_body_text
 	hover_url_button.visible = str(mail["real_url"]) != ""
 	hover_url_label.visible = false

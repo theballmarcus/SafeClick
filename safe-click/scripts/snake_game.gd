@@ -1,8 +1,8 @@
 extends Node2D
 
 @export var grid_size := 42
-@export var board_width := 14
-@export var board_height := 10
+@export var board_width := 20
+@export var board_height := 13
 @export var tick_rate := 0.15
 @export var food_texture: Texture2D
 
@@ -110,7 +110,7 @@ func _draw():
 
 	for x in board_width:
 		for y in board_height:
-			draw_rect(Rect2(x * grid_size, y * grid_size, grid_size - 1, grid_size - 1), Color(0.12,0.12,0.12), false)
+			draw_rect(Rect2(x * grid_size, y * grid_size, grid_size - 1, grid_size - 1), Color(0.122, 0.122, 0.122, 0.3), false)
 
 	var food_pos = Vector2(food * grid_size)
 

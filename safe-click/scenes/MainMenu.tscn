@@ -16,6 +16,7 @@
 [ext_resource type="Theme" uid="uid://ct2telxc5wpci" path="res://graphics/themes/Button3.tres" id="15_8vx4p"]
 [ext_resource type="Texture2D" uid="uid://na2hjs8tfyfj" path="res://graphics/images/mailanimation/1.png" id="15_wrgne"]
 [ext_resource type="Theme" uid="uid://cgotv5vax3tlo" path="res://graphics/themes/Button2.tres" id="16_tdapf"]
+[ext_resource type="Theme" uid="uid://bxyw0eqfm4fbv" path="res://graphics/themes/Background.tres" id="17_8vx4p"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hm0al"]
 animations = [{
@@ -67,27 +68,22 @@ animations = [{
 "speed": 3.0
 }]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8vx4p"]
+bg_color = Color(0.6, 0.59607846, 0.6, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 1, 1, 1)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
 [node name="MainMenu" type="Node2D" unique_id=1025483519]
 script = ExtResource("1_yqorp")
 
 [node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=1498115019]
-
-[node name="Highscore" parent="." unique_id=1556198625 instance=ExtResource("2_0ykhv")]
-z_index = 9
-offset_left = 10.0
-offset_top = 40.0
-offset_right = 301.0
-offset_bottom = 136.0
-
-[node name="Label" type="Label" parent="Highscore" unique_id=154313779]
-layout_mode = 0
-offset_left = 15.0
-offset_top = -30.0
-offset_right = 268.0
-offset_bottom = 13.0
-theme_override_fonts/font = ExtResource("3_l4mxc")
-theme_override_font_sizes/font_size = 32
-text = "Leaderboard"
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1224852831]
 z_index = -1
@@ -105,12 +101,12 @@ theme_override_font_sizes/font_size = 60
 text = "SafeClick"
 
 [node name="Mouse" type="TextureRect" parent="SafeClick" unique_id=1923078235]
-z_index = 2
+z_index = 5
 layout_mode = 0
 offset_left = 365.0
-offset_top = 39.0
+offset_top = 22.0
 offset_right = 430.0
-offset_bottom = 104.0
+offset_bottom = 87.0
 texture = ExtResource("5_826wr")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SafeClick" unique_id=1943702639]
@@ -124,10 +120,10 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 392.0
-offset_top = 340.0
-offset_right = 520.0
-offset_bottom = 443.0
+offset_left = 394.0
+offset_top = 315.0
+offset_right = 522.0
+offset_bottom = 418.0
 grow_horizontal = 0
 grow_vertical = 0
 theme = ExtResource("14_hubol")
@@ -137,10 +133,10 @@ theme_override_font_sizes/font_size = 18
 text = "Start Spil"
 
 [node name="QuitButton" type="Button" parent="." unique_id=1811172870]
-offset_left = 678.0
-offset_top = 340.0
-offset_right = 806.0
-offset_bottom = 443.0
+offset_left = 672.0
+offset_top = 315.0
+offset_right = 800.0
+offset_bottom = 418.0
 theme = ExtResource("15_8vx4p")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("3_l4mxc")
@@ -148,15 +144,53 @@ theme_override_font_sizes/font_size = 18
 text = "Exit Spil"
 
 [node name="TutorialButton" type="Button" parent="." unique_id=1302199518]
-offset_left = 535.0
-offset_top = 340.0
-offset_right = 663.0
-offset_bottom = 443.0
+offset_left = 533.0
+offset_top = 315.0
+offset_right = 661.0
+offset_bottom = 418.0
 theme = ExtResource("16_tdapf")
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_fonts/font = ExtResource("3_l4mxc")
 theme_override_font_sizes/font_size = 18
 text = "Tutorial"
+
+[node name="Highscore" parent="." unique_id=1556198625 instance=ExtResource("2_0ykhv")]
+z_index = 10
+offset_left = 11.0
+offset_top = 55.0
+offset_right = 302.0
+offset_bottom = 58.0
+
+[node name="Button" type="Button" parent="." unique_id=1432747092]
+z_index = -1
+offset_left = 9.0
+offset_top = 8.0
+offset_right = 305.0
+offset_bottom = 644.0
+theme = ExtResource("17_8vx4p")
+
+[node name="Label" type="Label" parent="." unique_id=154313779]
+z_index = 5
+offset_left = 31.0
+offset_top = 12.0
+offset_right = 284.0
+offset_bottom = 55.0
+theme_override_fonts/font = ExtResource("3_l4mxc")
+theme_override_font_sizes/font_size = 32
+text = "Leaderboard"
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1690349246]
+offset_left = 12.0
+offset_top = 55.0
+offset_right = 304.0
+offset_bottom = 56.0
+
+[node name="Panel" type="Panel" parent="." unique_id=650936655]
+offset_left = 6.0
+offset_top = 6.0
+offset_right = 309.0
+offset_bottom = 647.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_8vx4p")
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://6a1c2b7ljyx8" path="res://scenes/Game.tscn" id="1_cfv3y"]
 [ext_resource type="Texture2D" uid="uid://bnvdso5i71hka" path="res://graphics/images/DayPlaying.png" id="1_u5f0c"]
-[ext_resource type="Script" uid="uid://cbjpyfe4yxc4w" path="res://scenes/control.gd" id="2_288ch"]
+[ext_resource type="Script" uid="uid://cbjpyfe4yxc4w" path="res://scripts/tutorial.gd" id="2_288ch"]
 [ext_resource type="Texture2D" uid="uid://dde0tuq47end8" path="res://graphics/images/Boss3a.png" id="2_pgr2e"]
 [ext_resource type="Texture2D" uid="uid://chme7l2e27crq" path="res://graphics/images/Boss3b.png" id="3_ebau5"]
 [ext_resource type="Texture2D" uid="uid://bmkco34c5w7v5" path="res://graphics/images/SpeechBoxGod.png" id="5_288ch"]

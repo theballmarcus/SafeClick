@@ -53,6 +53,11 @@ var rect_size := Vector2(155, 39)
 @onready var SettingsMenu = $TopBar/TopPanel/SettingsMenu
 @onready var StatsMenu = $TopBar/TopPanel/StatsMenu
 @onready var calender_label = $TopBar/TopPanel/Calender/CalenderLabel
+@onready var toolbar = $"MainArea/MailPanel/Baggrund/Værktøjslinje"
+@onready var tool_button = $MainArea/MailPanel/AnimatedShape/ToolButton
+@onready var day_playing_icon = $DayPlaying
+@onready var day_bar = $StartNewDayBar
+@onready var start_day_label = $StartNewDayBar/StartNyDag
 
 @onready var feedback_menu = $BossFeedback
 @onready var boss_label = $BossFeedback/SpeechBubble/BossLabel
@@ -75,22 +80,18 @@ func _ready():
 	phishing_button.pressed.connect(_on_phishing_pressed)
 	hover_url_button.pressed.connect(_on_hover_url_pressed)
 	new_day_button.pressed.connect(start_new_day)
-	#feedback_menu.gui_input.connect(_on_boss_feedback_gui_input)
 	new_day_button.visible = true
 	clear_mail_view()
 	update_topbar()
 	SettingsMenu.visible = false
 	StatsMenu.visible = false
 	
-	var style = StyleBoxFlat.new()
-	style.bg_color = Color("c3c3c396")
-	style.corner_radius_top_left = 60
-	style.corner_radius_top_right = 60
-	style.corner_radius_bottom_left = 60
-	style.corner_radius_bottom_right = 60
-	shape.visible = true
-	shape.add_theme_stylebox_override("panel", style)
-	shape.size = circle_size
+	toolbar.visible = false
+	legit_button.visible = false
+	phishing_button.visible = false
+	tool_button.visible = false
+	time_label.visible = false
+	
 
 func _process(delta):
 	if not day_running:
@@ -253,6 +254,19 @@ func end_day():
 	update_topbar()
 	save_progress()
 	
+	toolbar.visible = false
+	legit_button.visible = false
+	phishing_button.visible = false
+	tool_button.visible = false
+	time_label.visible = false
+	day_playing_icon.visible = false
+	day_bar.visible = true
+	hover_url_button.visible = false
+	shape.visible = false
+	
+	start_day_label.text = "Start ny dag!"
+	start_day_label.add_theme_font_size_override("font_size", 20)
+	
 	boss_shown = false
 	feedback_menu.visible = false
 	snake_game.start()
@@ -267,6 +281,7 @@ func show_boss():
 
 	# Then pick random qoute from Gamestate.BOSS_QUOTES based on performance
 	var performance: float = (float(score) / max(float(max_score), 1.0)) * 100.0
+	performance = 100
 	var quote_pool := []
 	
 	var qoute_feedback_pre := ""
@@ -459,3 +474,22 @@ func _on_idea_button_pressed() -> void:
 		hint_label.visible = true
 	else:
 		hint_label.visible = false
+
+func _on_new_day_button_pressed() -> void:
+	toolbar.visible = true
+	legit_button.visible = true
+	phishing_button.visible = true
+	tool_button.visible = true
+	time_label.visible = true
+	day_playing_icon.visible = true
+	day_bar.visible = false
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color("c3c3c396")
+	style.corner_radius_top_left = 60
+	style.corner_radius_top_right = 60
+	style.corner_radius_bottom_left = 60
+	style.corner_radius_bottom_right = 60
+	shape.visible = true
+	shape.add_theme_stylebox_override("panel", style)
+	shape.size = circle_size
+	hover_url_button.visible = false

@@ -36,10 +36,10 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "Du fik %d i score!"
 
 [node name="Username" type="Label" parent="." unique_id=2066079140]
-offset_left = 455.0
-offset_top = 286.0
-offset_right = 744.0
-offset_bottom = 309.0
+offset_left = 445.0
+offset_top = 287.0
+offset_right = 747.0
+offset_bottom = 310.0
 text = "Skriv dit brugernavn i feltet herunder"
 
 [node name="SubmitButton" type="Button" parent="." unique_id=1101976163]

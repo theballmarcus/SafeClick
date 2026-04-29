@@ -5,22 +5,18 @@ extends Node
 @onready var score_label = $ScoreLabel
 @onready var submit_button = $SubmitButton
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	pass
 	submit_button.pressed.connect(_on_submit_pressed)
 	http_request.request_completed.connect(_on_request_completed)
 	score_label.text = "Du fik %d i score!" % [Gamestate.user_score]
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
 
 func _on_submit_pressed():
 	if username_input.text.length() == 0:
 		return
-	# Lav en post request
 	var data = {
 		"username" : username_input.text,
 		"highscore" : Gamestate.user_score

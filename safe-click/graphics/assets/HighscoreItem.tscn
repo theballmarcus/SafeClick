@@ -1,46 +1,56 @@
 [gd_scene format=3 uid="uid://djt5osuoidl7h"]
 
 [ext_resource type="Theme" uid="uid://cgcvefu8sv8uc" path="res://graphics/themes/MailItem.tres" id="1_vd2mc"]
+[ext_resource type="FontFile" uid="uid://lohkoxhgdcob" path="res://graphics/fonts/Bungee-Regular.ttf" id="2_ryncy"]
 
 [node name="HighscoreItem" type="Button" unique_id=1836904760]
 self_modulate = Color(1, 1, 1, 0)
-custom_minimum_size = Vector2(292, 65)
+custom_minimum_size = Vector2(292, 60.5)
 offset_right = 292.0
-offset_bottom = 65.0
+offset_bottom = 60.0
 theme_override_colors/font_color = Color(0.13050123, 0.8617083, 0.16004495, 1)
 
 [node name="Control" type="Control" parent="." unique_id=1864737852]
 self_modulate = Color(1, 1, 1, 0)
 anchors_preset = 0
-offset_left = 1.0
-offset_top = 2.0
-offset_right = 292.0
-offset_bottom = 65.0
+offset_right = 291.0
+offset_bottom = 60.5
 mouse_filter = 1
 theme = ExtResource("1_vd2mc")
 
 [node name="Username" type="Label" parent="Control" unique_id=358169957]
-modulate = Color(0, 0, 0, 1)
 layout_mode = 0
-offset_left = 23.0
+offset_left = 39.0
 offset_top = 20.0
-offset_right = 206.0
-offset_bottom = 41.0
+offset_right = 165.0
+offset_bottom = 43.0
+theme_override_fonts/font = ExtResource("2_ryncy")
+theme_override_font_sizes/font_size = 18
 text = "David"
 
 [node name="Score" type="Label" parent="Control" unique_id=1481607316]
-modulate = Color(0, 0, 0, 1)
 layout_mode = 0
 offset_left = 160.0
-offset_top = 20.0
+offset_top = 19.0
 offset_right = 300.0
-offset_bottom = 48.0
+offset_bottom = 41.0
+theme_override_fonts/font = ExtResource("2_ryncy")
+theme_override_font_sizes/font_size = 17
 text = "100"
 horizontal_alignment = 1
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1346397039]
+[node name="ColorRect" type="ColorRect" parent="Control" unique_id=1346397039]
 layout_mode = 0
-offset_top = 64.0
-offset_right = 292.0
-offset_bottom = 65.0
-color = Color(0.78936666, 0.78936666, 0.78936666, 1)
+offset_left = -1.0
+offset_top = 60.5
+offset_right = 291.0
+offset_bottom = 61.5
+
+[node name="Number" type="Label" parent="Control" unique_id=1009801029]
+layout_mode = 0
+offset_left = -5.0
+offset_top = 10.0
+offset_right = 18.0
+offset_bottom = 36.0
+theme_override_fonts/font = ExtResource("2_ryncy")
+theme_override_font_sizes/font_size = 20

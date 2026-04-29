@@ -17,10 +17,11 @@ extends Control
 @onready var start_button_grey = $StartButtonGrey
 @onready var snake = $"../../Game/Snake"
 
+var scene_done: bool = false
 
 var dialogue_lines: Array[String] = [
 	"Velkommen til din Første dag på jobbet! På jobbet skal du tjekke firmaets indkommende mails for phishing.",
-	"For at starte din arbejdsdag skal du klikke på startknappen. Herefter skal du vurdere om kommende mails er ægte eller phishing mails.",
+	"For at starte din arbejdsdag skal du klikke på startknappen. Herefter skal du vurdere om indkommende mails er ægte eller phishing mails.",
 	"Du vil i løbet af dagen modtage mails i din indbakke. Klik på mailen, og afvis den, hvis du vurderer, at det er phishing, og videresend den, hvis det er en reel mail.",
 	"Hovsa! det var vist forkert. Hvis du kigger i mailens domæne kan du se at det ene 'o' er erstattet af et '0'. Prøv at afvise mailen.",
 	"Det var helt rigtigt! Du jo et naturtalent!"
@@ -83,6 +84,11 @@ func handle_click() -> void:
 	if is_typing:
 		is_typing = false
 		speech_text.visible_characters = full_text.length()
+		return
+		
+	if scene_done:
+		get_tree().change_scene_to_file("res://scenes/Game.tscn")
+		return
 		
 		if dialogue_index == 1:
 			start_button.disabled = false
@@ -168,6 +174,7 @@ func _on_godkend_button_pressed() -> void:
 	boss.visible = true
 	speech_text.visible = true
 	godkend_button.disabled = true
+	scene_done = true
 
 func _on_afvis_button_pressed() -> void:
 	speechbobble.visible = true
@@ -181,3 +188,4 @@ func _on_afvis_button_pressed() -> void:
 	emne_mail.visible = false
 	dialogue_index = 4
 	play_dialogue(dialogue_lines[4])
+	scene_done = true

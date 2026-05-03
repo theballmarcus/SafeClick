@@ -469,13 +469,14 @@ theme = ExtResource("17_a85ww")
 [node name="IdeaButton" type="Button" parent="MainArea/MailPanel/AnimatedShape" unique_id=1201720767]
 visible = false
 layout_mode = 0
-offset_left = 120.0
+offset_left = 95.0
 offset_top = 6.6
-offset_right = 145.0
+offset_right = 120.0
 offset_bottom = 31.6
 theme = ExtResource("17_jhsr3")
 
 [node name="HintLabel" type="Label" parent="MainArea/MailPanel/AnimatedShape/IdeaButton" unique_id=1889518184]
+visible = false
 modulate = Color(0, 0, 0, 1)
 z_index = 110
 layout_mode = 0
@@ -487,9 +488,9 @@ offset_bottom = -50.0
 [node name="HoverUrlButton" type="Button" parent="MainArea/MailPanel/AnimatedShape" unique_id=203944982]
 visible = false
 layout_mode = 0
-offset_left = 85.0
+offset_left = 60.0
 offset_top = 6.6
-offset_right = 110.0
+offset_right = 85.0
 offset_bottom = 31.6
 theme = ExtResource("18_jhsr3")
 

@@ -1,17 +1,29 @@
 [gd_scene format=3 uid="uid://slsvbqr61bdd"]
 
 [ext_resource type="PackedScene" uid="uid://6a1c2b7ljyx8" path="res://scenes/Game.tscn" id="1_cfv3y"]
-[ext_resource type="Texture2D" uid="uid://bnvdso5i71hka" path="res://graphics/images/DayPlaying.png" id="1_u5f0c"]
 [ext_resource type="Script" uid="uid://cbjpyfe4yxc4w" path="res://scripts/tutorial.gd" id="2_288ch"]
 [ext_resource type="Texture2D" uid="uid://dde0tuq47end8" path="res://graphics/images/Boss3a.png" id="2_pgr2e"]
 [ext_resource type="Texture2D" uid="uid://chme7l2e27crq" path="res://graphics/images/Boss3b.png" id="3_ebau5"]
 [ext_resource type="Texture2D" uid="uid://bmkco34c5w7v5" path="res://graphics/images/SpeechBoxGod.png" id="5_288ch"]
+[ext_resource type="Texture2D" uid="uid://bskfmxrcv3lm2" path="res://graphics/images/Boss2a.png" id="5_u5f0c"]
 [ext_resource type="Texture2D" uid="uid://odm4xt7berv" path="res://graphics/images/Arrow.png" id="7_y0w3d"]
 [ext_resource type="FontFile" uid="uid://bdaxgas4nuahb" path="res://graphics/fonts/Belgrano-Regular.ttf" id="8_u5f0c"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_288ch"]
 animations = [{
 "frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_pgr2e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_pgr2e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_pgr2e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_pgr2e")
+}, {
 "duration": 1.0,
 "texture": ExtResource("2_pgr2e")
 }, {
@@ -25,20 +37,20 @@ animations = [{
 "texture": ExtResource("2_pgr2e")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_pgr2e")
+"texture": ExtResource("5_u5f0c")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_pgr2e")
+"texture": ExtResource("5_u5f0c")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_pgr2e")
+"texture": ExtResource("5_u5f0c")
 }, {
 "duration": 1.0,
-"texture": ExtResource("2_pgr2e")
+"texture": ExtResource("5_u5f0c")
 }],
 "loop": true,
 "name": &"default",
-"speed": 1.0
+"speed": 3.0
 }]
 
 [node name="Node2D" type="Node2D" unique_id=1566535822]
@@ -66,36 +78,27 @@ theme_override_font_sizes/font_size = 22
 text = "PostNord Pakkeservice, <postnOrd@pakkelevering.dk>"
 
 [node name="Boss" type="AnimatedSprite2D" parent="CanvasLayer/Control" unique_id=1426990538]
-position = Vector2(197, 484.99997)
+position = Vector2(657, 485)
 scale = Vector2(0.76486486, 0.71929824)
 sprite_frames = SubResource("SpriteFrames_288ch")
 autoplay = "default"
 
 [node name="Arrow" type="TextureRect" parent="CanvasLayer/Control" unique_id=1426949607]
 layout_mode = 0
-offset_left = 1130.0
-offset_top = 472.0
-offset_right = 1226.0
-offset_bottom = 568.0
+offset_left = 285.0
+offset_top = 476.0
+offset_right = 381.0
+offset_bottom = 572.0
 rotation = 1.5707964
 texture = ExtResource("7_y0w3d")
 
 [node name="StartButton" type="Button" parent="CanvasLayer/Control" unique_id=1864696007]
 modulate = Color(1, 1, 1, 0)
 layout_mode = 0
-offset_left = 1063.0
+offset_left = 215.0
 offset_top = 585.0
-offset_right = 1106.0
+offset_right = 258.0
 offset_bottom = 628.0
-
-[node name="StartButtonGrey" type="TextureRect" parent="CanvasLayer/Control" unique_id=1043648661]
-layout_mode = 0
-offset_left = 1060.0
-offset_top = 583.0
-offset_right = 1105.0
-offset_bottom = 628.0
-texture = ExtResource("1_u5f0c")
-expand_mode = 1
 
 [node name="AfsenderIndhold" type="Label" parent="CanvasLayer/Control" unique_id=1943132447]
 visible = false
@@ -128,9 +131,9 @@ offset_top = 206.0
 offset_right = 1020.0
 offset_bottom = 480.0
 theme_override_font_sizes/normal_font_size = 22
-text = "Din pakke er blevet tilbageholdt, da den ikke er blevet tildelt en adresse. Du bliver dermed nødt til at betale 9kr i gebyr. Klik på understående link for at betale gebyret.
+text = "Din pakke er blevet tilbageholdt, da den ikke er blevet tildelt en adresse. Du bliver dermed nødt til at betale 9kr i gebyr. Klik her for at betale gebyret.
 
-postnord-levering-check.info"
+"
 
 [node name="GodkendButton" type="Button" parent="CanvasLayer/Control" unique_id=1677885960]
 modulate = Color(1, 1, 1, 0)
@@ -151,19 +154,19 @@ offset_bottom = 627.0
 [node name="SpeechBobble" type="TextureRect" parent="CanvasLayer/Control" unique_id=777826486]
 texture_filter = 3
 layout_mode = 0
-offset_left = 318.0
-offset_top = 211.0
-offset_right = 691.0
-offset_bottom = 482.0
+offset_left = 776.0
+offset_top = 134.0
+offset_right = 1149.0
+offset_bottom = 405.0
 texture = ExtResource("5_288ch")
 
 [node name="SpeechText" type="RichTextLabel" parent="CanvasLayer/Control" unique_id=1319910963]
 modulate = Color(0, 0, 0, 1)
 layout_mode = 0
-offset_left = 339.0
-offset_top = 234.0
-offset_right = 659.0
-offset_bottom = 406.0
+offset_left = 799.0
+offset_top = 156.0
+offset_right = 1129.0
+offset_bottom = 335.0
 theme_override_fonts/normal_font = ExtResource("8_u5f0c")
 theme_override_font_sizes/normal_font_size = 20
 fit_content = true
@@ -206,6 +209,27 @@ offset_top = 190.0
 offset_right = 293.0
 offset_bottom = 191.0
 color = Color(0.78936666, 0.78936666, 0.78936666, 1)
+
+[node name="Url" type="RichTextLabel" parent="CanvasLayer/Control" unique_id=86787897]
+visible = false
+layout_mode = 0
+offset_left = 347.0
+offset_top = 555.0
+offset_right = 738.0
+offset_bottom = 577.0
+bbcode_enabled = true
+text = "[color=black]URL:[/color] [color=#1a73e8][u]https://postn0rd-pakke.dk/betal[/u][/color]"
+
+[node name="Hint" type="Label" parent="CanvasLayer/Control" unique_id=1943834427]
+visible = false
+layout_mode = 0
+offset_left = 342.0
+offset_top = 531.0
+offset_right = 829.0
+offset_bottom = 597.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Du spørger chefen om hjælp - han siger: 
+“Undersøg både afsenderens mailadresse og linkets domæne.”"
 
 [connection signal="pressed" from="CanvasLayer/Control/StartButton" to="CanvasLayer/Control" method="_on_startbutton_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/GodkendButton" to="CanvasLayer/Control" method="_on_godkend_button_pressed"]

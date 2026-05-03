@@ -32,7 +32,7 @@ var max_score := 0
 
 var expanded := false
 var circle_size := Vector2(39, 39)
-var rect_size := Vector2(155, 39)
+var rect_size := Vector2(130, 39)
 
 @onready var inbox_container = $MainArea/Mails
 @onready var day_label = $TopBar/TopPanel/StatsMenu/TextureRect/DayLabel
@@ -91,6 +91,8 @@ func _ready():
 	phishing_button.visible = false
 	tool_button.visible = false
 	time_label.visible = false
+	
+	shape.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
 
 func _process(delta):
 	if not day_running:

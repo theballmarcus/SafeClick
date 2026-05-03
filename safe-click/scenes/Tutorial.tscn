@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://bskfmxrcv3lm2" path="res://graphics/images/Boss2a.png" id="5_u5f0c"]
 [ext_resource type="Texture2D" uid="uid://odm4xt7berv" path="res://graphics/images/Arrow.png" id="7_y0w3d"]
 [ext_resource type="FontFile" uid="uid://bdaxgas4nuahb" path="res://graphics/fonts/Belgrano-Regular.ttf" id="8_u5f0c"]
+[ext_resource type="Theme" uid="uid://bivscebox32sn" path="res://graphics/themes/TutorialMailButton.tres" id="9_0g6v0"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_288ch"]
 animations = [{
@@ -173,12 +174,12 @@ fit_content = true
 autowrap_mode = 2
 
 [node name="MailButton" type="Button" parent="CanvasLayer/Control" unique_id=2099743959]
-modulate = Color(1, 1, 1, 0)
 layout_mode = 0
 offset_left = 1.0
 offset_top = 133.0
 offset_right = 294.0
 offset_bottom = 189.0
+theme = ExtResource("9_0g6v0")
 
 [node name="TitelMail" type="Label" parent="CanvasLayer/Control" unique_id=2011274416]
 visible = false

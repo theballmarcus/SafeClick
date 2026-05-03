@@ -648,10 +648,10 @@ text = "Start dagen!"
 
 [node name="NewDayButton" type="Button" parent="." unique_id=430395349]
 z_index = 196
-offset_left = 214.0
-offset_top = 584.0
-offset_right = 259.0
-offset_bottom = 629.0
+offset_left = 217.0
+offset_top = 586.0
+offset_right = 257.0
+offset_bottom = 625.0
 mouse_default_cursor_shape = 2
 theme = ExtResource("16_vjgi4")
 

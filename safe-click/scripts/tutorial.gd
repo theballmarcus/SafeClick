@@ -52,7 +52,6 @@ var text_speed: float = 0.04
 var is_typing: bool = false
 var current_index: int = 0
 var arrow_start_pos: Vector2
-var arrow_pos_2: Vector2
 var arrow_tween: Tween
 
 var tool_button_active: bool = false
@@ -65,16 +64,17 @@ var phishing_button_active: bool = false
 var last_dialogue: bool = false
 
 func _ready() -> void:
-	arrow.visible = false
-	start_button.disabled = true
-	godkend_button.disabled = true
-	afvis_button.disabled = true
-	mail_button.disabled = true
+	set_nodes_visible([arrow], false)
+	set_nodes_disabled([start_button, godkend_button, afvis_button, mail_button], true)
+	
 	arrow_start_pos = arrow.position
 	play_dialogue(dialogue_lines[dialogue_index])
+	
 	snake.visible = false
-	shape.visible = false
 	snake.process_mode = Node.PROCESS_MODE_DISABLED
+	
+	shape.visible = false
+	
 	indhold.bbcode_enabled = true
 	indhold.text = "Din pakke er blevet tilbageholdt, da den ikke er blevet tildelt en adresse. Du bliver dermed nødt til at betale 9kr i gebyr. Klik [u]her[/u] for at betale gebyret."
 
@@ -87,8 +87,6 @@ func play_dialogue(new_text: String) -> void:
 	is_typing = true
 	
 	if dialogue_index == 4:
-		if arrow_tween:
-			arrow_tween.kill()
 		show_arrow(Vector2(512, 476))
 		arrow.rotation_degrees = 90
 		
@@ -118,24 +116,28 @@ func show_text() -> void:
 		
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:
-		if tool_button_active and _mouse_is_over_tool_button(event.position):
+		if tool_button_active and mouse_is_over(tool_button, event.position):
 			_on_tool_button_pressed()
 			return
-		if hover_url_button_active and _mouse_is_over_hover_url_button(event.position):
+			
+		if hover_url_button_active and mouse_is_over(hover_url_button, event.position):
 			_on_hover_url_button_pressed()
 			return
-		if idea_button_active and _mouse_is_over_idea_button(event.position):
+			
+		if idea_button_active and mouse_is_over(idea_button, event.position):
 			_on_idea_button_pressed()
 			return
-		if legit_button_active and _mouse_is_over_legit_button(event.position):
+			
+		if legit_button_active and mouse_is_over(legit_button, event.position):
 			_on_godkend_button_pressed()
 			return
-		if phishing_button_active and _mouse_is_over_phishing_button(event.position):
+			
+		if phishing_button_active and mouse_is_over(phishing_button, event.position):
 			_on_afvis_button_pressed()
 			return
 			
 		handle_click()
-
+		
 	if event.is_action_pressed("ui_accept"):
 		handle_click()
 
@@ -187,6 +189,36 @@ func handle_click() -> void:
 				
 				play_dialogue(dialogue_lines[dialogue_index])
 
+func set_nodes_visible(nodes: Array, value: bool) -> void:
+	for node in nodes:
+		node.visible = value
+
+func set_nodes_disabled(nodes: Array, value: bool) -> void:
+	for node in nodes:
+		node.disabled = value
+
+func set_interaction_active(value: bool) -> void:
+	tool_button_active = value
+	hover_url_button_active = value
+	idea_button_active = value
+	legit_button_active = value
+	phishing_button_active = value
+
+func mouse_is_over(node: Control, mouse_pos: Vector2) -> bool:
+	var rect := Rect2(node.global_position, node.size)
+	return rect.has_point(mouse_pos)
+
+func apply_shape_style() -> void:
+	var style = StyleBoxFlat.new()
+	style.bg_color = Color("c3c3c396")
+	style.corner_radius_top_left = 60
+	style.corner_radius_top_right = 60
+	style.corner_radius_bottom_left = 60
+	style.corner_radius_bottom_right = 60
+	
+	shape.visible = true
+	shape.add_theme_stylebox_override("panel", style)
+
 func show_arrow(new_pos:Vector2) -> void:
 	arrow.visible = true
 	arrow_start_pos = new_pos
@@ -223,29 +255,19 @@ func _on_startbutton_pressed() -> void:
 	play_dialogue(dialogue_lines[2])
 		
 func _on_mail_button_pressed() -> void:
-	arrow.visible = false
-	speechbobble.visible = false
-	boss.visible = false
-	speech_text.visible = false
+	set_nodes_visible([arrow, speechbobble, boss, speech_text], false)
 	
-	afsender_indhold.visible = true
-	emne_indhold.visible = true
-	indhold.visible = true
-	værktøjslinje.visible = true
-	tool_button.visible = true
-	legit_button.visible = true
-	phishing_button.visible = true
-	time_label.visible = true
-	shape.visible = true
+	set_nodes_visible([
+		afsender_indhold,
+		emne_indhold,
+		indhold,
+		værktøjslinje,
+		tool_button,
+		legit_button,
+		phishing_button
+	], true)
 	
-	var style = StyleBoxFlat.new()
-	style.bg_color = Color("c3c3c396")
-	style.corner_radius_top_left = 60
-	style.corner_radius_top_right = 60
-	style.corner_radius_bottom_left = 60
-	style.corner_radius_bottom_right = 60
-
-	shape.add_theme_stylebox_override("panel", style)
+	apply_shape_style()
 	shape.size = game.circle_size
 	
 	mail_button.disabled = true
@@ -255,43 +277,16 @@ func _on_mail_button_pressed() -> void:
 	speechbobble.scale.x = -1
 	speech_text.position = Vector2(561, 281)
 	
-	await get_tree() .create_timer(0.0).timeout
-	boss.visible = true
-	speechbobble.visible = true
-	speech_text.visible = true
+	set_nodes_visible([boss, speechbobble, speech_text], true)
+	
 	tool_button_active = false
 	tool_button.disabled = false
-	time_label.visible = false
 	
 	dialogue_index = 3
 	play_dialogue(dialogue_lines[3])
 	
-func _mouse_is_over_tool_button(mouse_pos: Vector2) -> bool:
-	var rect := Rect2(tool_button.global_position, tool_button.size)
-	return rect.has_point(mouse_pos)
-func _mouse_is_over_hover_url_button(mouse_pos: Vector2) -> bool:
-	var rect := Rect2(hover_url_button.global_position, hover_url_button.size)
-	return rect.has_point(mouse_pos)
-func _mouse_is_over_idea_button(mouse_pos: Vector2) -> bool:
-	var rect := Rect2(idea_button.global_position, idea_button.size)
-	return rect.has_point(mouse_pos)
-func _mouse_is_over_legit_button(mouse_pos: Vector2) -> bool:
-	var rect := Rect2(legit_button.global_position, legit_button.size)
-	return rect.has_point(mouse_pos)
-func _mouse_is_over_phishing_button(mouse_pos: Vector2) -> bool:
-	var rect := Rect2(phishing_button.global_position, phishing_button.size)
-	return rect.has_point(mouse_pos)
-	
 func _on_tool_button_pressed() -> void:
-	var style = StyleBoxFlat.new()
-	style.bg_color = Color("c3c3c396")
-	style.corner_radius_top_left = 60
-	style.corner_radius_top_right = 60
-	style.corner_radius_bottom_left = 60
-	style.corner_radius_bottom_right = 60
-	
-	shape.visible = true
-	shape.add_theme_stylebox_override("panel", style)
+	apply_shape_style()
 
 	if not free_mail_choice_mode:
 		show_arrow(Vector2(566, 476))
@@ -355,32 +350,24 @@ func _on_godkend_button_pressed() -> void:
 	play_dialogue(dialogue_lines[7])
 
 func _on_afvis_button_pressed() -> void:
-	tool_button_active = false
-	hover_url_button_active = false
-	idea_button_active = false
-	legit_button_active = false
-	phishing_button_active = false
+	set_interaction_active(false)
 	free_mail_choice_mode = false
 	can_choose_mail_type = false
 
-	url.visible = false
-	hint.visible = false
-	arrow.visible = false
-
-	godkend_button.disabled = true
-	afvis_button.disabled = true
-	tool_button.disabled = true
+	tool_button.disabled = false
+	set_nodes_visible([url, hint, arrow], false)
+	set_nodes_disabled([godkend_button, afvis_button], true)
 	
-	speechbobble.visible = true
-	boss.visible = true
-	speech_text.visible = true
+	set_nodes_visible([speechbobble, boss, speech_text], true)
 	
-	afsender_indhold.visible = false
-	emne_indhold.visible = false
-	indhold.visible = false
-	mail_barriere.visible = false
-	titel_mail.visible = false
-	emne_mail.visible = false
+	set_nodes_visible([
+		afsender_indhold,
+		emne_indhold,
+		indhold,
+		mail_barriere,
+		titel_mail,
+		emne_mail
+	], false)
 	
 	dialogue_index = 8
 	last_dialogue = false

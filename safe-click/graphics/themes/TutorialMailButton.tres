@@ -1,19 +1,9 @@
-[gd_resource type="Theme" format=3 uid="uid://bhjhubx6g25ei"]
+[gd_resource type="Theme" format=3 uid="uid://bivscebox32sn"]
 
-[ext_resource type="FontFile" uid="uid://bdaxgas4nuahb" path="res://graphics/fonts/Belgrano-Regular.ttf" id="1_vwqqq"]
-[ext_resource type="Texture2D" uid="uid://dhohe3etb2o8l" path="res://graphics/images/Start.png" id="2_f23sl"]
+[ext_resource type="FontFile" uid="uid://bdaxgas4nuahb" path="res://graphics/fonts/Belgrano-Regular.ttf" id="1_vxf0k"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l0pal"]
-content_margin_left = 4.0
-content_margin_top = 4.0
-content_margin_right = 4.0
-content_margin_bottom = 4.0
-bg_color = Color(0.1, 0.1, 0.1, 0.3)
-corner_radius_top_left = 3
-corner_radius_top_right = 3
-corner_radius_bottom_right = 3
-corner_radius_bottom_left = 3
-corner_detail = 5
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uq6vq"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hpanq"]
 content_margin_left = 4.0
@@ -36,22 +26,23 @@ expand_margin_top = 2.0
 expand_margin_right = 2.0
 expand_margin_bottom = 2.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_vwqqq"]
-texture = ExtResource("2_f23sl")
-expand_margin_left = 5.0
-expand_margin_top = 5.0
-expand_margin_right = 5.0
-expand_margin_bottom = 5.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vxf0k"]
+bg_color = Color(0.6, 0.6, 0.6, 0.54509807)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_eqfb3"]
-texture = ExtResource("2_f23sl")
-region_rect = Rect2(8, 8, 80, 80)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pnxbx"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f23sl"]
-texture = ExtResource("2_f23sl")
-expand_margin_left = 5.0
-expand_margin_top = 5.0
-expand_margin_right = 5.0
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_etbo4"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0, 0, 0, 0.6)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+corner_detail = 5
 
 [resource]
 Button/colors/font_color = Color(0.875, 0.875, 0.875, 1)
@@ -72,9 +63,9 @@ Button/constants/h_separation = 4
 Button/constants/icon_max_width = 0
 Button/constants/outline_size = 0
 Button/font_sizes/font_size = 16
-Button/fonts/font = ExtResource("1_vwqqq")
-Button/styles/disabled = SubResource("StyleBoxFlat_l0pal")
+Button/fonts/font = ExtResource("1_vxf0k")
+Button/styles/disabled = SubResource("StyleBoxFlat_uq6vq")
 Button/styles/focus = SubResource("StyleBoxFlat_hpanq")
-Button/styles/hover = SubResource("StyleBoxTexture_vwqqq")
-Button/styles/normal = SubResource("StyleBoxTexture_eqfb3")
-Button/styles/pressed = SubResource("StyleBoxTexture_f23sl")
+Button/styles/hover = SubResource("StyleBoxFlat_vxf0k")
+Button/styles/normal = SubResource("StyleBoxFlat_pnxbx")
+Button/styles/pressed = SubResource("StyleBoxFlat_etbo4")

@@ -5,6 +5,7 @@ extends Node
 @onready var score_label = $ScoreLabel
 @onready var submit_button = $SubmitButton
 
+
 func _ready() -> void:
 	pass
 	submit_button.pressed.connect(_on_submit_pressed)
@@ -15,6 +16,7 @@ func _process(delta: float) -> void:
 	pass
 
 func _on_submit_pressed():
+	Sound.play_sound("ButtonClicked")
 	if username_input.text.length() == 0:
 		return
 	var data = {
@@ -32,3 +34,11 @@ func _on_request_completed(result, response_code, _headers, body):
 	print(response_text)
 	var err = get_tree().change_scene_to_file("res://scenes/MainMenu.tscn")
 	print("Scene change result: ", err)
+
+func _on_exit_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
+	get_tree().quit()
+
+func _on_restart_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
+	get_tree().change_scene_to_file("res://scenes/Game.tscn")

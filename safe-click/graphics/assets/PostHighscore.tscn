@@ -1,11 +1,27 @@
 [gd_scene format=3 uid="uid://bfayfoa2sloiy"]
 
 [ext_resource type="Script" uid="uid://dniclfcmj3kqj" path="res://scripts/post_highscore.gd" id="1_b3qs3"]
+[ext_resource type="Theme" uid="uid://j5u3y12053wn" path="res://graphics/themes/Button1.tres" id="2_eote1"]
+[ext_resource type="FontFile" uid="uid://lohkoxhgdcob" path="res://graphics/fonts/Bungee-Regular.ttf" id="3_hg1f2"]
+[ext_resource type="Theme" uid="uid://cgotv5vax3tlo" path="res://graphics/themes/Button2.tres" id="4_y3h52"]
+[ext_resource type="Theme" uid="uid://ct2telxc5wpci" path="res://graphics/themes/Button3.tres" id="5_8dyj1"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l5yqj"]
+bg_color = Color(0.87486136, 0.87486136, 0.87486136, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.078431375)
+shadow_size = 14
+shadow_offset = Vector2(2, 2)
 
 [node name="PostHighscore" type="Node2D" unique_id=145812766]
 script = ExtResource("1_b3qs3")
-
-[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=674315563]
 
 [node name="ClickFilter" type="Control" parent="." unique_id=1355000555]
 z_index = 100
@@ -14,37 +30,112 @@ anchors_preset = 0
 offset_right = 1150.0
 offset_bottom = 648.0
 
-[node name="Background" type="ColorRect" parent="." unique_id=453380534]
-offset_left = 427.0
-offset_top = 237.0
-offset_right = 762.0
-offset_bottom = 450.0
-color = Color(0.41598046, 0.41598043, 0.4159804, 1)
+[node name="HTTPRequest" type="HTTPRequest" parent="." unique_id=674315563]
+
+[node name="Background" type="Panel" parent="." unique_id=867575715]
+z_index = -1
+offset_left = 895.0
+offset_top = 79.0
+offset_right = 1135.0
+offset_bottom = 293.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l5yqj")
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="Panel" parent="Background" unique_id=1830474776]
+z_index = -1
+layout_mode = 1
+anchors_preset = -1
+anchor_top = -0.03271028
+anchor_bottom = -0.03271028
+offset_left = 1.0
+offset_top = 231.0
+offset_right = 241.0
+offset_bottom = 307.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l5yqj")
+metadata/_edit_use_anchors_ = true
+
+[node name="Username" type="Label" parent="Background/Background" unique_id=137573533]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 0
+offset_left = 48.0
+offset_top = 5.0
+offset_right = 196.0
+offset_bottom = 30.0
+text = "Vil du prøve igen?"
+metadata/_edit_use_anchors_ = true
+
+[node name="Background" type="Panel" parent="Background/Background" unique_id=375776953]
+z_index = -1
+layout_mode = 0
+offset_top = 78.0
+offset_right = 240.0
+offset_bottom = 127.0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_l5yqj")
+metadata/_edit_use_anchors_ = true
 
 [node name="UsernameInput" type="LineEdit" parent="." unique_id=1829369026]
-offset_left = 483.0
-offset_top = 328.0
-offset_right = 626.0
-offset_bottom = 363.0
+offset_left = 937.0
+offset_top = 205.0
+offset_right = 1093.0
+offset_bottom = 240.0
+metadata/_edit_use_anchors_ = true
 
 [node name="ScoreLabel" type="Label" parent="." unique_id=1565606085]
-offset_left = 458.0
-offset_top = 255.0
-offset_right = 591.0
-offset_bottom = 278.0
+offset_left = 909.0
+offset_top = 91.0
+offset_right = 1119.0
+offset_bottom = 122.0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
 text = "Du fik %d i score!"
+metadata/_edit_use_anchors_ = true
 
 [node name="Username" type="Label" parent="." unique_id=2066079140]
-offset_left = 445.0
-offset_top = 287.0
-offset_right = 747.0
-offset_bottom = 310.0
-text = "Skriv dit brugernavn i feltet herunder"
+modulate = Color(0, 0, 0, 1)
+offset_left = 934.0
+offset_top = 137.0
+offset_right = 1105.0
+offset_bottom = 182.0
+theme_override_font_sizes/font_size = 15
+text = "Skriv dit brugernavn 
+i feltet herunder"
+metadata/_edit_use_anchors_ = true
 
 [node name="SubmitButton" type="Button" parent="." unique_id=1101976163]
-offset_left = 483.0
-offset_top = 373.0
-offset_right = 627.0
-offset_bottom = 415.0
-text = "Submit"
+offset_left = 939.0
+offset_top = 225.0
+offset_right = 1094.0
+offset_bottom = 308.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("2_eote1")
+theme_override_fonts/font = ExtResource("3_hg1f2")
+text = "Indsend"
+metadata/_edit_use_anchors_ = true
+
+[node name="RestartButton" type="Button" parent="." unique_id=1390441297]
+offset_left = 940.0
+offset_top = 310.0
+offset_right = 1095.0
+offset_bottom = 393.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("4_y3h52")
+theme_override_fonts/font = ExtResource("3_hg1f2")
+text = "Genstart"
+metadata/_edit_use_anchors_ = true
+
+[node name="ExitButton" type="Button" parent="." unique_id=742785976]
+offset_left = 940.0
+offset_top = 363.0
+offset_right = 1095.0
+offset_bottom = 446.0
+mouse_default_cursor_shape = 2
+theme = ExtResource("5_8dyj1")
+theme_override_fonts/font = ExtResource("3_hg1f2")
+text = "LUK Spilet"
+metadata/_edit_use_anchors_ = true
+
+[connection signal="pressed" from="RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]

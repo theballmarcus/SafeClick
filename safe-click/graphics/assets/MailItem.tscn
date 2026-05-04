@@ -22,9 +22,11 @@ offset_right = -873.0
 offset_bottom = -582.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_default_cursor_shape = 16
 theme_override_styles/normal = SubResource("StyleBoxFlat_3q27o")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_4tclf")
 theme_override_styles/hover = SubResource("StyleBoxFlat_e5qy0")
+toggle_mode = true
 
 [node name="Control" type="Control" parent="." unique_id=923534668]
 anchors_preset = 0

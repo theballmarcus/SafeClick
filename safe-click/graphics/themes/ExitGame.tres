@@ -1,19 +1,29 @@
-[gd_resource type="Theme" format=3 uid="uid://jko5kkr28v5q"]
+[gd_resource type="Theme" format=3 uid="uid://bdndofp560ttk"]
 
-[ext_resource type="Texture2D" uid="uid://b5g0uys88ssla" path="res://graphics/images/CancelButton.png" id="1_ay4d6"]
-
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_4tx1v"]
-texture = ExtResource("1_ay4d6")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_cjwaf"]
+bg_color = Color(0, 0, 0, 0.47058824)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 expand_margin_left = 3.0
 expand_margin_top = 3.0
 expand_margin_right = 3.0
 expand_margin_bottom = 3.0
 
-[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_fcnkg"]
-texture = ExtResource("1_ay4d6")
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kcw5d"]
+bg_color = Color(0, 0, 0, 0.3137255)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ay4d6"]
-bg_color = Color(1, 1, 1, 0)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vaard"]
+bg_color = Color(0, 0, 0, 0.3137255)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [resource]
 Button/colors/font_color = Color(0, 0, 0, 1)
@@ -37,6 +47,6 @@ Button/font_sizes/font_size = 16
 Button/fonts/font = null
 Button/styles/disabled = null
 Button/styles/focus = null
-Button/styles/hover = SubResource("StyleBoxTexture_4tx1v")
-Button/styles/normal = SubResource("StyleBoxTexture_fcnkg")
-Button/styles/pressed = SubResource("StyleBoxFlat_ay4d6")
+Button/styles/hover = SubResource("StyleBoxFlat_cjwaf")
+Button/styles/normal = SubResource("StyleBoxFlat_kcw5d")
+Button/styles/pressed = SubResource("StyleBoxFlat_vaard")

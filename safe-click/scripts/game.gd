@@ -35,10 +35,10 @@ var circle_size := Vector2(39, 39)
 var rect_size := Vector2(130, 39)
 
 @onready var inbox_container = $MainArea/Mails
-@onready var day_label = $TopBar/TopPanel/StatsMenu/TextureRect/DayLabel
+@onready var day_label = $TopBar/TopPanel/StatsMenu/Værktøjslinje/DayLabel
 @onready var time_label = $TimeLabel
-@onready var score_label = $TopBar/TopPanel/StatsMenu/TextureRect/ScoreLabel
-@onready var rank_label = $TopBar/TopPanel/StatsMenu/TextureRect/RankLabel
+@onready var score_label = $"TopBar/TopPanel/StatsMenu/Værktøjslinje/ScoreLabel"
+@onready var rank_label = $TopBar/TopPanel/StatsMenu/Værktøjslinje/RankLabel
 @onready var subject_label = $MainArea/MailPanel/MailContent/SubjectLabel
 @onready var sender_label = $MainArea/MailPanel/MailContent/SenderLabel
 @onready var body_text = $MainArea/MailPanel/MailContent/BodyText
@@ -52,6 +52,7 @@ var rect_size := Vector2(130, 39)
 @onready var dayplaying_sprite = $Sprite2D
 @onready var SettingsMenu = $TopBar/TopPanel/SettingsMenu
 @onready var StatsMenu = $TopBar/TopPanel/StatsMenu
+@onready var InfoMenu = $TopBar/TopPanel/InfoPanel
 @onready var calender_label = $TopBar/TopPanel/Calender/CalenderLabel
 @onready var toolbar = $"MainArea/MailPanel/Baggrund/Værktøjslinje"
 @onready var tool_button = $MainArea/MailPanel/AnimatedShape/ToolButton
@@ -74,6 +75,10 @@ var boss_qoute_queue := []
 
 @onready var post_highscore_elem = $PostHighscore
 
+@onready var volume_icon = $"TopBar/TopPanel/SettingsMenu/Værktøjslinje/Volume"
+@onready var icon_sound = preload("res://graphics/images/SoundOn.png")
+@onready var icon_muted = preload("res://graphics/images/SoundOff.png")
+
 func _ready():
 	load_mail_data()
 	legit_button.pressed.connect(_on_legit_pressed)
@@ -93,6 +98,10 @@ func _ready():
 	time_label.visible = false
 	
 	shape.add_theme_stylebox_override("panel", StyleBoxEmpty.new())
+	update_volume_icon()
+	$"TopBar/TopPanel/SettingsMenu/Værktøjslinje/VolumeSlider".value = Sound.master_volume
+	for child in content.get_children():
+		child.modulate.a = 0
 
 func _process(delta):
 	if not day_running:
@@ -172,7 +181,7 @@ func open_mail(mail, item):
 	sender_label.text = "Fra: %s <%s>" % [mail["sender_name"], mail["sender_email"]]
 	var cur_body_text = mail["body"].replace('[l]', '[url]').replace('[/l]', '[/url]')
 	body_text.text = cur_body_text
-	hover_url_button.visible = str(mail["real_url"]) != ""
+	#hover_url_button.visible = str(mail["real_url"]) != ""
 	hover_url_label.visible = false
 	hover_url_label.text = "URL: %s" % mail["real_url"]
 	legit_button.disabled = false
@@ -445,28 +454,112 @@ func toggle_shape():
 	expanded = !expanded
 	
 #Buttons
+var settings_open = false
+var is_animating = false
+@onready var content = $"TopBar/TopPanel/SettingsMenu/Værktøjslinje"
 func _on_settings_button_pressed() -> void:
-	SettingsMenu.visible = not SettingsMenu.visible
-	StatsMenu.visible = false
+	if is_animating:
+		return
+	is_animating = true
+	if settings_open:
+		close_all_menus()
+		is_animating = false
+		return
+	close_all_menus()
 	Sound.play_sound("ButtonClicked")
-
+	var panel = $"TopBar/TopPanel/SettingsMenu/Værktøjslinje"
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_OUT)
+	if settings_open:
+		for child in content.get_children():
+			child.modulate.a = 0
+		tween.tween_property(panel, "size:y", 0, 0.2)
+		await tween.finished
+		SettingsMenu.visible = false
+	else:
+		SettingsMenu.visible = true
+		panel.size.y = 0
+		tween.tween_property(panel, "size:y", 557, 0.5)
+		for child in content.get_children():
+			create_tween().tween_property(child, "modulate:a", 1, 0.15)
+		await get_tree().create_timer(0.5).timeout
+	settings_open = !settings_open
+	is_animating = false
+	
 func _on_close_settings_button_pressed() -> void:
-	SettingsMenu.visible = false
+	if is_animating:
+		return
+	is_animating = true
+	settings_open = false
 	Sound.play_sound("ButtonClicked")
+	var panel = $"TopBar/TopPanel/SettingsMenu/Værktøjslinje"
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_OUT)
+	for child in content.get_children():
+		child.modulate.a = 0
+	tween.tween_property(panel, "size:y", 0, 0.2)
+	await tween.finished
+	SettingsMenu.visible = false
+	is_animating = false
 
+var stats_open = false
+var is_animating2 = false
+@onready var contentstats = $"TopBar/TopPanel/StatsMenu/Værktøjslinje"
 func _on_stats_button_pressed() -> void:
-	StatsMenu.visible = not StatsMenu.visible
-	SettingsMenu.visible = false
+	if is_animating2:
+		return
+	is_animating2 = true
+	if stats_open:
+		close_all_menus()
+		is_animating2 = false
+		return
+	close_all_menus()
 	Sound.play_sound("ButtonClicked")
-
+	var panel = $"TopBar/TopPanel/StatsMenu/Værktøjslinje"
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_OUT)
+	if stats_open:
+		for child in contentstats.get_children():
+			child.modulate.a = 0
+		tween.tween_property(panel, "size:y", 0, 0.2)
+		await tween.finished
+		StatsMenu.visible = false
+	else:
+		StatsMenu.visible = true
+		panel.size.y = 0
+		tween.tween_property(panel, "size:y", 557, 0.5)
+		for child in contentstats.get_children():
+			create_tween().tween_property(child, "modulate:a", 1, 0.15)
+		await get_tree().create_timer(0.5).timeout
+	stats_open = !stats_open
+	is_animating2 = false
+	
 func _on_close_stats_button_pressed() -> void:
-	StatsMenu.visible = false
+	if is_animating2:
+		return
+	is_animating2 = true
+	stats_open = false
 	Sound.play_sound("ButtonClicked")
+	var panel = $"TopBar/TopPanel/StatsMenu/Værktøjslinje"
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_OUT)
+	for child in contentstats.get_children():
+		child.modulate.a = 0
+	tween.tween_property(panel, "size:y", 0, 0.2)
+	await tween.finished
+	StatsMenu.visible = false
+	is_animating2 = false
 
 func _on_tool_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
 	toggle_shape()
 
 func _on_idea_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
 	score -= 5
 	if current_mail.size() == 0:
 		hint_label.text = "\n Ingen mail er valgt!"
@@ -478,6 +571,7 @@ func _on_idea_button_pressed() -> void:
 		hint_label.visible = false
 
 func _on_new_day_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
 	toolbar.visible = true
 	legit_button.visible = true
 	phishing_button.visible = true
@@ -495,3 +589,103 @@ func _on_new_day_button_pressed() -> void:
 	shape.add_theme_stylebox_override("panel", style)
 	shape.size = circle_size
 	hover_url_button.visible = false
+
+func _on_volume_slider_value_changed(value: float) -> void:
+	Sound.master_volume = value
+
+	if value <= 0.01:
+		Sound.is_muted = true
+	else:
+		Sound.is_muted = false
+
+	Sound.update_volume()
+	update_volume_icon()
+
+func update_volume_icon():
+	if Sound.is_muted or Sound.master_volume <= 0.01:
+		volume_icon.texture = icon_muted
+	else:
+		volume_icon.texture = icon_sound	
+
+
+func _on_exit_game_pressed() -> void:
+	get_tree().quit()
+	Sound.play_sound("ButtonClicked")
+
+var info_open = false
+var is_animating3 = false
+@onready var contentinfo = $"TopBar/TopPanel/InfoPanel/Værktøjslinje"
+func _on_info_button_pressed() -> void:
+	if is_animating3:
+		return
+	is_animating3 = true
+	if info_open:
+		close_all_menus()
+		is_animating3 = false
+		return
+	close_all_menus()
+	Sound.play_sound("ButtonClicked")
+	var panel = $"TopBar/TopPanel/InfoPanel/Værktøjslinje"
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_OUT)
+	if info_open:
+		for child in contentinfo.get_children():
+			child.modulate.a = 0
+		tween.tween_property(panel, "size:y", 0, 0.2)
+		await tween.finished
+		InfoMenu.visible = false
+	else:
+		InfoMenu.visible = true
+		panel.size.y = 0
+		tween.tween_property(panel, "size:y", 557, 0.5)
+		for child in contentinfo.get_children():
+			create_tween().tween_property(child, "modulate:a", 1, 0.15)
+		await get_tree().create_timer(0.5).timeout
+	info_open = !info_open
+	is_animating3 = false
+
+func _on_close_info_button_pressed() -> void:
+	if is_animating3:
+		return
+	is_animating3 = true
+	info_open = false
+	Sound.play_sound("ButtonClicked")
+	var panel = $"TopBar/TopPanel/InfoPanel/Værktøjslinje"
+	var tween = create_tween()
+	tween.set_trans(Tween.TRANS_QUAD)
+	tween.set_ease(Tween.EASE_OUT)
+	for child in contentinfo.get_children():
+		child.modulate.a = 0
+	tween.tween_property(panel, "size:y", 0, 0.2)
+	await tween.finished
+	InfoMenu.visible = false
+	is_animating3 = false
+
+func close_all_menus():
+#Settings
+	settings_open = false
+	for child in content.get_children():
+		child.modulate.a = 0
+	$"TopBar/TopPanel/SettingsMenu".visible = false
+
+#Stats
+	stats_open = false
+	for child in contentstats.get_children():
+		child.modulate.a = 0
+	$"TopBar/TopPanel/StatsMenu".visible = false
+
+#Info
+	info_open = false
+	for child in contentinfo.get_children():
+		child.modulate.a = 0
+	$"TopBar/TopPanel/InfoPanel".visible = false
+
+func _on_hover_url_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
+
+func _on_phishing_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
+	
+func _on_legit_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")

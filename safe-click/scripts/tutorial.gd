@@ -77,7 +77,7 @@ func _ready() -> void:
 	
 	indhold.bbcode_enabled = true
 	indhold.text = "Din pakke er blevet tilbageholdt, da den ikke er blevet tildelt en adresse. Du bliver dermed nødt til at betale 9kr i gebyr. Klik [u]her[/u] for at betale gebyret."
-
+	
 func play_dialogue(new_text: String) -> void:
 	full_text = new_text
 	speech_text.text = full_text
@@ -85,6 +85,8 @@ func play_dialogue(new_text: String) -> void:
 	
 	current_index = 0
 	is_typing = true
+	
+	Sound.play_sound("BossTalking")
 	
 	if dialogue_index == 4:
 		show_arrow(Vector2(512, 476))
@@ -100,6 +102,8 @@ func show_text() -> void:
 	
 	speech_text.visible_characters = full_text.length()
 	is_typing = false
+	
+	Sound.stop_sound("BossTalking")
 	
 	if dialogue_index == 1:
 		start_button.disabled = false
@@ -145,6 +149,7 @@ func handle_click() -> void:
 	if is_typing:
 		is_typing = false
 		speech_text.visible_characters = full_text.length()
+		Sound.stop_sound("BossTalking")
 		return
 		
 	if dialogue_index == 3:
@@ -233,6 +238,8 @@ func show_arrow(new_pos:Vector2) -> void:
 	arrow_tween.tween_property(arrow, "position", arrow_start_pos, 0.4)
 
 func _on_startbutton_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
+	
 	mail_barriere.visible = true
 	titel_mail.visible = true
 	emne_mail.visible = true
@@ -255,6 +262,8 @@ func _on_startbutton_pressed() -> void:
 	play_dialogue(dialogue_lines[2])
 		
 func _on_mail_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
+	
 	set_nodes_visible([arrow, speechbobble, boss, speech_text], false)
 	
 	set_nodes_visible([
@@ -286,6 +295,8 @@ func _on_mail_button_pressed() -> void:
 	play_dialogue(dialogue_lines[3])
 	
 func _on_tool_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
+	
 	apply_shape_style()
 
 	if not free_mail_choice_mode:
@@ -306,6 +317,8 @@ func _on_tool_button_pressed() -> void:
 		idea_button_active = true
 	
 func _on_hover_url_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
+	
 	url.visible = true
 	hint.visible = false
 	
@@ -329,6 +342,8 @@ func _on_hover_url_button_pressed() -> void:
 	game._on_hover_url_pressed()
 	
 func _on_idea_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
+	
 	url.visible = false
 	hint.visible = true
 	
@@ -340,6 +355,8 @@ func _on_idea_button_pressed() -> void:
 		play_dialogue(dialogue_lines[6])
 
 func _on_godkend_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
+	
 	speechbobble.visible = true
 	boss.visible = true
 	speech_text.visible = true
@@ -349,6 +366,8 @@ func _on_godkend_button_pressed() -> void:
 	play_dialogue(dialogue_lines[7])
 
 func _on_afvis_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
+	
 	set_interaction_active(false)
 	free_mail_choice_mode = false
 	can_choose_mail_type = false

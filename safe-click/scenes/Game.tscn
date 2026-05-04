@@ -19,7 +19,6 @@
 [ext_resource type="Theme" uid="uid://bhjhubx6g25ei" path="res://graphics/themes/StartButton.tres" id="16_vjgi4"]
 [ext_resource type="Theme" uid="uid://d0dmlirlj6i2" path="res://graphics/themes/ToolsButton.tres" id="17_a85ww"]
 [ext_resource type="Theme" uid="uid://ddqhgpls6sa23" path="res://graphics/themes/IdeaButton.tres" id="17_jhsr3"]
-[ext_resource type="Texture2D" uid="uid://bnvdso5i71hka" path="res://graphics/images/DayPlaying.png" id="17_vjgi4"]
 [ext_resource type="Theme" uid="uid://bx08qc3hybbv4" path="res://graphics/themes/LinkButton.tres" id="18_jhsr3"]
 [ext_resource type="Texture2D" uid="uid://bskfmxrcv3lm2" path="res://graphics/images/Boss2a.png" id="21_attvq"]
 [ext_resource type="Texture2D" uid="uid://d3f0t5ig2gax5" path="res://graphics/images/Boss2b.png" id="22_bneo8"]
@@ -370,17 +369,11 @@ offset_top = 89.0
 offset_right = 352.0
 offset_bottom = 112.0
 
-[node name="DayPlaying" type="Sprite2D" parent="." unique_id=680792227]
-visible = false
-position = Vector2(1082.8, 605.5)
-scale = Vector2(0.47, 0.47)
-texture = ExtResource("17_vjgi4")
-
 [node name="TimeLabel" type="Label" parent="." unique_id=1658460617]
 modulate = Color(0, 0, 0, 1)
-offset_left = 920.0
+offset_left = 974.0
 offset_top = 589.0
-offset_right = 1050.0
+offset_right = 1104.0
 offset_bottom = 622.0
 theme_override_fonts/font = ExtResource("13_45i86")
 theme_override_font_sizes/font_size = 24

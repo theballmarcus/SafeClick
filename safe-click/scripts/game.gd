@@ -50,7 +50,6 @@ var rect_size := Vector2(130, 39)
 @onready var calender_label = $TopBar/TopPanel/Calender/CalenderLabel
 @onready var toolbar = $"MainArea/MailPanel/Baggrund/Værktøjslinje"
 @onready var tool_button = $MainArea/MailPanel/AnimatedShape/ToolButton
-@onready var day_playing_icon = $DayPlaying
 @onready var day_bar = $StartNewDayBar
 @onready var start_day_label = $StartNewDayBar/StartNyDag
 
@@ -263,7 +262,6 @@ func end_day():
 	phishing_button.visible = false
 	tool_button.visible = false
 	time_label.visible = false
-	day_playing_icon.visible = false
 	day_bar.visible = true
 	hover_url_button.visible = false
 	shape.visible = false
@@ -561,7 +559,6 @@ func _on_new_day_button_pressed() -> void:
 	phishing_button.visible = true
 	tool_button.visible = true
 	time_label.visible = true
-	day_playing_icon.visible = true
 	day_bar.visible = false
 	var style = StyleBoxFlat.new()
 	style.bg_color = Color("c3c3c396")

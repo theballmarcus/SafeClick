@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://na2hjs8tfyfj" path="res://graphics/images/mailanimation/1.png" id="15_wrgne"]
 [ext_resource type="Theme" uid="uid://cgotv5vax3tlo" path="res://graphics/themes/Button2.tres" id="16_tdapf"]
 [ext_resource type="Theme" uid="uid://bxyw0eqfm4fbv" path="res://graphics/themes/Background.tres" id="17_8vx4p"]
+[ext_resource type="Theme" uid="uid://cmf854dw2npg1" path="res://graphics/themes/LeaderboardButton.tres" id="18_tdapf"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hm0al"]
 animations = [{
@@ -164,15 +165,8 @@ offset_top = 55.0
 offset_right = 302.0
 offset_bottom = 58.0
 
-[node name="Button" type="Button" parent="." unique_id=1432747092]
-z_index = -1
-offset_left = 9.0
-offset_top = 8.0
-offset_right = 305.0
-offset_bottom = 644.0
-theme = ExtResource("17_8vx4p")
-
 [node name="Label" type="Label" parent="." unique_id=154313779]
+visible = false
 z_index = 5
 offset_left = 31.0
 offset_top = 12.0
@@ -183,18 +177,38 @@ theme_override_font_sizes/font_size = 32
 text = "Leaderboard"
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1690349246]
+visible = false
 offset_left = 12.0
 offset_top = 55.0
 offset_right = 304.0
 offset_bottom = 56.0
 
 [node name="Panel" type="Panel" parent="." unique_id=650936655]
+visible = false
 offset_left = 6.0
 offset_top = 6.0
 offset_right = 309.0
 offset_bottom = 647.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_8vx4p")
 
+[node name="Button" type="Button" parent="." unique_id=1432747092]
+visible = false
+z_index = -1
+offset_left = 9.0
+offset_top = 8.0
+offset_right = 305.0
+offset_bottom = 644.0
+theme = ExtResource("17_8vx4p")
+
+[node name="LeaderboardButton" type="Button" parent="." unique_id=1542432804]
+offset_left = 13.0
+offset_top = 20.0
+offset_right = 79.0
+offset_bottom = 77.0
+theme = ExtResource("18_tdapf")
+
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="TutorialButton" to="." method="_on_tutorial_button_pressed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="LeaderboardButton" to="." method="_on_leaderboard_button_pressed"]

@@ -7,7 +7,6 @@ extends Node2D
 
 const HIGHSCORE_ITEM_SCENE := preload("res://graphics/assets/HighscoreItem.tscn")
 
-
 func _ready() -> void:
 	update_highscores()
 	# Fetch first batch of mails
@@ -77,10 +76,27 @@ func click_loop():
 		await get_tree().create_timer(2.5).timeout
 
 func _on_start_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
 	get_tree().change_scene_to_file("res://scenes/Game.tscn")
 
 func _on_quit_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
 	get_tree().quit()
 
 func _on_tutorial_button_pressed() -> void:
+	Sound.play_sound("ButtonClicked")
 	get_tree().change_scene_to_file("res://scenes/Tutorial.tscn")
+
+func _on_leaderboard_button_pressed() -> void:
+	$Button.visible = true
+	$Label.visible = true
+	$ColorRect.visible = true
+	$Panel.visible = true
+	$LeaderboardButton.visible = false
+
+func _on_button_pressed() -> void:
+	$Button.visible = false
+	$Label.visible = false
+	$ColorRect.visible = false
+	$Panel.visible = false
+	$LeaderboardButton.visible = true

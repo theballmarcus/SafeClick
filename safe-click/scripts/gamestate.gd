@@ -138,10 +138,7 @@ func _on_request_completed(_result, response_code, _headers, body):
 
 		for incoming_mail in data["mails"]:
 			var mail_id := int(incoming_mail.get("id", -1))
-			if mail_id == -1:
-				continue
-			if _has_mail_id(mail_id):
-				continue
+
 			mails.append(incoming_mail)
 			added_count += 1
 

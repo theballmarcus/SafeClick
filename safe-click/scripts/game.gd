@@ -6,13 +6,7 @@ const DAY_DURATION := 20.0 # 4 minutes
 const MIN_MAILS_PER_DAY := 6
 const MAX_MAILS_PER_DAY := 7
 const UNANSWERED_MAIL_PENALTY := 3
-const MAX_FETCH_RETRIES := 3
 const MAIL_ITEM_SCENE := preload("res://graphics/assets/MailItem.tscn")
-const WORK_START_HOUR := 8
-const WORK_END_HOUR := 15
-const WORK_START_MINUTES := WORK_START_HOUR * 60
-const WORK_END_MINUTES := WORK_END_HOUR * 60
-const WORKDAY_MINUTES := WORK_END_MINUTES - WORK_START_MINUTES
 
 var day_mail_pool: Array = []
 var inbox_mails: Array = []
@@ -80,7 +74,6 @@ var boss_qoute_queue := []
 @onready var icon_muted = preload("res://graphics/images/SoundOff.png")
 
 func _ready():
-	load_mail_data()
 	legit_button.pressed.connect(_on_legit_pressed)
 	phishing_button.pressed.connect(_on_phishing_pressed)
 	hover_url_button.pressed.connect(_on_hover_url_pressed)
@@ -129,6 +122,7 @@ func start_new_day():
 	await _prepare_day_mail_pool(target_mail_count)
 
 	if day_mail_pool.is_empty():
+		# Vi burde ikke havne her men just in case 
 		day_running = false
 		feedback_label.text = "Kunne ikke starte dag: ingen mails tilgaengelige"
 		new_day_button.visible = true
@@ -247,7 +241,7 @@ func end_day():
 	calender_label.text = "%d" % day
 	day_running = false
 	time_left = 0
-	var unanswered_removed := _remove_unanswered_mails_and_apply_penalty()
+	var unanswered_removed := _remove_unanswered_mails()
 	inbox_mails.clear()
 	current_mail = {}
 	clear_inbox_ui()
@@ -263,7 +257,6 @@ func end_day():
 	new_day_button.disabled = false
 	update_rank()
 	update_topbar()
-	save_progress()
 	
 	toolbar.visible = false
 	legit_button.visible = false
@@ -299,6 +292,7 @@ func show_boss():
 	var qoute_feedback 
 	
 	if failed_mails.size() > 0:
+		# Pick feedback qoute if there are any
 		qoute_feedback_pre = Gamestate.boss_feedback[randi() % Gamestate.boss_feedback.size()]
 		qoute_feedback = failed_mails[randi() % failed_mails.size()]
 		
@@ -327,15 +321,10 @@ func show_boss():
 	var quote = quote_pool[randi() % quote_pool.size()]
 	boss_label.text = quote
 
-
 func _prepare_day_mail_pool(target_count: int) -> void:
 	day_mail_pool.clear()
-	if target_count <= 0:
-		return
 
 	await _ensure_mail_supply(target_count)
-	if Gamestate.mails.is_empty():
-		return
 
 	var shuffled_mails: Array = Gamestate.mails.duplicate(true)
 	shuffled_mails.shuffle()
@@ -346,11 +335,10 @@ func _prepare_day_mail_pool(target_count: int) -> void:
 
 func _ensure_mail_supply(required_count: int) -> void:
 	var retries := 0
-	while Gamestate.mails.size() < required_count and retries < MAX_FETCH_RETRIES:
+	while Gamestate.mails.size() < required_count and retries < 3:
 		retries += 1
 		var started_fetch: bool = Gamestate.fetch_mails(day)
-		if not started_fetch:
-			break
+
 		var fetch_result = await Gamestate.mails_fetched
 		var fetch_success: bool = fetch_result[0]
 		var added_count: int = int(fetch_result[1])
@@ -364,7 +352,6 @@ func _prefetch_next_day_mails() -> void:
 func _on_boss_button_pressed() -> void:	
 	if not boss_shown:
 		return
-
 	end_day()
 
 func _remove_mail_from_unanswered_by_id(mail_id: int) -> bool:
@@ -374,7 +361,7 @@ func _remove_mail_from_unanswered_by_id(mail_id: int) -> bool:
 			return true
 	return false
 
-func _remove_unanswered_mails_and_apply_penalty() -> int:
+func _remove_unanswered_mails() -> int:
 	var unanswered_removed := 0
 	for mail in inbox_mails:
 		var mail_id := int(mail.get("id", -1))
@@ -410,15 +397,12 @@ func update_rank():
 	elif score >= 20: rank = "Medarbejder"
 	else: rank = "Trainee"
 
-func load_mail_data():
-	# Mail state is stored in Gamestate and fetched on demand at day start.
-	pass
-
-func save_progress():
-	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)
-	if file: file.store_string(JSON.stringify({"score":score,"day":day,"rank":rank}))
-	
 func get_current_clock_time() -> String:
+	# Start at 8 hours, end at 15
+	const WORK_START_MINUTES := 8 * 60
+	const WORK_END_MINUTES := 15 * 60
+	const WORKDAY_MINUTES := WORK_END_MINUTES - WORK_START_MINUTES
+	
 	var elapsed := DAY_DURATION - time_left
 	var progress: float = clamp(elapsed / DAY_DURATION, 0.0, 1.0)
 	var current_minutes := WORK_START_MINUTES + int(progress * WORKDAY_MINUTES)

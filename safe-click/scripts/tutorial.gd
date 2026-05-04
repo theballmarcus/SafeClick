@@ -345,7 +345,6 @@ func _on_godkend_button_pressed() -> void:
 	speech_text.visible = true
 	godkend_button.disabled = true
 	
-	
 	dialogue_index = 7
 	play_dialogue(dialogue_lines[7])
 

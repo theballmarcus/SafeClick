@@ -5,7 +5,6 @@ extends Node
 @onready var score_label = $ScoreLabel
 @onready var submit_button = $SubmitButton
 
-
 func _ready() -> void:
 	pass
 	submit_button.pressed.connect(_on_submit_pressed)

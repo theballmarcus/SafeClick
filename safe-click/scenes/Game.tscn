@@ -123,6 +123,32 @@ animations = [{
 }, {
 "duration": 1.0,
 "texture": ExtResource("12_7f8l2")
+}],
+"loop": true,
+"name": &"BossGladBlink",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_bneo8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
 }, {
 "duration": 1.0,
 "texture": ExtResource("21_attvq")
@@ -137,7 +163,7 @@ animations = [{
 "texture": ExtResource("21_attvq")
 }],
 "loop": true,
-"name": &"BossGladBlink",
+"name": &"BossNeutralBlink",
 "speed": 3.0
 }, {
 "frames": [{
@@ -468,7 +494,7 @@ z_index = 100
 position = Vector2(150, 556)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_a85ww")
-animation = &"BossGladBlink"
+animation = &"BossSurBlink"
 autoplay = "BossSurBlink"
 
 [node name="SpeechBubble" type="TextureRect" parent="BossFeedback" unique_id=1033569555]

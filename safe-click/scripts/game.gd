@@ -2,7 +2,7 @@ extends Node
 
 const save_game := false
 const SAVE_PATH := "user://savegame.json"
-const DAY_DURATION := 80.0 # 4 minutes
+const DAY_DURATION := 100.0 # 4 minutes
 const MIN_MAILS_PER_DAY := 6
 var MAX_MAILS_PER_DAY := 7
 const UNANSWERED_MAIL_PENALTY := 3
@@ -55,9 +55,7 @@ var rect_size := Vector2(130, 39)
 
 @onready var feedback_menu = $BossFeedback
 @onready var boss_label = $BossFeedback/SpeechBubble/BossLabel
-@onready var boss_n = $BossFeedback/BossN
 @onready var boss_g = $BossFeedback/BossG
-@onready var boss_s = $BossFeedback/BossS
 var boss_qoute_queue := []
 
 @onready var shape = $MainArea/MailPanel/AnimatedShape
@@ -264,15 +262,14 @@ func end_day():
 	time_label.visible = false
 	day_bar.visible = true
 	hover_url_button.visible = false
+	idea_button.visible = false
 	shape.visible = false
 	
 	start_day_label.text = "Start ny dag!"
 	start_day_label.add_theme_font_size_override("font_size", 20)
 	
 	boss_shown = false
-	boss_n.visible = false
 	boss_g.visible = false
-	boss_s.visible = false
 	feedback_menu.visible = false
 	snake_game.start()
 	
@@ -303,11 +300,9 @@ func show_boss():
 		Gamestate.user_score = score
 		employee_fired = true
 		quote_pool = Gamestate.boss_fired
-		
 
 	elif performance <= 60:
 		quote_pool = Gamestate.boss_comments["bad"]
-		#boss_s.visible = true
 		boss_g.visible = true
 		boss_g.play("BossSurBlink")
 		boss_qoute_queue.append(qoute_feedback_pre)
@@ -317,9 +312,12 @@ func show_boss():
 		
 	elif performance <= 90:
 		quote_pool = Gamestate.boss_comments["ok"]
-		boss_n.visible = true
+		boss_g.visible = true
+		boss_g.play("BossNeutralBlink")
 		boss_qoute_queue.append(qoute_feedback_pre)
-		boss_qoute_queue.append("Mail fra %s\n%s" % [qoute_feedback["sender_name"], qoute_feedback["hint"]])
+		var sender = qoute_feedback.get("sender_name", "Unknown")
+		var hint = qoute_feedback.get("hint", "Snydt")
+		boss_qoute_queue.append("Mail fra %s\n%s" % [sender, hint])
 	else:
 		quote_pool = Gamestate.boss_comments["good"]
 		boss_g.visible = true
@@ -405,7 +403,6 @@ func update_rank():
 	else: rank = "Trainee"
 
 func get_current_clock_time() -> String:
-	# Start at 8 hours, end at 15
 	const WORK_START_MINUTES := 8 * 60
 	const WORK_END_MINUTES := 15 * 60
 	const WORKDAY_MINUTES := WORK_END_MINUTES - WORK_START_MINUTES
@@ -560,6 +557,7 @@ func _on_idea_button_pressed() -> void:
 		hint_label.visible = true
 	else:
 		hint_label.visible = false
+	hover_url_label.visible = false
 
 func _on_new_day_button_pressed() -> void:
 	Sound.play_sound("ButtonClicked")
@@ -673,6 +671,7 @@ func close_all_menus():
 
 func _on_hover_url_button_pressed() -> void:
 	Sound.play_sound("ButtonClicked")
+	hint_label.visible = false
 
 func _on_phishing_button_pressed() -> void:
 	Sound.play_sound("ButtonClicked")

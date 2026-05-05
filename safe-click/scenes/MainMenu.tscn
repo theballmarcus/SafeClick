@@ -94,9 +94,9 @@ texture = ExtResource("3_2wh52")
 expand_mode = 1
 
 [node name="SafeClick" type="Label" parent="." unique_id=1494319621]
-offset_left = 390.0
+offset_left = 375.0
 offset_top = 254.0
-offset_right = 664.0
+offset_right = 649.0
 offset_bottom = 331.0
 theme_override_font_sizes/font_size = 60
 text = "SafeClick"
@@ -121,9 +121,9 @@ anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 394.0
+offset_left = 379.0
 offset_top = 315.0
-offset_right = 522.0
+offset_right = 507.0
 offset_bottom = 418.0
 grow_horizontal = 0
 grow_vertical = 0
@@ -135,9 +135,9 @@ theme_override_font_sizes/font_size = 18
 text = "Start Spil"
 
 [node name="QuitButton" type="Button" parent="." unique_id=1811172870]
-offset_left = 672.0
+offset_left = 657.0
 offset_top = 315.0
-offset_right = 800.0
+offset_right = 785.0
 offset_bottom = 418.0
 mouse_default_cursor_shape = 2
 theme = ExtResource("15_8vx4p")
@@ -147,9 +147,9 @@ theme_override_font_sizes/font_size = 18
 text = "Exit Spil"
 
 [node name="TutorialButton" type="Button" parent="." unique_id=1302199518]
-offset_left = 533.0
+offset_left = 518.0
 offset_top = 315.0
-offset_right = 661.0
+offset_right = 646.0
 offset_bottom = 418.0
 mouse_default_cursor_shape = 2
 theme = ExtResource("16_tdapf")

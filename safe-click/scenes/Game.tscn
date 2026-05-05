@@ -9,10 +9,12 @@
 [ext_resource type="Theme" uid="uid://jko5kkr28v5q" path="res://graphics/themes/CloseButton.tres" id="9_mcffj"]
 [ext_resource type="Texture2D" uid="uid://csf2c2xq2w53o" path="res://graphics/images/Settings.png" id="10_mcffj"]
 [ext_resource type="Texture2D" uid="uid://dsi0djg27gk87" path="res://graphics/images/Indbakke.png" id="12_2rd6h"]
+[ext_resource type="Texture2D" uid="uid://dde0tuq47end8" path="res://graphics/images/Boss3a.png" id="12_7f8l2"]
 [ext_resource type="Theme" uid="uid://dwltkpsji8m0" path="res://graphics/themes/AcceptButton.tres" id="12_7ua8r"]
 [ext_resource type="Texture2D" uid="uid://bw24g4wbjfdpa" path="res://graphics/images/Calender.png" id="12_kyk2p"]
 [ext_resource type="Texture2D" uid="uid://cwle457dmgiuh" path="res://graphics/images/Inbox.png" id="13_7ua8r"]
 [ext_resource type="FontFile" uid="uid://lohkoxhgdcob" path="res://graphics/fonts/Bungee-Regular.ttf" id="13_45i86"]
+[ext_resource type="Texture2D" uid="uid://chme7l2e27crq" path="res://graphics/images/Boss3b.png" id="13_cxum0"]
 [ext_resource type="Theme" uid="uid://cx61wghxdyryp" path="res://graphics/themes/DeclineButton.tres" id="13_r7sob"]
 [ext_resource type="Texture2D" uid="uid://blvpqeoftl0ch" path="res://graphics/images/Logo.png" id="13_sv1m6"]
 [ext_resource type="Theme" uid="uid://ukjmf4h4tvbf" path="res://graphics/themes/InfoButton.tres" id="14_0bq3a"]
@@ -97,6 +99,47 @@ animations = [{
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_a85ww"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("12_7f8l2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_7f8l2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_7f8l2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_7f8l2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_7f8l2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_cxum0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_7f8l2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_7f8l2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_attvq")
+}],
+"loop": true,
+"name": &"BossGladBlink",
+"speed": 3.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("23_ocgqw")
@@ -420,11 +463,12 @@ animation = &"BossSurBlink"
 autoplay = "BossSurBlink"
 
 [node name="BossS" type="AnimatedSprite2D" parent="BossFeedback" unique_id=303377423]
+visible = false
 z_index = 100
 position = Vector2(150, 556)
 scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_a85ww")
-animation = &"BossSurBlink"
+animation = &"BossGladBlink"
 autoplay = "BossSurBlink"
 
 [node name="SpeechBubble" type="TextureRect" parent="BossFeedback" unique_id=1033569555]

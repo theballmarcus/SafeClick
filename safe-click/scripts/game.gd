@@ -2,9 +2,9 @@ extends Node
 
 const save_game := false
 const SAVE_PATH := "user://savegame.json"
-const DAY_DURATION := 20.0 # 4 minutes
+const DAY_DURATION := 80.0 # 4 minutes
 const MIN_MAILS_PER_DAY := 6
-const MAX_MAILS_PER_DAY := 7
+var MAX_MAILS_PER_DAY := 7
 const UNANSWERED_MAIL_PENALTY := 3
 const MAIL_ITEM_SCENE := preload("res://graphics/assets/MailItem.tscn")
 
@@ -117,7 +117,7 @@ func start_new_day():
 	inbox_mails.clear()
 	current_mail = {}
 
-	var target_mail_count := randi_range(MIN_MAILS_PER_DAY, MAX_MAILS_PER_DAY)
+	var target_mail_count := randi_range(MIN_MAILS_PER_DAY + day, MAX_MAILS_PER_DAY + day)
 	await _prepare_day_mail_pool(target_mail_count)
 
 	if day_mail_pool.is_empty():
@@ -270,6 +270,9 @@ func end_day():
 	start_day_label.add_theme_font_size_override("font_size", 20)
 	
 	boss_shown = false
+	boss_n.visible = false
+	boss_g.visible = false
+	boss_s.visible = false
 	feedback_menu.visible = false
 	snake_game.start()
 	
@@ -300,12 +303,17 @@ func show_boss():
 		Gamestate.user_score = score
 		employee_fired = true
 		quote_pool = Gamestate.boss_fired
+		
 
 	elif performance <= 60:
 		quote_pool = Gamestate.boss_comments["bad"]
-		boss_s.visible = true
+		#boss_s.visible = true
+		boss_g.visible = true
+		boss_g.play("BossSurBlink")
 		boss_qoute_queue.append(qoute_feedback_pre)
-		boss_qoute_queue.append("Mail fra %s\n%s" % [qoute_feedback["sender_name"], qoute_feedback["hint"]])
+		var sender = qoute_feedback.get("sender_name", "Unknown")
+		var hint = qoute_feedback.get("hint", "Snydt")
+		boss_qoute_queue.append("Mail fra %s\n%s" % [sender, hint])
 		
 	elif performance <= 90:
 		quote_pool = Gamestate.boss_comments["ok"]
@@ -315,6 +323,7 @@ func show_boss():
 	else:
 		quote_pool = Gamestate.boss_comments["good"]
 		boss_g.visible = true
+		boss_g.play("BossGladBlink")
 	
 	var quote = quote_pool[randi() % quote_pool.size()]
 	boss_label.text = quote
@@ -345,7 +354,7 @@ func _ensure_mail_supply(required_count: int) -> void:
 
 func _prefetch_next_day_mails() -> void:
 	var next_day: int = min(day + 1, 10)
-	var _started: bool = Gamestate.fetch_mails(next_day, MAX_MAILS_PER_DAY)
+	var _started: bool = Gamestate.fetch_mails(next_day, MAX_MAILS_PER_DAY + day)
 
 func _on_boss_button_pressed() -> void:	
 	if not boss_shown:
@@ -542,10 +551,10 @@ func _on_tool_button_pressed() -> void:
 
 func _on_idea_button_pressed() -> void:
 	Sound.play_sound("ButtonClicked")
-	score -= 5
 	if current_mail.size() == 0:
 		hint_label.text = "\n Ingen mail er valgt!"
 	else:
+		score -= 5
 		hint_label.text = "Du spørger chefen om hjælp - han siger: \n" +  current_mail["hint"]
 	if hint_label.visible == false:
 		hint_label.visible = true
